@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/WoojungCard?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+mybatis:
+  config-location: classpath:config/config.xml
+  mapper-location: classpath:mapper/*.xml
