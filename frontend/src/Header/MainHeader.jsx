@@ -1,6 +1,5 @@
 import React from "react";
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
+import {Link} from "react-router-dom";
 
 const styles = {
     main: {
@@ -12,16 +11,20 @@ const styles = {
 
 };
 
-
+// 로그인 전 보여지는 메인 헤더
 function MainHeader(props) {
-	return (
-		<>
-			<Navbar style={{marginTop: 10}}>
-		        <Container>
-		        	<Navbar.Brand href="/" style={styles.main}>우정카드</Navbar.Brand>
-		        </Container>
-	        </Navbar>			
-		</>
+	return (	
+		<div className={""} id={"div-header"}>
+            <nav className={"navbar navbar-expand-sm navbar-white bg-white mt-1 fixed"} id={"header_nav"}>
+                <div className={"container justify-content-between"}>
+                    <Link to={"/"} style={styles.main}>우정카드</Link>
+                    
+                    <Link to={"/"} style={styles.main}>카드상품</Link>
+                    
+                    <Link to={"/"} style={styles.main}>로그인</Link>
+                </div>
+            </nav>
+        </div>
 	);
 }
 

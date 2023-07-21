@@ -5,11 +5,13 @@ import Form from "react-bootstrap/Form";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+// 개인고객 회원가입
 function UserJoin() {
 	return (
 		<div>
 			<Container className="container d-flex justify-content-center my-3">
 				<Form className="w-50">
+					<h5>개인고객 회원가입</h5>
 					<Form.Group as="Row" className="mb-3" controlId="formPlaintextUserId">
 						<Col sm>
                                 <Form.Control

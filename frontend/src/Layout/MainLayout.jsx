@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import MainHeader from "./Header/MainHeader";
+import MainHeader from "../Header/MainHeader";
 
-function Layout(props) {
+function MainLayout(props) {
 	return (
 		<div>
 			<MainHeader />
@@ -11,4 +11,4 @@ function Layout(props) {
 	);
 }
 
-export default Layout;
+export default MainLayout;
