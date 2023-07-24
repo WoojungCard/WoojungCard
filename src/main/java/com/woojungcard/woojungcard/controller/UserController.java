@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.woojungcard.woojungcard.domain.entity.User;
-import com.woojungcard.woojungcard.domain.request.SignUpRequest;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.woojungcard.woojungcard.dto.UserDTO;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,14 +29,8 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/test/{id}")
-	public User test(@PathVariable("id") Long id) {
-		return userService.findById(id);
-	}
-	
-	@PostMapping("/signup")
-	public int signUp(@RequestBody SignUpRequest request) {
-		System.out.println(request);
-		return userService.signUp(request);
+	@GetMapping("/test")
+	public List<UserDTO> test() {
+		return userService.findById();
 	}
 }
