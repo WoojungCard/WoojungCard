@@ -1,4 +1,4 @@
-package com.woojungcard.woojungcard.dto;
+package com.woojungcard.woojungcard.domain.dto;
 
 import java.time.LocalDate;
 
