@@ -12,7 +12,7 @@ function ProjectRouter(props) {
 			<Routes>
 				// 회원가입 & 로그인 화면 레이아웃
 				<Route path="/" element=<MainLayout/> >
-					<Route index element=<CardProductList/> />
+					<Route path="cardProduct" element=<CardProductList/> />
 					<Route path="login" element=<Login/> />
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
