@@ -17,7 +17,7 @@ public class ExceptionConfig {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
-	// Id Check Exception
+	// User Id Check Exception
 	@ExceptionHandler(UserIdCheckException.class)
 	public ResponseEntity<String> idCheckException(UserIdCheckException e){
 		return new ResponseEntity<>(e. getMessage(), HttpStatus.BAD_REQUEST);

@@ -30,7 +30,6 @@ public class UserController {
 		return userService.findById();
 	}
 	
-	
 	// User Id Check
 	@PostMapping("/idcheck")
 	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws UserIdCheckException {

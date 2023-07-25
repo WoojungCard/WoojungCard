@@ -2,6 +2,7 @@ package com.woojungcard.woojungcard.service;
 
 import java.util.List;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class UserServiceImpl implements UserService {
 	
 private final UserRepository userRepository;
 private final EncryptConfig encryptConfig;
-	
-	
+//private final StringRedisTemplate redisTemplate;
+
 	public List<UserDTO> findById(){
 		return userRepository.findById();
 	}

@@ -12,6 +12,8 @@ import com.woojungcard.woojungcard.exception.SignUpException;
 
 public interface UserService {
 	public List<UserDTO> findById();
+	// User Id Check
 	public ResponseEntity<String> userIdCheck(UserIdCheckRequest request) throws UserIdCheckException;
+	// User Sign Up
 	public ResponseEntity<String> userSignUp(UserSignUpRequest request) throws SignUpException;
 }

@@ -15,6 +15,8 @@ import com.woojungcard.woojungcard.exception.SignUpException;
 @Mapper
 public interface UserRepository {
 	List<UserDTO> findById();
-	Integer userSignUp(UserSignUpRequest request) throws SignUpException;
+	// User Id Check
 	Integer userIdCheck(UserIdCheckRequest ruquest) throws UserIdCheckException;
+	// User Sign Up
+	Integer userSignUp(UserSignUpRequest request) throws SignUpException;
 }
