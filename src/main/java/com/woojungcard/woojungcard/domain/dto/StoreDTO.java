@@ -12,6 +12,15 @@ import lombok.Setter;
 @Getter @Setter
 public class StoreDTO {
 	private Long id;
-	private 
+	private String businessNumber;
+	private String storePwd;
+	private String storeName;
+	private String representative;
+	private String storeAddress;
+	private int storeTel;
+	private int businessStartDate;
+	private String businessType;
 	private LocalDate storeJoinDate;
+	private String status;
+	
 }
