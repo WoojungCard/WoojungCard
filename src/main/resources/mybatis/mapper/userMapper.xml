@@ -2,9 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.woojungcard.woojungcard.repository.UserRepository">
-    <select id="findById" resultType="com.woojungcard.woojungcard.dto.UserDTO">
+    <select id="findById" resultType="com.woojungcard.woojungcard.domain.dto.UserDTO">
     	<![CDATA[
         select * from user
         ]]>
     </select>
+    
+    <!-- 아이디 중복 체크 -->
+    <select id="userIdCheck" resultType="int" parameterType="com.woojungcard.woojungcard.domain.request.UserIdCheckRequest">
+    	<![CDATA[
+    	SELECT
+    		count(*)
+   		FROM
+   			user
+  		WHERE
+  			user_id = #{userId}
+ 		]]>
+    </select>
+       
+    <!-- 유저 회원가입 -->
+    <insert id="userSignUp" parameterType="com.woojungcard.woojungcard.domain.request.UserSignUpRequest">
+    	<![CDATA[
+    		INSERT INTO 
+    			user(user_id, user_pwd, user_name, user_birth, user_gender, user_tel, user_join_date)
+    		VALUES
+    			(#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userGender}, #{userTel}, now()) 
+    	]]>
+    </insert>
 </mapper>

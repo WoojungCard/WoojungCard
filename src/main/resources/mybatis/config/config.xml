@@ -6,8 +6,8 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-    <package name="com.woojungcard.woojungcard.dto"/>
-</typeAliases>
+    	<package name="com.woojungcard.woojungcard.domain"/>
+	</typeAliases>
     <mappers>
         <mapper resource="mybatis/mapper/userMapper.xml"/>
     </mappers>

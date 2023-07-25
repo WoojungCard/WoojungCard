@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.woojungcard.woojungcard.dto.UserDTO;
+
+import com.woojungcard.woojungcard.domain.dto.UserDTO;
+import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
+import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.exception.IdCheckException;
+import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,16 @@ public class UserController {
 		return userService.findById();
 	}
 	
+	
+	// User Id Check
+	@PostMapping("/idcheck")
+	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws IdCheckException {
+		return userService.userIdCheck(request);
+	}
+	
+	// User Sign Up
 	@PostMapping("/signup")
-	public ResponseEntity<String> userSignUp(@RequestBody )
+	public ResponseEntity<String> userSignUp(@RequestBody UserSignUpRequest request) throws SignUpException {
+		return userService.userSignUp(request);
+	}
 }
