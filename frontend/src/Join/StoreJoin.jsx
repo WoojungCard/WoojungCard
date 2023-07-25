@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { phoneNumberAutoFormat } from "./UserJoin";
+import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-bootstrap/Modal';
 
 // 가맹점 회원가입
 function StoreJoin() {
@@ -12,7 +14,9 @@ function StoreJoin() {
 	const [insertStorePwd, setInsertStorePwd] = useState('');
 	const [insertStoreRepresent, setInsertStoreRepresent] = useState('');
 	const [insertStoreName, setInsertStoreName] = useState('');
+	const [zipCode, setZipCode] = useState('');
 	const [insertStoreAddr, setInsertStoreAddr] = useState('');
+	const [insertStoreAddrDetail, setInsertStoreAddrDetail] = useState('');
 	const [insertStoreDate, setInsertStoreDate] = useState('');
 	const [insertStoreTel, setInsertStoreTel] = useState('');
 	
@@ -43,13 +47,42 @@ function StoreJoin() {
 	};
 	
 	const onChangeinputStoreTel = (e) => {
-		setInsertStoreTel(e.target.value);
+		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
+		setInsertStoreTel(targetValue);
 	};
 	
 	const handleStoreType = (e) => {
 		setStoreType(e.target.value);
 	};
 	
+//	다음 주소 api 사용하는 모달창
+	const [show, setShow] = useState(false);
+	
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+	
+	const handleStoreAddrComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setShow(false);
+    setZipCode(data.zonecode);  // 우편번호
+    setInsertStoreAddr(fullAddress);  // 검색 후 클릭한 기본 주소
+    }
+    
+    const onChangeinputStoreAddrDetail = (e) => {
+		setInsertStoreAddrDetail(e.target.value);
+	};
 	
 //	가맹점 신청하기 클릭
 	const onClickStoreJoin = () => {
@@ -58,7 +91,7 @@ function StoreJoin() {
 	
 	
 	return (
-		<div className="mt-5 pt-5">
+		<div className="mt-5">
 			<Container className="container d-flex justify-content-center my-3">
 				<Form style={{width: "500px"}}>
 					<h4 className="fw-bold text-center">가맹점 회원가입</h4>
@@ -100,13 +133,35 @@ function StoreJoin() {
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreAddr">
-						<Form.Label className="mb-0 ">사업자주소</Form.Label>
+						<Form.Label className="mb-0 ">사업장주소</Form.Label>
+						<Form.Control
+                            type="text" placeholder="검색"
+                            style={{width: "75px"}}
+                            onClick={handleShow}
+                            value={zipCode}
+                            className="mb-1"
+                            readOnly
+                        />
                         <Form.Control
-                            type="text" placeholder="사업자주소를 입력하세요"
-                            onChange={onChangeinputStoreAddr}
+                            type="text" placeholder="사업장주소를 입력하세요"
+                            value={insertStoreAddr}
+                            onClick={handleShow}
+                            className="mb-1"
+                            readOnly
+                        />
+                        <Form.Control
+                            type="text" placeholder="상세주소를 입력하세요"
+                            onChange={onChangeinputStoreAddrDetail}
                             className="mb-2"
                         />
                     </Form.Group>
+                    
+                    <Modal show={show} onHide={handleClose} animation={false} centered>
+                    	<Modal.Body>
+                    		<DaumPostcode onComplete={handleStoreAddrComplete}/>
+                    	</Modal.Body>
+                    </Modal>
+                    
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
@@ -131,8 +186,9 @@ function StoreJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업개시일을 입력하세요"
+                            type="text" placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputStoreStartDate}
+                            maxLength={8}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -142,6 +198,8 @@ function StoreJoin() {
                         <Form.Control
                             type="text" placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
+                            maxLength={13}
+                            value={insertStoreTel}
                             className="mb-4"
                         />
                     </Form.Group>

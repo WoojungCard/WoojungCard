@@ -39,7 +39,8 @@ function UserJoin() {
 	};
 	
 	const onChangeinputUserTel = (e) => {
-		setInsertUserTel(e.target.value);
+		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
+		setInsertUserTel(targetValue);
 	};
 	
 //	개인고객 회원가입 클릭
@@ -57,7 +58,7 @@ function UserJoin() {
 					<Form.Group controlId="formPlaintextUserId">
 						<Form.Label className="mb-0">아이디</Form.Label>
                         <Form.Control
-                            type="text" placeholder="아이디를 입력해주세요."
+                            type="text" placeholder="아이디를 입력하세요."
                             onChange={onChangeinputUserId}
                             className="mb-3"
                         />
@@ -86,6 +87,7 @@ function UserJoin() {
                         <Form.Control
                             type="text" placeholder="생년월일 8자리"
                             onChange={onChangeinputUserBirth}
+                            maxLength={8}
                             className="mb-3"
                         />
                     </Form.Group>
@@ -104,8 +106,10 @@ function UserJoin() {
 			        <Form.Group className="mb-3" controlId="formPlaintextUserTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="010-0000-0000"
+                            type="text" placeholder="연락처를 입력하세요"
                             onChange={onChangeinputUserTel}
+                            maxLength={13}
+                            value={insertUserTel}
                             className="mb-4"
                         />
                     </Form.Group>
@@ -119,6 +123,16 @@ function UserJoin() {
 		</div>
 
 	);
+}
+
+// 연락처 입력시 하이픈 자동완성
+export function phoneNumberAutoFormat(phoneNumber) {
+  const number = phoneNumber.trim().replace(/[^0-9]/g, "");
+
+  if (number.length < 4) return number;
+  if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
+  if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
+  return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
 }
 
 export default UserJoin;
