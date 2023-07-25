@@ -18,7 +18,7 @@ function UserJoin() {
 //	성별 선택
 	const handleGender = (e) => {
 		setGender(e);
-//		console.log(e);  // M or F 로 출력됨
+//		console.log(e);  // M(남자) or F(여자) 로 출력됨
 	};
 	
 	const onChangeinputUserId = (e) => {

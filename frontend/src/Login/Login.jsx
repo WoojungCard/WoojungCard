@@ -25,7 +25,7 @@ function Login() {
 	};
 	
 	const onChangeLoginPwd = (e) => {
-		setInsertLoginId(e.target.value);
+		setInsertLoginPwd(e.target.value);
 	};
 	
 	const onClickLogin = (e) => {
