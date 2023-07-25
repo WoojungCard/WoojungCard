@@ -1,23 +1,22 @@
-package com.woojungcard.woojungcard.dto;
+package com.woojungcard.woojungcard.domain.request;
 
 import java.time.LocalDate;
+
+import com.woojungcard.woojungcard.domain.enums.UserGender;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@AllArgsConstructor 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class UserDTO {
-	private Long id;
+public class UserSignUpRequest {
 	private String userId;
 	private String userPwd;
 	private String userName;
 	private LocalDate userBirth;
-	private String userGender;
+	private UserGender userGender;
 	private String userTel;
-	private LocalDate userJoinDate;
 }
