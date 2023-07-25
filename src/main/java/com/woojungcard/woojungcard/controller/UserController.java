@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
-import com.woojungcard.woojungcard.exception.IdCheckException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.service.UserService;
 
@@ -33,7 +33,7 @@ public class UserController {
 	
 	// User Id Check
 	@PostMapping("/idcheck")
-	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws IdCheckException {
+	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws UserIdCheckException {
 		return userService.userIdCheck(request);
 	}
 	

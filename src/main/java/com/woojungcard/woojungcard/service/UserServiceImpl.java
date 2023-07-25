@@ -10,7 +10,7 @@ import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
-import com.woojungcard.woojungcard.exception.IdCheckException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.repository.UserRepository;
 
@@ -29,12 +29,12 @@ private final EncryptConfig encryptConfig;
 	}
 	
 	// User Id Check
-	public ResponseEntity<String> userIdCheck(UserIdCheckRequest request) throws IdCheckException{
+	public ResponseEntity<String> userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{
 		Integer countId = userRepository.userIdCheck(request);
 		if (countId == 0) {
 			return new ResponseEntity<String>("사용 가능한 아이디입니다.", HttpStatus.OK);
 		} else {
-			throw new IdCheckException();
+			throw new UserIdCheckException();
 		}
 	}
 	
