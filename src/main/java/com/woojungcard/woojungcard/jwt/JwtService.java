@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -62,8 +63,7 @@ public class JwtService {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
         // Redis에 Refresh Token 저장
-        String refreshTokenKey = "refreshToken:" + id;
-        redisTemplate.opsForValue().set(refreshTokenKey, refreshToken);
+        redisTemplate.opsForValue().set(refreshToken, id.toString());
         return refreshToken;
     }
 	
@@ -92,48 +92,49 @@ public class JwtService {
         }
     }
 	
-//	 public String isValidTokens(){ //엑세스 토큰과 리프레쉬 토큰의 유효성을 둘다 검사한다
-//        //check both refresh AND access token
-//        String accessToken = getAccessToken();
-//        String refreshToken = getRefreshToken();
-//        if(!isValidAccessToken(accessToken)){
-//            return isValidRefreshToken(refreshToken);
-//        }
-//        return "OK";
-//    }
-//
-//    public boolean isValidAccessToken(String accessToken){
-//        if(accessToken == null) return false;
-//        // Access Token이 유효하지 않으면
-//        // is access token is not valid
-//        if(tokenToDTO(accessToken) == null) return false;
-//        return true;
-//    }
-//
-//    private String isValidRefreshToken(String refreshToken) {
-//        try {
-//            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-//
-//            // MyBatis를 사용하여 Redis에서 RefreshToken을 조회
-//            RefreshToken redisToken = redisTemplate.opsForValue().get(refreshToken);
-//            
-//            if (redisToken != null) {
-//                // Refresh Token이 있다면 새로운 Access Token을 생성하여 HTTPOnly 쿠키에 설정하고 반환한다
-//                // if refresh token exists create new access token and set pm HTTPOnly cookie
-//                return refreshAccessToken(response, redisToken);
-//            }
-//            return null;
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
-//
-//    private String refreshAccessToken(HttpServletResponse response, RefreshToken redisToken) {
-//        //새로운 엑세스 토큰 생성
-//    	// create new access token
-//        String newAccessToken = createAccessToken(redisToken.getId());
-////	        response.addHeader("accessToken", newAccessToken);
-//        return newAccessToken;
-//    }
+	 public String isValidTokens(){ //엑세스 토큰과 리프레쉬 토큰의 유효성을 둘다 검사한다
+        //check both refresh AND access token
+        String accessToken = getAccessToken();
+        String refreshToken = getRefreshToken();
+        if(!isValidAccessToken(accessToken)){
+            return isValidRefreshToken(refreshToken);
+        }
+        return "OK";
+    }
+
+    public boolean isValidAccessToken(String accessToken){
+        if(accessToken == null) return false;
+        // Access Token이 유효하지 않으면
+        // is access token is not valid
+        if(tokenToDTO(accessToken) == null) return false;
+        return true;
+    }
+
+    private String isValidRefreshToken(String refreshToken) {
+        try {
+            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+
+            // MyBatis를 사용하여 Redis에서 RefreshToken을 조회
+            Long id = Long.parseLong(redisTemplate.opsForValue().get(refreshToken));
+            
+            if (id != null) {
+            	RefreshToken redisToken = new RefreshToken();
+                redisToken.setId(id);
+                redisToken.setRefreshToken(refreshToken);
+                return refreshAccessToken(response, redisToken);
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String refreshAccessToken(HttpServletResponse response, RefreshToken redisToken) {
+        //새로운 엑세스 토큰 생성
+    	// create new access token
+        String newAccessToken = createAccessToken(redisToken.getId());
+//	        response.addHeader("accessToken", newAccessToken);
+        return newAccessToken;
+    }
 
 }
