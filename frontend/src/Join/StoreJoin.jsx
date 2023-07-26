@@ -26,8 +26,24 @@ function StoreJoin() {
 		setInsertStoreId(e.target.value);
 	};
 	
-	const onChangeinputStorePwd = (e) => {
-		setInsertStorePwd(e.target.value);
+//	사업자번호 입력 input에서 포커스 전환 시 사업자번호 중복체크
+	const [idAlertOpen, setIdAlertOpen] = useState(false);
+	const handleBlur = (e) => {
+		setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
+	}
+		
+//	비밀번호 유효성 검증
+	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
+	const handlePwdBlur = (e) => {
+		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+        const passwordCurrent = e.target.value;
+        
+        if (!passwordRegex.test(passwordCurrent)) {
+			setPwdAlertOpen(true);
+		} else {
+			setPwdAlertOpen(false);
+			setInsertStorePwd(passwordCurrent);
+		}
 	};
 	
 	const onChangeinputStoreRepresent = (e) => {
@@ -37,11 +53,7 @@ function StoreJoin() {
 	const onChangeinputStoreName = (e) => {
 		setInsertStoreName(e.target.value);
 	};
-	
-	const onChangeinputStoreAddr = (e) => {
-		setInsertStoreAddr(e.target.value);
-	};
-	
+		
 	const onChangeinputStoreStartDate = (e) => {
 		setInsertStoreDate(e.target.value);
 	};
@@ -101,18 +113,23 @@ function StoreJoin() {
                         <Form.Control
                             type="text" placeholder="사업자번호를 입력하세요"
                             onChange={onChangeinputStoreId}
+                            onBlur={handleBlur}
                             className="mb-2"
                         />
                     </Form.Group>
+                    
+                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.</p>}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
                             type="password" placeholder="비밀번호를 입력하세요"
-                            onChange={onChangeinputStorePwd}
+                            onBlur={handlePwdBlur}
                             className="mb-2"
                         />
                     </Form.Group>
+                    
+                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
                     
                     <Form.Group className="mb-3" controlId="formPlaintextRepresent">
 						<Form.Label className="mb-0 ">대표자</Form.Label>
@@ -132,29 +149,29 @@ function StoreJoin() {
                         />
                     </Form.Group>
                     
-                    <Form.Group className="mb-3" controlId="formPlaintextStoreAddr">
-						<Form.Label className="mb-0 ">사업장주소</Form.Label>
-						<Form.Control
-                            type="text" placeholder="검색"
-                            style={{width: "75px"}}
-                            onClick={handleShow}
-                            value={zipCode}
-                            className="mb-1"
-                            readOnly
-                        />
-                        <Form.Control
-                            type="text" placeholder="사업장주소를 입력하세요"
-                            value={insertStoreAddr}
-                            onClick={handleShow}
-                            className="mb-1"
-                            readOnly
-                        />
-                        <Form.Control
-                            type="text" placeholder="상세주소를 입력하세요"
-                            onChange={onChangeinputStoreAddrDetail}
-                            className="mb-2"
-                        />
-                    </Form.Group>
+                    
+					<Form.Label className="mb-0 ">사업장주소</Form.Label>
+					<Form.Control
+                        type="text" placeholder="검색"
+                        style={{width: "75px"}}
+                        onClick={handleShow}
+                        value={zipCode}
+                        className="mb-1"
+                        readOnly
+                    />
+                    <Form.Control
+                        type="text" placeholder="사업장주소를 입력하세요"
+                        value={insertStoreAddr}
+                        onClick={handleShow}
+                        className="mb-1"
+                        readOnly
+                    />
+                    <Form.Control
+                        type="text" placeholder="상세주소를 입력하세요"
+                        onChange={onChangeinputStoreAddrDetail}
+                        className="mb-2"
+                    />
+                    
                     
                     <Modal show={show} onHide={handleClose} animation={false} centered>
                     	<Modal.Body>

@@ -25,10 +25,26 @@ function UserJoin() {
 		setInsertUserId(e.target.value);
 	};
 	
-	const onChangeinputUserPwd = (e) => {
-		setInsertUserPwd(e.target.value);
+//	아이디 입력 input에서 포커스 전환 시 아이디 중복체크
+	const [idAlertOpen, setIdAlertOpen] = useState(false);
+	const handleIdBlur = (e) => {
+		setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용
 	};
 	
+//	비밀번호 유효성 검증
+	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
+	const handlePwdBlur = (e) => {
+		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+        const passwordCurrent = e.target.value;
+        
+        if (!passwordRegex.test(passwordCurrent)) {
+			setPwdAlertOpen(true);
+		} else {
+			setPwdAlertOpen(false);
+			setInsertUserPwd(passwordCurrent);
+		}
+	};
+		
 	const onChangeinputUserName = (e) => {
 		setInsertUserName(e.target.value);
 	};
@@ -58,20 +74,25 @@ function UserJoin() {
 					<Form.Group controlId="formPlaintextUserId">
 						<Form.Label className="mb-0">아이디</Form.Label>
                         <Form.Control
-                            type="text" placeholder="아이디를 입력하세요."
+                            type="text" placeholder="아이디를 입력하세요"
                             onChange={onChangeinputUserId}
+                            onBlur={handleIdBlur}
                             className="mb-3"
                         />
                     </Form.Group>
+                    
+                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-12px", fontSize: "13px"}}>&#8226; 사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</p>}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="영문과 숫자를 혼합한 10글자 이상"
-                            onChange={onChangeinputUserPwd}
+                            type="password" placeholder="비밀번호를 입력하세요"
+                            onBlur={handlePwdBlur}
                             className="mb-3"
                         />
                     </Form.Group>
+                    
+                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-12px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
                     
                     <Form.Group className="mb-3" controlId="formPlaintextUserName">
 						<Form.Label className="mb-0 ">이름</Form.Label>
