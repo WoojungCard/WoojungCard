@@ -1,8 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/woojungcard?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.0.31:3306/woojungcard?serverTimezone=Asia/Seoul
     username: root
     password: 1234
+    
+  redis:
+    host: 192.168.0.31
+    port: 6379
 
 mybatis:
   config-location: classpath:mybatis/config/config.xml
+
+jwt:
+  ACCESS_SECRET_KEY: aidhgjarisdafjskljklriaonsdikrnsnnfkdsijkevklasdfujiielarlfnkanvdkvcxfsdgweasdv
+  REFRESH_SECRET_KEY: zsxdfbnjmsdcyuhjkkrtfweecvrdftfvghfgbhmukhtgugwqesfteyhoikdwduigkwgrsdugafjixf

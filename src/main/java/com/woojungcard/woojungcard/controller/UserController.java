@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
+import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.service.UserService;
 
@@ -30,7 +33,6 @@ public class UserController {
 		return userService.findById();
 	}
 	
-	
 	// User Id Check
 	@PostMapping("/idcheck")
 	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws UserIdCheckException {
@@ -41,5 +43,11 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<String> userSignUp(@RequestBody UserSignUpRequest request) throws SignUpException {
 		return userService.userSignUp(request);
+	}
+	
+	// User Login
+	@PostMapping("/login")
+	public UserLoginResponse userLogin(@RequestBody UserLoginRequest request) throws LoginException {
+		return userService.userLogin(request);
 	}
 }

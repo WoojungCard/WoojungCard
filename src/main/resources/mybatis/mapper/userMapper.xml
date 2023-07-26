@@ -23,10 +23,22 @@
     <!-- 유저 회원가입 -->
     <insert id="userSignUp" parameterType="com.woojungcard.woojungcard.domain.request.UserSignUpRequest">
     	<![CDATA[
-    		INSERT INTO 
-    			user(user_id, user_pwd, user_name, user_birth, user_gender, user_tel, user_join_date)
-    		VALUES
-    			(#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userGender}, #{userTel}, now()) 
+   		INSERT INTO 
+   			user(user_id, user_pwd, user_name, user_birth, user_gender, user_tel, user_join_date)
+   		VALUES
+   			(#{userId}, #{userPwd}, #{userName}, #{userBirth}, #{userGender}, #{userTel}, now()) 
     	]]>
     </insert>
+    
+    <!-- 유저 로그인 -->
+    <select id="userLogin" resultType="com.woojungcard.woojungcard.domain.dto.UserDTO" parameterType="com.woojungcard.woojungcard.domain.request.UserLoginRequest">
+    	<![CDATA[
+    	SELECT
+    		*
+    	FROM
+    		user
+    	WHERE
+    		user_id = #{userId} AND user_pwd = #{userPwd}	
+    	]]>
+    </select>
 </mapper>
