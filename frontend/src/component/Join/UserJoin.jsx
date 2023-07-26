@@ -4,9 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import { useDispatch } from "react-redux";
+import { userIdCheck } from "../../store/user/userSlice";
 
 // 개인고객 회원가입
 function UserJoin() {
+
+	const dispatch = useDispatch();
+
 	const [insertUserId, setInsertUserId] = useState('');
 	const [insertUserPwd, setInsertUserPwd] = useState('');
 	const [insertUserName, setInsertUserName] = useState('');
@@ -28,6 +33,8 @@ function UserJoin() {
 //	아이디 입력 input에서 포커스 전환 시 아이디 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
 	const handleIdBlur = (e) => {
+		e.preventDefault();
+		dispatch(userIdCheck(insertUserId));
 		setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용
 	};
 	
