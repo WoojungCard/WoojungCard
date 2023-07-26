@@ -10,8 +10,8 @@ import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.SignUpException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

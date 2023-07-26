@@ -21,11 +21,11 @@ import lombok.RequiredArgsConstructor;
 
 public class StoreController {
 	
-	private final StoreService StoreService;
+	private final StoreService storeService;
 	
 	@GetMapping("/idcheck")
 	public ResponseEntity<String> idCheck(@RequestBody StoreIdCheckRequest request)throws StoreIdCheckException{
-		return StoreService.storeIdCheck(request);
+		return storeService.storeIdCheck(request);
 	}
 	
 	@PostMapping("/signup")
