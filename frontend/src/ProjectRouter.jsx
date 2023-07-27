@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import MainLayout from "./Layout/MainLayout";
-import Join from "./Join/Join";
-import UserJoin from "./Join/UserJoin";
-import StoreJoin from "./Join/StoreJoin";
-import Login from "./Login/Login";
-import CardProductList from "./Card/CardProductList";
+import MainLayout from "./component/Layout/MainLayout";
+import Join from "./component/Join/Join";
+import UserJoin from "./component/Join/UserJoin";
+import StoreJoin from "./component/Join/StoreJoin";
+import Login from "./component/Login/Login";
+import CardProductList from "./component/Card/CardProductList";
 
-function ProjectRouter(props) {
+const ProjectRouter = () => {
 	return (
 		<BrowserRouter>
 			<Routes>

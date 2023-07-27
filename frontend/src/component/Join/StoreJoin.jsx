@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { phoneNumberAutoFormat } from "./UserJoin";
+import DaumPostcode from 'react-daum-postcode';
+import Modal from 'react-bootstrap/Modal';
 
 // 가맹점 회원가입
 function StoreJoin() {
@@ -12,7 +14,9 @@ function StoreJoin() {
 	const [insertStorePwd, setInsertStorePwd] = useState('');
 	const [insertStoreRepresent, setInsertStoreRepresent] = useState('');
 	const [insertStoreName, setInsertStoreName] = useState('');
+	const [zipCode, setZipCode] = useState('');
 	const [insertStoreAddr, setInsertStoreAddr] = useState('');
+	const [insertStoreAddrDetail, setInsertStoreAddrDetail] = useState('');
 	const [insertStoreDate, setInsertStoreDate] = useState('');
 	const [insertStoreTel, setInsertStoreTel] = useState('');
 	
@@ -22,8 +26,24 @@ function StoreJoin() {
 		setInsertStoreId(e.target.value);
 	};
 	
-	const onChangeinputStorePwd = (e) => {
-		setInsertStorePwd(e.target.value);
+//	사업자번호 입력 input에서 포커스 전환 시 사업자번호 중복체크
+	const [idAlertOpen, setIdAlertOpen] = useState(false);
+	const handleBlur = (e) => {
+		setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
+	}
+		
+//	비밀번호 유효성 검증
+	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
+	const handlePwdBlur = (e) => {
+		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+        const passwordCurrent = e.target.value;
+        
+        if (!passwordRegex.test(passwordCurrent)) {
+			setPwdAlertOpen(true);
+		} else {
+			setPwdAlertOpen(false);
+			setInsertStorePwd(passwordCurrent);
+		}
 	};
 	
 	const onChangeinputStoreRepresent = (e) => {
@@ -33,23 +53,48 @@ function StoreJoin() {
 	const onChangeinputStoreName = (e) => {
 		setInsertStoreName(e.target.value);
 	};
-	
-	const onChangeinputStoreAddr = (e) => {
-		setInsertStoreAddr(e.target.value);
-	};
-	
+		
 	const onChangeinputStoreStartDate = (e) => {
 		setInsertStoreDate(e.target.value);
 	};
 	
 	const onChangeinputStoreTel = (e) => {
-		setInsertStoreTel(e.target.value);
+		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
+		setInsertStoreTel(targetValue);
 	};
 	
 	const handleStoreType = (e) => {
 		setStoreType(e.target.value);
 	};
 	
+//	다음 주소 api 사용하는 모달창
+	const [show, setShow] = useState(false);
+	
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+	
+	const handleStoreAddrComplete = (data) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setShow(false);
+    setZipCode(data.zonecode);  // 우편번호
+    setInsertStoreAddr(fullAddress);  // 검색 후 클릭한 기본 주소
+    }
+    
+    const onChangeinputStoreAddrDetail = (e) => {
+		setInsertStoreAddrDetail(e.target.value);
+	};
 	
 //	가맹점 신청하기 클릭
 	const onClickStoreJoin = () => {
@@ -58,7 +103,7 @@ function StoreJoin() {
 	
 	
 	return (
-		<div className="mt-5 pt-5">
+		<div className="mt-5">
 			<Container className="container d-flex justify-content-center my-3">
 				<Form style={{width: "500px"}}>
 					<h4 className="fw-bold text-center">가맹점 회원가입</h4>
@@ -68,18 +113,23 @@ function StoreJoin() {
                         <Form.Control
                             type="text" placeholder="사업자번호를 입력하세요"
                             onChange={onChangeinputStoreId}
+                            onBlur={handleBlur}
                             className="mb-2"
                         />
                     </Form.Group>
+                    
+                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.</p>}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
                             type="password" placeholder="비밀번호를 입력하세요"
-                            onChange={onChangeinputStorePwd}
+                            onBlur={handlePwdBlur}
                             className="mb-2"
                         />
                     </Form.Group>
+                    
+                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
                     
                     <Form.Group className="mb-3" controlId="formPlaintextRepresent">
 						<Form.Label className="mb-0 ">대표자</Form.Label>
@@ -99,14 +149,36 @@ function StoreJoin() {
                         />
                     </Form.Group>
                     
-                    <Form.Group className="mb-3" controlId="formPlaintextStoreAddr">
-						<Form.Label className="mb-0 ">사업자주소</Form.Label>
-                        <Form.Control
-                            type="text" placeholder="사업자주소를 입력하세요"
-                            onChange={onChangeinputStoreAddr}
-                            className="mb-2"
-                        />
-                    </Form.Group>
+                    
+					<Form.Label className="mb-0 ">사업장주소</Form.Label>
+					<Form.Control
+                        type="text" placeholder="검색"
+                        style={{width: "75px"}}
+                        onClick={handleShow}
+                        value={zipCode}
+                        className="mb-1"
+                        readOnly
+                    />
+                    <Form.Control
+                        type="text" placeholder="사업장주소를 입력하세요"
+                        value={insertStoreAddr}
+                        onClick={handleShow}
+                        className="mb-1"
+                        readOnly
+                    />
+                    <Form.Control
+                        type="text" placeholder="상세주소를 입력하세요"
+                        onChange={onChangeinputStoreAddrDetail}
+                        className="mb-2"
+                    />
+                    
+                    
+                    <Modal show={show} onHide={handleClose} animation={false} centered>
+                    	<Modal.Body>
+                    		<DaumPostcode onComplete={handleStoreAddrComplete}/>
+                    	</Modal.Body>
+                    </Modal>
+                    
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
@@ -131,8 +203,9 @@ function StoreJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업개시일을 입력하세요"
+                            type="text" placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputStoreStartDate}
+                            maxLength={8}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -142,6 +215,8 @@ function StoreJoin() {
                         <Form.Control
                             type="text" placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
+                            maxLength={13}
+                            value={insertStoreTel}
                             className="mb-4"
                         />
                     </Form.Group>
