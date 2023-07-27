@@ -3,13 +3,11 @@ package com.woojungcard.woojungcard.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
@@ -28,14 +26,9 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/test")
-	public List<UserDTO> test() {
-		return userService.findById();
-	}
-	
 	// User Id Check
 	@PostMapping("/idcheck")
-	public ResponseEntity<String> idCheck(@RequestBody UserIdCheckRequest request) throws UserIdCheckException {
+	public Boolean idCheck(@RequestBody UserIdCheckRequest request) throws UserIdCheckException {
 		return userService.userIdCheck(request);
 	}
 	

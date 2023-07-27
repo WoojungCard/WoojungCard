@@ -35,12 +35,12 @@ private final JwtService jwtService;
 	}
 	
 	// User Id Check
-	public ResponseEntity<String> userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{
+	public Boolean userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{
 		Integer countId = userRepository.userIdCheck(request);
 		if (countId == 0) {
-			return new ResponseEntity<String>("사용 가능한 아이디입니다.", HttpStatus.OK);
+			return true;
 		} else {
-			throw new UserIdCheckException();
+			return false;
 		}
 	}
 	
