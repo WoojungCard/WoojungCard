@@ -116,6 +116,7 @@ function UserJoin() {
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
                             type="password" placeholder="비밀번호를 입력하세요"
+                            maxLength={25}
                             onBlur={handlePwdBlur}
                             className="mb-3"
                         />
