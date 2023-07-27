@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class StoreIdCheckRequest {
-	private int storeId;
+	private String businessNumber;
 }

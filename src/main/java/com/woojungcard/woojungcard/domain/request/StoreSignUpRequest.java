@@ -16,9 +16,7 @@ public class StoreSignUpRequest {
 	private String storeName;
 	private String representative;
 	private String storeAddress;
-	private int storeTel;
-	private int businessStartDate;
+	private String storeTel;
+	private LocalDate businessStartDate;
 	private String businessType;
-	private LocalDate storeJoinDate;
-	private String status;
 }

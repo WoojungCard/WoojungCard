@@ -23,13 +23,13 @@ public class StoreController {
 	
 	private final StoreService storeService;
 	
-	@GetMapping("/idcheck")
+	@PostMapping("/idcheck")
 	public ResponseEntity<String> idCheck(@RequestBody StoreIdCheckRequest request)throws StoreIdCheckException{
 		return storeService.storeIdCheck(request);
 	}
 	
 	@PostMapping("/signup")
 	public ResponseEntity<String> StoreSignUp(@RequestBody StoreSignUpRequest request)throws SignUpException{
-		return StoreService.StoreSignUp(request);
+		return storeService.storeSignUp(request);
 	}
 }

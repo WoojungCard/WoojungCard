@@ -32,7 +32,7 @@ public ResponseEntity<String> storeIdCheck(StoreIdCheckRequest request) throws S
 
 // store Sign Up
 public ResponseEntity<String> storeSignUp(StoreSignUpRequest request) throws SignUpException {
-	String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), request.getStoreId());
+	String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), request.getBusinessNumber());
 	request.setStorePwd(encodedPwd);
 	Integer insertRow = storeRepository.storeSignUp(request);
 	if(insertRow != 0) {
