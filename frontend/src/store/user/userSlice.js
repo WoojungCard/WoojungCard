@@ -3,15 +3,14 @@ import { api } from "../../api";
 
 const initialState = {
     data: {},
+    idCheckResult : "",
     status : "idle",
     error: null
 }
 
 export const userIdCheck = createAsyncThunk("/user/idcheck", async (userId, thunkAPI) => {
     try {
-        console.log(userId);
         const response = await api("POST", "/user/idcheck", userId);
-        console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -20,7 +19,9 @@ export const userIdCheck = createAsyncThunk("/user/idcheck", async (userId, thun
 
 export const userSignUp = createAsyncThunk("/user/signup", async (user, thunkAPI) => {
     try {
+        console.log(user);
         const response = await api("POST", "/user/signup", user);
+        console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -37,7 +38,7 @@ const userSlice = createSlice({
             })
             .addCase(userIdCheck.fulfilled,(state, action) => {
                 state.status = "successed";
-                state.data = action.payload;
+                state.idCheckResult = action.payload;
             })
             .addCase(userIdCheck.rejected, (state, action) => {
                 state.status = "failed";

@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import { useDispatch } from "react-redux";
-import { userIdCheck } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { userIdCheck, userSignUp } from "../../store/user/userSlice";
 
 // 개인고객 회원가입
 function UserJoin() {
+
+	const { idCheckResult } = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
 
@@ -27,15 +29,24 @@ function UserJoin() {
 	};
 	
 	const onChangeinputUserId = (e) => {
-		setInsertUserId(e.target.value);
+		let userId = JSON.stringify(e.target.value);
+		setInsertUserId(userId);
 	};
 	
 //	아이디 입력 input에서 포커스 전환 시 아이디 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
+
+	useEffect(() => {
+		handleIdBlur();
+	}, [insertUserId])
+
 	const handleIdBlur = (e) => {
-		e.preventDefault();
 		dispatch(userIdCheck(insertUserId));
-		setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용
+		if(idCheckResult === false){
+			setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용 
+		} else {
+			setIdAlertOpen(false);
+		}
 	};
 	
 //	비밀번호 유효성 검증
@@ -56,19 +67,30 @@ function UserJoin() {
 		setInsertUserName(e.target.value);
 	};
 	
-	const onChangeinputUserBirth = (e) => {
-		setInsertUserBirth(e.target.value);
-//		console.log(e.target.value);
-	};
-	
 	const onChangeinputUserTel = (e) => {
 		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
 		setInsertUserTel(targetValue);
 	};
+
+	const onChangeinputUserBirth = (e) => {
+		const targetValue = birthAutoFormat(e.target.value);
+		setInsertUserBirth(targetValue);
+	}
+
+	const user = ({
+		"userId" : insertUserId,
+		"userPwd" : insertUserPwd,
+		"userName" : insertUserName,
+		"userBirth" : insertUserBirth,
+		"userGender" : gender,
+		"userTel" : insertUserTel
+	})
 	
 //	개인고객 회원가입 클릭
-	const onClickUserJoin = () => {
-		
+	const onClickUserJoin = (e) => {
+		e.preventDefault();
+		console.log(user);
+		dispatch(userSignUp(user));
 	}
 	
 	
@@ -115,17 +137,18 @@ function UserJoin() {
                         <Form.Control
                             type="text" placeholder="생년월일 8자리"
                             onChange={onChangeinputUserBirth}
-                            maxLength={8}
+                            maxLength={10}
+							value ={insertUserBirth}
                             className="mb-3"
                         />
                     </Form.Group>
                     
                     <Form.Group className="row mb-2" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="gender" value={gender} onChange={handleGender}>
-					        <ToggleButton variant="outline-secondary" id="tbg-radio-1" value="M">
+					        <ToggleButton variant="outline-secondary" id="tbg-radio-1" value="MAN">
 					          남자
 					        </ToggleButton>
-					        <ToggleButton variant="outline-secondary" id="tbg-radio-2" value="F">
+					        <ToggleButton variant="outline-secondary" id="tbg-radio-2" value="WOMAN">
 					          여자
 					        </ToggleButton>
 				        </ToggleButtonGroup>
@@ -162,5 +185,15 @@ export function phoneNumberAutoFormat(phoneNumber) {
   if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
   return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
 }
+
+// 생년월일 입력시 하이픈 자동완성
+export function birthAutoFormat(birth) {
+	const number = birth.trim().replace(/[^0-9]/g, "");
+  
+	if (number.length < 5) return number;
+	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
+	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");
+	return number.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+  }
 
 export default UserJoin;
