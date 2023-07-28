@@ -8,6 +8,7 @@ const initialState = {
     error: null
 }
 
+// User Id Check
 export const userIdCheck = createAsyncThunk("/user/idcheck", async (userId, thunkAPI) => {
     try {
         const response = await api("POST", "/user/idcheck", userId);
@@ -17,10 +18,21 @@ export const userIdCheck = createAsyncThunk("/user/idcheck", async (userId, thun
     }
 })
 
+// User Sign Up
 export const userSignUp = createAsyncThunk("/user/signup", async (user, thunkAPI) => {
     try {
-        console.log(user);
         const response = await api("POST", "/user/signup", user);
+        return response.data;
+    } catch (err) {
+        return thunkAPI.rejectWithValue(err.response);
+    }
+})
+
+// User Login
+export const userLogin = createAsyncThunk("/user/login", async(loginInfo, thunkAPI) => {
+    try {
+        console.log(loginInfo);
+        const response = await api("POST", "/user/login", loginInfo);
         console.log(response.data);
         return response.data;
     } catch (err) {
@@ -51,6 +63,19 @@ const userSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(userSignUp.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload.data;
+            })
+            .addCase(userLogin.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userLogin.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+                localStorage.setItem("RefreshToken", action.payload.refreshToken);
+                localStorage.setItem("AccessToken", action.payload.accessToken);
+            })
+            .addCase(userLogin.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload.data;
             })

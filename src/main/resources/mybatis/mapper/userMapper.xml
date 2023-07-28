@@ -41,4 +41,40 @@
     		user_id = #{userId} AND user_pwd = #{userPwd}	
     	]]>
     </select>
+    
+    <!-- 유저 정보 조회 -->
+    <select id="userGetInfo" resultType="com.woojungcard.woojungcard.domain.response.UserInfoResponse" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_id, user_name, user_birth, user_tel
+    	FROM
+    		user
+    	WHERE
+    		id = #{id}
+    	]]>
+    </select>
+    
+    <!-- 유저 아이디 조회 -->
+    <select id="findUserIdById" resultType="String" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_id
+    	FROM
+    		user
+   		WHERE
+   			id = #{id}
+    	]]>
+    </select>
+    
+    <!-- 유저 정보 변경 -->
+    <update id="userInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest">
+    	<![CDATA[
+    	UPDATE
+    		user
+   		SET
+   			user_pwd = #{userPwd}, user_tel = #{userTel}
+   		WHERE
+   			id = #{id} 
+    	]]>
+    </update>
 </mapper>
