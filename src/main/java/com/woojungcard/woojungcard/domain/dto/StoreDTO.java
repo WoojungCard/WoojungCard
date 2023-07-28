@@ -14,9 +14,12 @@ public class StoreDTO {
 	private Long id;
 	private String businessNumber;
 	private String storePwd;
+	private String ownerName;
 	private String storeName;
 	private String representative;
-	private String storeAddress;
+	private String storeZipCode;
+	private String storeAddress1;
+	private String storeAddress2;
 	private int storeTel;
 	private int businessStartDate;
 	private String businessType;

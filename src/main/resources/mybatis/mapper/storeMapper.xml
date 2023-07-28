@@ -28,4 +28,31 @@
 				(#{businessNumber}, #{storePwd}, #{storeName}, #{representative},#{storeAddress},#{storeTel},#{businessStartDate},#{businessType})
 		]]>
 	</insert>
+	<update id="storeInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.StoreUpdateRequest">
+		<![CDATA[
+			UPDATE 
+				store
+			SET
+				owner_name= #{ownerName},
+				store_pwd=#{storePwd},
+				store_zip_code=#{storeZipCode},
+				store_address1=#{storeAddress1},
+				store_address2=#{storeAddress2},
+				store_tel=#{storeTel}
+			WHERE 
+				id= #{id}
+		]]>
+	</update>
+	
+	<select id="findBNById" parameterType="com.woojungcard.woojungcard.domain.request.StoreFindBNByIdRequest">
+		<![CDATA[
+			SELECT
+				business_number
+			FROM
+				store
+			WHERE
+				id=#{id}
+		]]>
+	</select>
+	
 </mapper>

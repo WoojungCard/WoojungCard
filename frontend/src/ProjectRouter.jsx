@@ -5,6 +5,7 @@ import UserJoin from "./component/Join/UserJoin";
 import StoreJoin from "./component/Join/StoreJoin";
 import Login from "./component/Login/Login";
 import CardProductList from "./component/Card/CardProductList";
+import StoreInfoUpdate from "./component/Join/StoreInfoUpdate";
 
 const ProjectRouter = () => {
 	return (
@@ -17,7 +18,7 @@ const ProjectRouter = () => {
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
 					<Route path="storeJoin" element=<StoreJoin/> />
-					
+					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
 				</Route>
 			</Routes>
 		</BrowserRouter>
