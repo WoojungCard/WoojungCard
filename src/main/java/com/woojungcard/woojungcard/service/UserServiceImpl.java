@@ -1,7 +1,5 @@
 package com.woojungcard.woojungcard.service;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,6 @@ import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.jwt.JwtService;
-import com.woojungcard.woojungcard.jwt.TokenInfo;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
@@ -32,10 +29,6 @@ private final UserRepository userRepository;
 private final EncryptConfig encryptConfig;
 private final JwtService jwtService;
 
-	public List<UserDTO> findById(){
-		return userRepository.findById();
-	}
-	
 	// User Id Check
 	public Boolean userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{
 		Integer countId = userRepository.userIdCheck(request);

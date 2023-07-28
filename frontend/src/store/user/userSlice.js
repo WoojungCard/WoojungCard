@@ -4,7 +4,9 @@ import { api } from "../../api";
 const initialState = {
     data: {},
     idCheckResult : "",
+    userInfo : {},
     status : "idle",
+    loginStatus : "idle",
     error: null
 }
 
@@ -31,9 +33,23 @@ export const userSignUp = createAsyncThunk("/user/signup", async (user, thunkAPI
 // User Login
 export const userLogin = createAsyncThunk("/user/login", async(loginInfo, thunkAPI) => {
     try {
-        console.log(loginInfo);
         const response = await api("POST", "/user/login", loginInfo);
-        console.log(response.data);
+        return response.data;
+    } catch (err) {
+        return thunkAPI.rejectWithValue(err.response);
+    }
+})
+
+// User Get Info
+export const userGetInfo = createAsyncThunk("/user/info", async() => {
+    const response = await api("GET", "/user/info");
+    return response.data;
+})
+
+// User Info Update
+export const userInfoUpdate = createAsyncThunk("/user/infoChange", async(info, thunkAPI) => {
+    try {
+        const response =await api("PUT", "/user/infoChange", info);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -64,20 +80,42 @@ const userSlice = createSlice({
             })
             .addCase(userSignUp.rejected, (state, action) => {
                 state.status = "failed";
-                state.error = action.payload.data;
+                state.error = action.err.message;
             })
             .addCase(userLogin.pending, (state, action) => {
-                state.status = "loading";
+                state.loginStatus = "loading";
             })
             .addCase(userLogin.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.loginStatus = "successed";
                 state.data = action.payload;
                 localStorage.setItem("RefreshToken", action.payload.refreshToken);
                 localStorage.setItem("AccessToken", action.payload.accessToken);
             })
             .addCase(userLogin.rejected, (state, action) => {
+                state.loginStatus = "failed";
+                state.error = action.payload;
+            })
+            .addCase(userGetInfo.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userGetInfo.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userInfo = action.payload;
+            })
+            .addCase(userGetInfo.rejected, (state, action) => {
                 state.status = "failed";
-                state.error = action.payload.data;
+                state.error = action.payload;
+            })
+            .addCase(userInfoUpdate.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userInfoUpdate.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userInfo = action.payload;
+            })
+            .addCase(userInfoUpdate.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             })
     }
 });

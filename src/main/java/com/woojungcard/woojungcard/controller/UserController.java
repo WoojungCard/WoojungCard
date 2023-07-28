@@ -44,7 +44,7 @@ public class UserController {
 		return userService.userSignUp(request);
 	}
 	
-	// User Login
+	// User 	
 	@PostMapping("/login")
 	public UserLoginResponse userLogin(@RequestBody UserLoginRequest request) throws LoginException {
 		return userService.userLogin(request);

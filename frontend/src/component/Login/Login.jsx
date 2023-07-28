@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
 import Col from 'react-bootstrap/Col';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../store/user/userSlice";
 
 // 로그인
 function Login() {
 
+	const {loginStatus} = useSelector((state) => state.user);
+
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [insertLoginId, setInsertLoginId] = useState('');
 	const [insertLoginPwd, setInsertLoginPwd] = useState('');
-	const [userType, setUserType] = useState();
+	const [userType, setUserType] = useState('u');
 	
 //	개인고객, 가맹점 선택하여 로그인
 	const handleUserType = (e) => {
@@ -41,6 +44,9 @@ function Login() {
 		e.preventDefault();
 		if (userType === 'u') {
 			dispatch(userLogin(loginInfo));
+			// if (loginStatus === "successed") {
+				navigate("/user/infoChange");
+			// } 
 		} else if (userType === 's') {
 			console.log("store Login");
 		}
