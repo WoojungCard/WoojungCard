@@ -147,10 +147,10 @@ function UserJoin() {
                     <Form.Group className="row mb-2" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="gender" value={gender} onChange={handleGender}>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-1" value="MAN">
-					          남자
+					          	남자
 					        </ToggleButton>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-2" value="WOMAN">
-					          여자
+					          	여자
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>
