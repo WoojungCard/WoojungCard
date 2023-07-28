@@ -15,6 +15,7 @@ import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
@@ -60,6 +61,12 @@ public class UserController {
 	@PutMapping("/infoChange")
 	public ResponseEntity<String> userInfoUpdate(@RequestBody UserInfoUpdateRequest request) throws UpdateException {
 		return userService.userInfoUpdate(request);
+	}
+	
+	// User Card Application Info
+	@GetMapping("/cardAppInfo")
+	public UserCardAppInfoResponse userCardAppInfo() {
+		return userService.userCardAppInfo();
 	}
 }
     

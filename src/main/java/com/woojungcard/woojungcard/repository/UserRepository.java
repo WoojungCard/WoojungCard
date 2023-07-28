@@ -10,6 +10,7 @@ import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -32,4 +33,6 @@ public interface UserRepository {
 	String findUserIdById(Long id);
 	// User Info Update
 	Integer userInfoUpdate(UserInfoUpdateRequest reuqest) throws UpdateException;
+	// User Card Application Info
+	UserCardAppInfoResponse userCardAppInfo(Long id);
 }

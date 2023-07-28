@@ -77,4 +77,16 @@
    			id = #{id} 
     	]]>
     </update>
+    
+    <!-- 유저 카드 등록 정보 조회 -->
+    <select id="userCardAppInfo" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_name, user_birth, user_tel
+   		FROM
+   			user
+  		WHERE
+  			id = #{id}
+    	]]>
+    </select>
 </mapper>

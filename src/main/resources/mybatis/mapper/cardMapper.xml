@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woojungcard.woojungcard.repository.CardRepository">
+    <select id="cardApplication" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse">
+    	<![CDATA[
+        SELECT 
+        	card_name,
+        	card_type,
+        	register_date
+        FROM
+        	card_product
+       	WHERE
+       		id = #{id}
+        ]]>
+    </select>
+</mapper>

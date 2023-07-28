@@ -7,6 +7,7 @@ import Login from "./component/Login/Login";
 import CardProductList from "./component/Card/CardProductList";
 import UserInfoManagement from "./component/user/UserInfoManagement";
 import User from "./component/user/User";
+import UserCardApplication from "./component/user/UserCardApplication";
 
 const ProjectRouter = () => {
 	return (
@@ -24,6 +25,7 @@ const ProjectRouter = () => {
 				// 개인 고객 
 				<Route path="/user/"  element=<User/> >
 					<Route path="infoChange" element=<UserInfoManagement/> /> 
+					<Route path="cardapplication" element=<UserCardApplication/> /> 
 				</Route>
 
 			</Routes>
