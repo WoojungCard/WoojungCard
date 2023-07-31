@@ -13,4 +13,25 @@
        		id = #{id}
         ]]>
     </select>
+    
+    
+    <!-- 카드 전체 리스트 조회 -->
+	<select id="cardList" resultType="com.woojungcard.woojungcard.domain.response.CardListResponse"	>
+	<![CDATA[
+	SELECT
+		id,
+		card_name,
+		card_type,
+		card_info,
+		register_date,
+		state
+	FROM
+		card_product
+	WHERE
+		state = "PROCEEDING"	
+	]]>
+	
+	</select>
+	
+	
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
+import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
@@ -40,4 +41,6 @@ public interface UserRepository {
 	List<CardAppStatusResponse> userCardAppStatus(Long id);
 	// User List
 	List<UserDTO> userList();
+	// User Card Application
+	Integer userCardApp(UserCardAppRequest request);
 }

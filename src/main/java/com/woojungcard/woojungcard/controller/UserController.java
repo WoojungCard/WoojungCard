@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
+import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
@@ -25,6 +26,7 @@ import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
+import com.woojungcard.woojungcard.exception.UserCardAppException;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -78,6 +80,14 @@ public class UserController {
 		return userService.userCardAppInfo();
 	}
 	
+	// User Card Application
+	@PostMapping("/cardApp")
+	public ResponseEntity<String> userCardApp(@RequestBody UserCardAppRequest request) throws UserCardAppException {
+		return userService.userCardApp(request);
+	}
+	
+	
+	// User Card Application Status
 	@GetMapping("/cardAppStatus")
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		return userService.userCardAppStatus();

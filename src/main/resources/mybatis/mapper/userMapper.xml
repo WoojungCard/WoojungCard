@@ -82,7 +82,9 @@
     <select id="userCardAppInfo" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse" parameterType="Long">
     	<![CDATA[
     	SELECT
-    		user_name, user_birth, user_tel
+    		user_name, 
+    		user_birth, 
+    		user_tel
    		FROM
    			user
   		WHERE
@@ -120,4 +122,14 @@
     		user
     	]]>
     </select>
+    
+    <!-- 유저 카드 신청 -->
+    <insert id="userCardApp" parameterType="com.woojungcard.woojungcard.domain.request.UserCardAppRequest">
+    <![CDATA[
+    INSERT INTO
+    	card_issued (user_id, card_id, request_date, state)
+   	VALUES
+   		(#{userId}, #{cardId}, #{requestDate}, "WATING")
+    ]]>
+    </insert>
 </mapper>

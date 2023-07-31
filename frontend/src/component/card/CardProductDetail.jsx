@@ -4,6 +4,7 @@ import React from "react";
 function CardProductDetail() {
 	return (
 		<div>
+			<h1>adsafasd</h1>
 						
 		</div>
 		

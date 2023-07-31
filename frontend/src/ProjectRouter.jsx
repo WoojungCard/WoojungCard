@@ -21,7 +21,7 @@ const ProjectRouter = () => {
 				{/* 회원가입 & 로그인 화면 레이아웃 */}
 				<Route path="/" element=<MainLayout/> >
 					<Route path="cardProduct" element=<CardProductList/> />
-					<Route path="cardProductDetail" element=<CardProductDetail/> />
+					<Route path="cardProductDetail/:cardId" element=<CardProductDetail/> />
 					<Route path="login" element=<Login/> />
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
@@ -32,7 +32,7 @@ const ProjectRouter = () => {
 				<Route path="/user" element=<MainLayout/> >
 					<Route path="infoChange" element=<UserInfoManagement/> /> 
 					<Route path="cardapplication/:cardId" element=<UserCardApplication/> /> 
-					<Route path="cardApp" element=<UserCardAppStatus/> />
+					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
 				</Route>
 				

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
+import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
@@ -22,6 +23,7 @@ import com.woojungcard.woojungcard.jwt.JwtService;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
+import com.woojungcard.woojungcard.exception.UserCardAppException;
 import com.woojungcard.woojungcard.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -105,8 +107,20 @@ private final JwtService jwtService;
 	}
 
 	// User List
-	@Override
 	public List<UserDTO> userList() throws Exception {
 		return userRepository.userList();
+	}
+	
+	// User Card Application
+	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws UserCardAppException {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setUserId(id);
+		Integer insertRow = userRepository.userCardApp(request);
+		if (insertRow != 0) {
+			return new ResponseEntity<>("신청이 완료되었습니다.", HttpStatus.OK);
+		} else {
+			throw new UserCardAppException();
+		}
+		
 	}
 }

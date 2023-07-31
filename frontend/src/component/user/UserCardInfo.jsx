@@ -24,8 +24,7 @@ function UserCardInfo() {
                 <th>신용/체크</th>
                 <th>신청일</th>
                 <th>지급일</th>
-            </thead>
-           
+            </thead>    
             <tbody>
             {userCardAppStatusData?.map((el) => 
                 <tr>
@@ -36,9 +35,8 @@ function UserCardInfo() {
                     <td>{el.expirationDate}</td>
                     <td><Button>해지 신청</Button></td>
                 </tr>
-                            )}
+            )}
             </tbody>
-
         </table>
         </div>
     </div>
