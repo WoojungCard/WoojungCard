@@ -38,4 +38,6 @@ public interface UserRepository {
 	UserCardAppInfoResponse userCardAppInfo(Long id);
 	// User Card Application Status
 	List<CardAppStatusResponse> userCardAppStatus(Long id);
+	// User List
+	List<UserDTO> userList();
 }

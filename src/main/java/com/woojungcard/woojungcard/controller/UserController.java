@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
@@ -65,6 +66,12 @@ public class UserController {
 		return userService.userInfoUpdate(request);
 	}
 	
+	// Get User List
+	@GetMapping("/getUserList")
+	public List<UserDTO> userList() throws Exception {
+		return userService.userList();
+	}
+	
 	// User Card Application Info
 	@GetMapping("/cardAppInfo")
 	public UserCardAppInfoResponse userCardAppInfo() {
@@ -74,6 +81,6 @@ public class UserController {
 	@GetMapping("/cardAppStatus")
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		return userService.userCardAppStatus();
-	}
+	}	
 }
     

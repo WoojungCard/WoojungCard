@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import MainHeader from "../Header/MainHeader";
+import MainHeader from "../header/MainHeader";
 
 function MainLayout(props) {
 	return (

@@ -109,6 +109,16 @@
  			user_id = #{id}
  		AND 
  			(expiration_date <= now()+7 OR expiration_date is null)
+		]]>
+    </select>
+
+    <!-- Get User List -->
+    <select id="userList" resultType="com.woojungcard.woojungcard.domain.dto.UserDTO">
+    	<![CDATA[
+    	SELECT
+    		*
+    	FROM
+    		user
     	]]>
     </select>
 </mapper>

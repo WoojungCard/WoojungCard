@@ -3,6 +3,7 @@ import { api } from "../../api";
 
 const initialState = {
     data: {},
+    userListData: [],
     idCheckResult : "",
     userInfo : {},
     userAppInfo : {},
@@ -61,6 +62,12 @@ export const userInfoUpdate = createAsyncThunk("/user/infoChange", async(info, t
 export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
     const response = await api("GET", "/user/cardAppInfo");
     return response.data;
+})
+
+export const userList = createAsyncThunk("/user/getUserList", async() => {
+	const response = await api("GET", "/user/getUserList");
+    // console.log(response.data);
+	return response.data;
 })
 
 const userSlice = createSlice({
@@ -134,6 +141,10 @@ const userSlice = createSlice({
             .addCase(userCardAppInfo.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
+            })
+            .addCase(userList.fulfilled, (state, action) => {
+                state.status = "fulfilled";
+                state.userListData = action.payload;
             })
     }
 });

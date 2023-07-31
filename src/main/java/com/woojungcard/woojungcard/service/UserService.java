@@ -34,4 +34,6 @@ public interface UserService {
 	public UserCardAppInfoResponse userCardAppInfo();
 	// User Card Application Status
 	public List<CardAppStatusResponse> userCardAppStatus();
+	// User list
+	public List<UserDTO> userList() throws Exception;
 }

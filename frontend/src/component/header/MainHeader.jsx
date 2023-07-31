@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 const styles = {
     main: {
         textDecoration: 'none',
-        fontSize: 27,
+        fontSize: 25,
         fontWeight: 'bold',
         color: 'black'
     }

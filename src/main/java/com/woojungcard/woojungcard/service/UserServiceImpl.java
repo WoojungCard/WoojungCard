@@ -101,6 +101,12 @@ private final JwtService jwtService;
 	// User Card Application Status
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-		return userRepository.userCardAppStatus(id);		
+		return userRepository.userCardAppStatus(id);
+	}
+
+	// User List
+	@Override
+	public List<UserDTO> userList() throws Exception {
+		return userRepository.userList();
 	}
 }
