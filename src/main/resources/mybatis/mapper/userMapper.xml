@@ -41,4 +41,84 @@
     		user_id = #{userId} AND user_pwd = #{userPwd}	
     	]]>
     </select>
+    
+    <!-- 유저 정보 조회 -->
+    <select id="userGetInfo" resultType="com.woojungcard.woojungcard.domain.response.UserInfoResponse" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_id, user_name, user_birth, user_tel
+    	FROM
+    		user
+    	WHERE
+    		id = #{id}
+    	]]>
+    </select>
+    
+    <!-- 유저 아이디 조회 -->
+    <select id="findUserIdById" resultType="String" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_id
+    	FROM
+    		user
+   		WHERE
+   			id = #{id}
+    	]]>
+    </select>
+    
+    <!-- 유저 정보 변경 -->
+    <update id="userInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest">
+    	<![CDATA[
+    	UPDATE
+    		user
+   		SET
+   			user_pwd = #{userPwd}, user_tel = #{userTel}
+   		WHERE
+   			id = #{id} 
+    	]]>
+    </update>
+    
+    <!-- 유저 카드 등록 정보 조회 -->
+    <select id="userCardAppInfo" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse" parameterType="Long">
+    	<![CDATA[
+    	SELECT
+    		user_name, user_birth, user_tel
+   		FROM
+   			user
+  		WHERE
+  			id = #{id}
+    	]]>
+    </select>
+    
+    <!-- 유저 카드 신청 현황 조회 -->
+    <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse" parameterType="Long">
+    	<![CDATA[
+    	SELECT 
+    		card_number, 
+    		card_name, 
+    		card_type, 
+    		request_date, 
+    		expiration_date 
+   		FROM  
+   			card_issued AS i 
+ 		INNER JOIN 
+ 			card_product AS p 
+ 		ON 
+ 			i.card_id = p.id 
+ 		WHERE 
+ 			user_id = #{id}
+ 		AND 
+ 			(expiration_date <= now()+7 OR expiration_date is null)
+		]]>
+    </select>
+
+    <!-- Get User List -->
+    <select id="userList" resultType="com.woojungcard.woojungcard.domain.dto.UserDTO">
+    	<![CDATA[
+    	SELECT
+    		*
+    	FROM
+    		user
+    	]]>
+    </select>
 </mapper>

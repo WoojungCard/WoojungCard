@@ -29,16 +29,17 @@ function StoreJoin() {
 	const [storeType, setStoreType] = useState('');
 	
 	const onChangeinputStoreId = (e) => {
-		setInsertStoreId(e.target.value);
+		const storeId = JSON.stringify(e.target.value);
+		setInsertStoreId(storeId);
 	};
 
 			
 //	사업자번호 입력 input에서 포커스 전환 시 사업자번호 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
 	
-		useEffect(() =>{
+	useEffect(() => {
 		handleBlur();
-	},[insertStoreId])
+	},[insertStoreId]);
 	
 	const handleBlur = (e) => {
 		dispatch(storeIdCheck(insertStoreId));

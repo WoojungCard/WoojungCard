@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter @Setter
 public class TokenInfo {
 	private Long id;
-
+	
 	public TokenInfo tokenToDTO(Claims claims) {
-		Long id = (Long) claims.get("id");
+		Long id = Long.parseLong(String.valueOf(claims.get("id")));
 		return new TokenInfo(id);
 	}
 }

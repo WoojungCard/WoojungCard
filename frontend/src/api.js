@@ -6,12 +6,20 @@ axios.defaults.headers = {
 	"Content-Type": "application/json"
 };
 
-
 export const api = async (method, url, data) => {
-    const response = await axios({
-        method, 
-        data, 
-        url
-    }).catch((e)=>alert(e.response.data));
-    return response;
+  const refreshToken = localStorage.getItem("RefreshToken");
+  const accessToken = localStorage.getItem("AccessToken");
+  const headers = refreshToken
+    ? {
+        RefreshToken: refreshToken,
+        AccessToken: accessToken,
+      }
+    : {};
+  const response = await axios({
+    method,
+    data,
+    url,
+    headers,
+  });
+  return response;
 };
