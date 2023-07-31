@@ -12,8 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class CardApplicationResponse {
+public class CardAppStatusResponse {
+	private String cardNumber;
 	private String cardName;
 	private CardType cardType;
-	private LocalDate applicationDate;
+	private LocalDate requestDate;
+	private LocalDate expirationDate;
 }

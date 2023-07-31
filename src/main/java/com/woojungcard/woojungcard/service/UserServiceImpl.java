@@ -1,5 +1,7 @@
 package com.woojungcard.woojungcard.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
+import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
@@ -92,5 +96,11 @@ private final JwtService jwtService;
 	public UserCardAppInfoResponse userCardAppInfo() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		return userRepository.userCardAppInfo(id);
+	}
+	
+	// User Card Application Status
+	public List<CardAppStatusResponse> userCardAppStatus() {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		return userRepository.userCardAppStatus(id);		
 	}
 }

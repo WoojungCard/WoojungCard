@@ -29,8 +29,9 @@ function UserJoin() {
 	};
 	
 	const onChangeinputUserId = (e) => {
-		let userId = JSON.stringify(e.target.value);
-		setInsertUserId(userId);
+		// 아이디 입력시 "" 같이 출력 수정해야함
+		// let userId = JSON.stringify();
+		setInsertUserId(e.target.value);
 	};
 	
 //	아이디 입력 input에서 포커스 전환 시 아이디 중복체크
@@ -42,6 +43,7 @@ function UserJoin() {
 
 	const handleIdBlur = (e) => {
 		dispatch(userIdCheck(insertUserId));
+		console.log(insertUserId);
 		if(idCheckResult === false){
 			setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용 
 		} else {
@@ -194,6 +196,6 @@ export function birthAutoFormat(birth) {
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");
 	return number.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-  }
+}
 
 export default UserJoin;

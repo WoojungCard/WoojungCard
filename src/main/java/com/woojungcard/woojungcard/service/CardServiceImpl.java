@@ -1,5 +1,7 @@
 package com.woojungcard.woojungcard.service;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
@@ -14,8 +16,8 @@ public class CardServiceImpl implements CardService {
 	private final CardRepository cardRepository;
 	
 	public CardApplicationResponse cardApplication(Long id) {
-		return cardRepository.cardApplication(id);
+		CardApplicationResponse response = cardRepository.cardApplication(id);
+		response.setApplicationDate(LocalDate.now());
+		return response;
 	}
-	
-
 }

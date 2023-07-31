@@ -5,6 +5,7 @@ const initialState = {
     data: {},
     idCheckResult : "",
     userInfo : {},
+    userAppInfo : {},
     status : "idle",
     loginStatus : "idle",
     error: null
@@ -44,7 +45,7 @@ export const userLogin = createAsyncThunk("/user/login", async(loginInfo, thunkA
 export const userGetInfo = createAsyncThunk("/user/info", async() => {
     const response = await api("GET", "/user/info");
     return response.data;
-})
+}) 
 
 // User Info Update
 export const userInfoUpdate = createAsyncThunk("/user/infoChange", async(info, thunkAPI) => {
@@ -54,6 +55,12 @@ export const userInfoUpdate = createAsyncThunk("/user/infoChange", async(info, t
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
     }
+})
+
+// User Card Application Info
+export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
+    const response = await api("GET", "/user/cardAppInfo");
+    return response.data;
 })
 
 const userSlice = createSlice({
@@ -114,6 +121,17 @@ const userSlice = createSlice({
                 state.userInfo = action.payload;
             })
             .addCase(userInfoUpdate.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(userCardAppInfo.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userCardAppInfo.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userAppInfo = action.payload;
+            })
+            .addCase(userCardAppInfo.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })

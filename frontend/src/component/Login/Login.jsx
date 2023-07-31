@@ -45,7 +45,7 @@ function Login() {
 		if (userType === 'u') {
 			dispatch(userLogin(loginInfo));
 			// if (loginStatus === "successed") {
-				navigate("/user/infoChange");
+				navigate('/user/cardapplication/${2}');
 			// } 
 		} else if (userType === 's') {
 			console.log("store Login");

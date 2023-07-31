@@ -6,8 +6,7 @@
     	<![CDATA[
         SELECT 
         	card_name,
-        	card_type,
-        	register_date
+        	card_type
         FROM
         	card_product
        	WHERE

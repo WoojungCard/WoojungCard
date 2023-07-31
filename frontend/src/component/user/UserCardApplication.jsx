@@ -1,7 +1,25 @@
+import { useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { userCardAppInfo } from "../../store/user/userSlice";
+import { useParams } from "react-router-dom";
+import { cardGetInfo } from "../../store/card/cardSlice";
 
 
 function UserCardApplication() {
+
+const {userAppInfo} = useSelector((state) => state.user);
+
+const dispatch = useDispatch();
+const param = useParams();
+
+const  cardId = 2;
+
+useEffect(() => {
+    dispatch(cardGetInfo(param.cardId));
+    dispatch(userCardAppInfo());
+}, [])
+
 
 return (
     <div className="mt-5">
@@ -45,7 +63,7 @@ return (
                     type="text" 
                     readOnly           
                     className="mb-3 bg-light"
-                    // defaultValue={userInfo.userName}
+                    defaultValue={userAppInfo.userName}
                 />
             </Form.Group>
             
@@ -55,6 +73,7 @@ return (
                     type="text"
                     readOnly           
                     className="mb-3 bg-light"
+                    defaultValue={userAppInfo.userBirth}
                 />
             </Form.Group>
 
@@ -64,6 +83,7 @@ return (
                     type="text"
                     maxLength={13}
                     className="mb-4"
+                    defaultValue={userAppInfo.userTel}
                 />
             </Form.Group>
 

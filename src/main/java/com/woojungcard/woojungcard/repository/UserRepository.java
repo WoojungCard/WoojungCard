@@ -10,6 +10,7 @@ import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
+import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
@@ -35,4 +36,6 @@ public interface UserRepository {
 	Integer userInfoUpdate(UserInfoUpdateRequest reuqest) throws UpdateException;
 	// User Card Application Info
 	UserCardAppInfoResponse userCardAppInfo(Long id);
+	// User Card Application Status
+	List<CardAppStatusResponse> userCardAppStatus(Long id);
 }

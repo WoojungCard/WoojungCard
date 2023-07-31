@@ -18,7 +18,7 @@ public class CardController {
 	private final CardService cardService;
 	
 	// User Card Application Info
-	@GetMapping("/application/{id}")
+	@GetMapping("/getInfo/{id}")
 	public CardApplicationResponse cardApplication(@PathVariable("id") Long id) {
 		return cardService.cardApplication(id);
 	}
