@@ -3,6 +3,7 @@ import { api } from "../../api";
 
 const initialState = {
     data: {},
+    userListData: [],
     idCheckResult : "",
     status : "idle",
     error: null
@@ -21,11 +22,17 @@ export const userSignUp = createAsyncThunk("/user/signup", async (user, thunkAPI
     try {
         console.log(user);
         const response = await api("POST", "/user/signup", user);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
     }
+})
+
+export const userList = createAsyncThunk("/user/getUserList", async() => {
+	const response = await api("GET", "/user/getUserList");
+    // console.log(response.data);
+	return response.data;
 })
 
 const userSlice = createSlice({
@@ -53,6 +60,10 @@ const userSlice = createSlice({
             .addCase(userSignUp.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload.data;
+            })
+            .addCase(userList.fulfilled, (state, action) => {
+                state.status = "fulfilled";
+                state.userListData = action.payload;
             })
     }
 });

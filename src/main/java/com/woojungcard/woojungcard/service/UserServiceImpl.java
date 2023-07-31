@@ -67,4 +67,10 @@ private final JwtService jwtService;
 			throw new LoginException();
 		}
 	}
+
+	// User List
+	@Override
+	public List<UserDTO> userList() throws Exception {
+		return userRepository.userList();
+	}
 }

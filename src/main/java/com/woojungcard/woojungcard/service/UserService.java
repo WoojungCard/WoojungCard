@@ -20,4 +20,6 @@ public interface UserService {
 	public ResponseEntity<String> userSignUp(UserSignUpRequest request) throws SignUpException;
 	// User Login
 	public UserLoginResponse userLogin(UserLoginRequest request) throws LoginException;
+	// User list
+	public List<UserDTO> userList() throws Exception;
 }

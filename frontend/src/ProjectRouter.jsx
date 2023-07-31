@@ -26,7 +26,7 @@ const ProjectRouter = () => {
 				{/* 카드사 관리자 레이아웃 */}
 				<Route path="/admin" element=<AdminLayout/> >
 					<Route path="userManagement" element=<UserManagement/> />
-					<Route path="userManagementDetail" element=<UserManagementDetail/> />
+					<Route path="userManagementDetail/:index" element=<UserManagementDetail/> />
 				</Route>
 			</Routes>
 		</BrowserRouter>

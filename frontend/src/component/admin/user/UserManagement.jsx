@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userList } from "../../../store/user/userSlice";
 
 // 카드사 관리자_고객 관리 목록
 function UserManagement() {
+
+    const dispatch = useDispatch();
+    const {userListData} = useSelector((state) => state.user);
+
+    useEffect(() => {
+        dispatch(userList());
+    }, []);
 
     // 고객명 검색
     const searchUser = (e) => {
@@ -44,12 +53,25 @@ function UserManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><Link to={"/admin/userManagementDetail"} style={{textDecoration: "none", color: "black"}}>홍길동</Link></td>
-                            <td>2000-01-01</td>
-                            <td>010-0000-0000</td>
-                        </tr>
+                        {
+                            userListData.map((item, index) => {
+                                index = index + 1;
+                                return (
+                                    <tr key={index}>
+                                        <td>{index}</td>
+                                        <td>
+                                            <Link to={`/admin/userManagementDetail/${index}`} 
+                                                state={{index: `${(index - 1)}`}} 
+                                                style={{textDecoration: "none", color: "black"}}>
+                                                    {item.userName}
+                                                </Link>
+                                            </td>
+                                        <td>{item.userBirth}</td>
+                                        <td>{item.userTel}</td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
             </div>

@@ -3,12 +3,24 @@ import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function UserManagementDetail() {
+
+    const location = useLocation();
+    const index = location.state.index;
+    
+    const dispatch = useDispatch();
+    const {userListData} = useSelector((state) => state.user);
+    const userData = userListData[index];
+    // console.log(userData);
+
+
     return (
         <div className="container mt-5 pt-4">
             <div className="container w-75">
-                <h5 className="fw-bold text-start mb-4">"홍길동"님 상세 조회</h5>
+                <h5 className="fw-bold text-start mb-4">"{userData.userName}"님 카드 내역 조회</h5>
 
                 <Table hover className="text-center">
                     <thead className="">

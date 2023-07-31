@@ -23,4 +23,6 @@ public interface UserRepository {
 	Integer userSignUp(UserSignUpRequest request) throws SignUpException;
 	// User Login
 	UserDTO userLogin(UserLoginRequest request) throws LoginException;
+	// User List
+	List<UserDTO> userList();
 }
