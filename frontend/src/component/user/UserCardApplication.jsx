@@ -32,6 +32,7 @@ const request = ({
 })
 
 const onClickHandler = (e) => {
+    console.log(request);
     e.preventDefault();
     dispatch(userCardApp(request));
     navigate("/user/cardAppStatus");

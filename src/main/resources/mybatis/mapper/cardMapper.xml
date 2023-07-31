@@ -2,9 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.woojungcard.woojungcard.repository.CardRepository">
+
+	<!-- 카드 발급 신청 내역 -->
     <select id="cardApplication" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse">
     	<![CDATA[
         SELECT 
+        	id,
         	card_name,
         	card_type
         FROM

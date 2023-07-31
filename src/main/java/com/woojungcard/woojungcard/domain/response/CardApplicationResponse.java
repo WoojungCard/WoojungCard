@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class CardApplicationResponse {
+	private Long id;
 	private String cardName;
 	private CardType cardType;
 	private LocalDate applicationDate;
