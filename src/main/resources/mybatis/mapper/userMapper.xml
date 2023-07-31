@@ -91,14 +91,15 @@
     </select>
     
     <!-- 유저 카드 신청 현황 조회 -->
-    <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse" parameterType="Long">
+    <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardAppStatusResponse" parameterType="Long">
     	<![CDATA[
     	SELECT 
     		card_number, 
     		card_name, 
     		card_type, 
     		request_date, 
-    		expiration_date 
+    		expiration_date,
+    		i.state as state
    		FROM  
    			card_issued AS i 
  		INNER JOIN 
@@ -107,8 +108,6 @@
  			i.card_id = p.id 
  		WHERE 
  			user_id = #{id}
- 		AND 
- 			(expiration_date <= now()+7 OR expiration_date is null)
 		]]>
     </select>
 

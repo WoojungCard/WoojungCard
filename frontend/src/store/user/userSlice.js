@@ -7,6 +7,7 @@ const initialState = {
     idCheckResult : "",
     userInfo : {},
     userAppInfo : {},
+    userCardAppStatusData : [],
     status : "idle",
     loginStatus : "idle",
     error: null
@@ -70,11 +71,17 @@ export const userList = createAsyncThunk("/user/getUserList", async() => {
 	return response.data;
 })
 
+// User Card Application Status
+export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
+    const response = await api("GET", "/user/cardAppStatus");
+    return response.data;
+})
+
 const userSlice = createSlice({
     name: "user",
     initialState,
     extraReducers(builder) {
-        builder
+        builder 
             .addCase(userIdCheck.pending, (state, action) => {
                 state.status = "loading";
             })
@@ -145,6 +152,17 @@ const userSlice = createSlice({
             .addCase(userList.fulfilled, (state, action) => {
                 state.status = "fulfilled";
                 state.userListData = action.payload;
+            })
+            .addCase(userCardAppStatus.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userCardAppStatus.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userCardAppStatusData = action.payload;
+            })
+            .addCase(userCardAppStatus.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             })
     }
 });
