@@ -12,6 +12,7 @@ import UserCardInfo from "./component/user/UserCardInfo";
 import AdminLayout from "./component/layout/AdminLayout";
 import UserManagement from "./component/admin/user/UserManagement";
 import UserManagementDetail from "./component/admin/user/UserManagementDetail";
+import CardProductDetail from "./component/card/CardProductDetail";
 
 const ProjectRouter = () => {
 	return (
@@ -20,6 +21,7 @@ const ProjectRouter = () => {
 				{/* 회원가입 & 로그인 화면 레이아웃 */}
 				<Route path="/" element=<MainLayout/> >
 					<Route path="cardProduct" element=<CardProductList/> />
+					<Route path="cardProductDetail" element=<CardProductDetail/> />
 					<Route path="login" element=<Login/> />
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
