@@ -32,9 +32,8 @@ public class JwtService {
 	private String REFRESH_SECRET_KEY;
 	
 	public String createAccessToken(Long id){
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-        byte[] secretKeyByte = DatatypeConverter.parseBase64Binary(ACCESS_SECRET_KEY);
-        Key key = new SecretKeySpec(secretKeyByte, signatureAlgorithm.getJcaName());
+		byte[] keyBytes = Decoders.BASE64.decode(ACCESS_SECRET_KEY);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
         Date now = new Date();
         
         Claims claims = Jwts.claims();
@@ -78,13 +77,14 @@ public class JwtService {
     }
 	
 	public TokenInfo tokenToDTO(String accessToken){
-        try{
+        try{      	
             Claims claims = Jwts
                     .parserBuilder()
                     .setSigningKey(ACCESS_SECRET_KEY)
                     .build()
                     .parseClaimsJws(accessToken)
                     .getBody();
+            
             TokenInfo info = new TokenInfo().tokenToDTO(claims);
             return info;
         }catch (Exception e){

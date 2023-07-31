@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
+import com.woojungcard.woojungcard.exception.UpdateException;
 
 @RestControllerAdvice
 public class ExceptionConfig {
@@ -26,6 +27,12 @@ public class ExceptionConfig {
 	// Login Exception
 	@ExceptionHandler(LoginException.class)
 	public ResponseEntity<String> loginException(LoginException e){
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	// Update Exception
+	@ExceptionHandler(UpdateException.class)
+	public ResponseEntity<String> updateException(UpdateException e){
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 }
