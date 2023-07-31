@@ -13,4 +13,14 @@
        		id = #{id}
         ]]>
     </select>
+    
+    <!-- Get Card List -->
+    <select id="cardList" resultType="com.woojungcard.woojungcard.domain.dto.CardProductDTO">
+    	<![CDATA[
+    	SELECT
+    		*
+    	FROM
+    		card_product
+    	]]>
+    </select>
 </mapper>

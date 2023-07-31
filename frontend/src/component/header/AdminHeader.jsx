@@ -20,7 +20,7 @@ function AdminHeader() {
                 <div className={"container justify-content-between"}>
                     <Link to={"/admin"} style={styles.main}>우정카드</Link>
                     
-                    <Link to={"/cardProduct"} style={styles.main}>상품관리</Link>
+                    <Link to={"/admin/cardManage"} style={styles.main}>상품관리</Link>
                     
                     <Link to={"/admin/userManagement"} style={styles.main}>고객관리</Link>
                     
