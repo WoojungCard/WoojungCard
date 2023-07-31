@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
@@ -6,9 +6,15 @@ import Col from 'react-bootstrap/Col';
 import { phoneNumberAutoFormat } from "./UserJoin";
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-bootstrap/Modal';
+import { userIdCheck } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { storeIdCheck } from "../../store/user/storeSlice";
 
 // 가맹점 회원가입
 function StoreJoin() {
+	const { storeIdCheckResult } = useSelector((state) => state.store);
+	
+	const dispatch =useDispatch();
 	
 	const [insertStoreId, setInsertStoreId] = useState('');
 	const [insertStorePwd, setInsertStorePwd] = useState('');
@@ -25,11 +31,23 @@ function StoreJoin() {
 	const onChangeinputStoreId = (e) => {
 		setInsertStoreId(e.target.value);
 	};
-	
+
+			
 //	사업자번호 입력 input에서 포커스 전환 시 사업자번호 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
+	
+		useEffect(() =>{
+		handleBlur();
+	},[insertStoreId])
+	
 	const handleBlur = (e) => {
-		setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
+		dispatch(storeIdCheck(insertStoreId));
+		if(storeIdCheckResult === false){
+			setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
+		}else{
+			setIdAlertOpen(false);
+		}
+			
 	}
 		
 //	비밀번호 유효성 검증
