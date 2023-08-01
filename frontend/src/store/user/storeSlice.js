@@ -3,7 +3,7 @@ import { api } from "../../api";
 
 const initialState = {
     data: {},
-    idCheckResult : "",
+    storeIdCheckResult : "",
     status : "idle",
     error: null
 }
@@ -19,9 +19,9 @@ export const storeIdCheck = createAsyncThunk("/store/idcheck", async (storeId, t
 
 export const storeSignUp = createAsyncThunk("/store/signup", async (store, thunkAPI) => {
     try {
-        console.log(store);
+       // console.log(store);
         const response = await api("POST", "/store/signup", store);
-        console.log(response.data);
+       // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -38,7 +38,7 @@ const storeSlice = createSlice({
             })
             .addCase(storeIdCheck.fulfilled,(state, action) => {
                 state.status = "successed";
-                state.idCheckResult = action.payload;
+                state.storeIdCheckResult = action.payload;
             })
             .addCase(storeIdCheck.rejected, (state, action) => {
                 state.status = "failed";

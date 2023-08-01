@@ -4,11 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
 import Col from 'react-bootstrap/Col';
 import { phoneNumberAutoFormat } from "./UserJoin";
+import { birthAutoFormat } from "./UserJoin";
 import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { storeIdCheck } from "../../store/user/storeSlice";
+import { storeIdCheck, storeSignUp } from "../../store/user/storeSlice";
 
 // 가맹점 회원가입
 function StoreJoin() {
@@ -43,13 +44,14 @@ function StoreJoin() {
 	
 	const handleBlur = (e) => {
 		dispatch(storeIdCheck(insertStoreId));
-		if(storeIdCheckResult === false){
+		console.log(insertStoreId);
+		if (storeIdCheckResult === false) {
 			setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
 		}else{
 			setIdAlertOpen(false);
 		}
-			
-	}
+		
+	};
 		
 //	비밀번호 유효성 검증
 	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
@@ -73,9 +75,18 @@ function StoreJoin() {
 		setInsertStoreName(e.target.value);
 	};
 		
-	const onChangeinputStoreStartDate = (e) => {
-		setInsertStoreDate(e.target.value);
-	};
+//	const onChangeinputStoreStartDate = (e) => {
+//		setInsertStoreDate(e.target.value);
+//	};
+//	const onChangeinputStoreStartDate = (e) => {
+//		const targetValue = DateAutoFormat(e.target.value);
+//		setInsertStoreDate(targetValue);
+//	}
+	const onChangeinputUserBirth = (e) => {
+		const targetValue = birthAutoFormat(e.target.value);
+		setInsertStoreDate(targetValue);
+	}
+
 	
 	const onChangeinputStoreTel = (e) => {
 		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
@@ -115,9 +126,28 @@ function StoreJoin() {
 		setInsertStoreAddrDetail(e.target.value);
 	};
 	
+	
+	
+	const store = ({
+	
+	"businessNumber" : insertStoreId,
+	"storePwd" : insertStorePwd,
+	"representative" : insertStoreRepresent, 
+	"storeName" : insertStoreName,
+	"storeZipCode" : zipCode,
+	"storeAddress1" :insertStoreAddr,
+	"storeAddress2" :insertStoreAddrDetail, 
+	"businessStartDate" : insertStoreDate,
+	"businessType" : storeType,
+	"storeTel" : insertStoreTel
+	})
+	
+	
 //	가맹점 신청하기 클릭
-	const onClickStoreJoin = () => {
-		
+	const onClickStoreJoin = (e) => {
+		// e.prventDefault();
+		console.log(store);
+		dispatch(storeSignUp(store));
 	};
 	
 	
@@ -223,8 +253,9 @@ function StoreJoin() {
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
                             type="text" placeholder="사업개시일 8자리를 입력하세요"
-                            onChange={onChangeinputStoreStartDate}
-                            maxLength={8}
+                            onChange={onChangeinputUserBirth}
+                            maxLength={10}
+                            value ={insertStoreDate}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -249,5 +280,12 @@ function StoreJoin() {
 		</div>
 	);
 }
-
+export function DateAutoFormat(date) {
+	const number = date.trim().replace(/[^0-9]/g, "");
+  
+	if (number.length < 5) return number;
+	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
+	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");
+	return number.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+}
 export default StoreJoin;
