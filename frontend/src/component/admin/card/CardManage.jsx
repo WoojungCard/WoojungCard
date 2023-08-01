@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cardList } from "../../../store/card/cardSlice";
@@ -29,6 +30,12 @@ function CardManage() {
             
             <div className="container w-75">
                 <div className="d-flex justify-content-end mb-1">
+                    <div className="col mb-3">
+                        <Link to={"/admin/cardNew"}>
+                            <Button type="button" variant="outline-dark" className="mx-2 py-0">등록</Button>
+                        </Link>
+                    </div>
+                    
                     <Form>
                         <Form.Group as={Row} className="mb-2 pe-0" controlId="searchUserName">
                             <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>카드명</Form.Label>
@@ -71,7 +78,7 @@ function CardManage() {
                                         <th>{item.cardType}</th>
                                         <th>{item.cardInfo}</th>
                                         <th>{item.registerDate}</th>
-                                        <th>가입자 수</th>
+                                        <th>{item.count}</th>
                                         <th>{item.state}</th>
                                     </tr>
                                 )

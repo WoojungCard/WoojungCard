@@ -15,11 +15,11 @@ function CardProductList() {
 						<div className="row my-4 py-2">
 							<div className="col-4">
 								<img
-								className="d-block"
-								src="/img/defaultCardImage.png"
-								alt="[우정카드]"
-								style={{width: "145px", height: "90px"}}
-							/>
+									className="d-block"
+									src="/img/defaultCardImage.png"
+									alt="[우정카드]"
+									style={{width: "145px", height: "90px"}}
+								/>
 							</div>
 							<div className="col">
 								<span className="fw-bold">[우정카드]</span><br/>

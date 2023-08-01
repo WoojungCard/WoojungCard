@@ -20,4 +20,6 @@ public class CardProductDTO {
 	private String cardInfo;
 	private LocalDate registerDate;
 	private String state;
+	
+	private long count;
 }

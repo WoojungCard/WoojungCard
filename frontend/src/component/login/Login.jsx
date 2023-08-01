@@ -62,10 +62,10 @@ function Login() {
 					<Form.Group className="row mb-4" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="userType" defaultValue="u" value={userType} onChange={handleUserType}>
 					        <ToggleButton  variant="outline-dark" id="tbg-radio-1" value="u">
-					          개인 고객
+					          	개인 고객
 					        </ToggleButton>
 					        <ToggleButton variant="outline-dark" id="tbg-radio-2" value="s">
-					          가맹점
+					          	가맹점
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>

@@ -18,9 +18,12 @@
     <select id="cardList" resultType="com.woojungcard.woojungcard.domain.dto.CardProductDTO">
     	<![CDATA[
     	SELECT
-    		*
+    		*,
+    		COUNT(ci.card_id) as count
     	FROM
-    		card_product
+    		card_product cp
+    	LEFT JOIN card_issued ci ON cp.id = ci.card_id
+    	GROUP BY cp.id
     	]]>
     </select>
 </mapper>

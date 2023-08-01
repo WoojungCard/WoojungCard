@@ -64,7 +64,7 @@ function UserManagement() {
                                                 state={{index: `${(index - 1)}`}} 
                                                 style={{textDecoration: "none", color: "black"}}>
                                                     {item.userName}
-                                                </Link>
+                                            </Link>
                                             </td>
                                         <td>{item.userBirth}</td>
                                         <td>{item.userTel}</td>
