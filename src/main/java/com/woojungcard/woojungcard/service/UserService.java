@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
+import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
@@ -18,6 +19,7 @@ import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 
 public interface UserService {
 	// User Id Check
@@ -36,4 +38,6 @@ public interface UserService {
 	public List<CardAppStatusResponse> userCardAppStatus();
 	// User list
 	public List<UserDTO> userList() throws Exception;
+	// User Card Application
+	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException ;
 }

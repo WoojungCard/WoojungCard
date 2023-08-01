@@ -8,6 +8,8 @@ import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserCardApproveException;
 
 @RestControllerAdvice
 public class ExceptionConfig {
@@ -33,6 +35,18 @@ public class ExceptionConfig {
 	// Update Exception
 	@ExceptionHandler(UpdateException.class)
 	public ResponseEntity<String> updateException(UpdateException e){
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	// User Card Application Exception
+	@ExceptionHandler(ApplicationException.class)
+	public ResponseEntity<String> applicationException(ApplicationException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	// User Card Application Approve Exception
+	@ExceptionHandler(UserCardApproveException.class)
+	public ResponseEntity<String> userCardApproveException(UserCardApproveException e){
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 }

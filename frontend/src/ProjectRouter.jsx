@@ -13,6 +13,8 @@ import AdminLayout from "./component/layout/AdminLayout";
 import UserManagement from "./component/admin/user/UserManagement";
 import UserManagementDetail from "./component/admin/user/UserManagementDetail";
 import CardProductDetail from "./component/card/CardProductDetail";
+import UserCardAppHistory from "./component/admin/user/UserCardAppHitsory";
+import UserCardCancelHistory from "./component/admin/user/UserCardCancelHistory";
 
 const ProjectRouter = () => {
 	return (
@@ -21,7 +23,7 @@ const ProjectRouter = () => {
 				{/* 회원가입 & 로그인 화면 레이아웃 */}
 				<Route path="/" element=<MainLayout/> >
 					<Route path="cardProduct" element=<CardProductList/> />
-					<Route path="cardProductDetail" element=<CardProductDetail/> />
+					<Route path="cardProductDetail/:cardId" element=<CardProductDetail/> />
 					<Route path="login" element=<Login/> />
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
@@ -32,7 +34,7 @@ const ProjectRouter = () => {
 				<Route path="/user" element=<MainLayout/> >
 					<Route path="infoChange" element=<UserInfoManagement/> /> 
 					<Route path="cardapplication/:cardId" element=<UserCardApplication/> /> 
-					<Route path="cardApp" element=<UserCardAppStatus/> />
+					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
 				</Route>
 				
@@ -40,7 +42,9 @@ const ProjectRouter = () => {
 				<Route path="/admin" element=<AdminLayout/> >
 					<Route path="userManagement" element=<UserManagement/> />
 					<Route path="userManagementDetail/:index" element=<UserManagementDetail/> />
-				</Route>
+					<Route path="userCardAppHistory" element=<UserCardAppHistory/> />
+					<Route path="userCardCancelHistory" element=<UserCardCancelHistory/> />
+				</Route> 
 			</Routes>
 		</BrowserRouter>
 	);
