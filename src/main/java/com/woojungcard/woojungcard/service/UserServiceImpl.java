@@ -23,7 +23,7 @@ import com.woojungcard.woojungcard.jwt.JwtService;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.UserCardAppException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -112,14 +112,14 @@ private final JwtService jwtService;
 	}
 	
 	// User Card Application
-	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws UserCardAppException {
+	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setUserId(id);
 		Integer insertRow = userRepository.userCardApp(request);
 		if (insertRow != 0) {
 			return new ResponseEntity<>("신청이 완료되었습니다.", HttpStatus.OK);
 		} else {
-			throw new UserCardAppException();
+			throw new ApplicationException();
 		}
 		
 	}

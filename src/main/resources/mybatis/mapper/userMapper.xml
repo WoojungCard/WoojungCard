@@ -95,7 +95,8 @@
     <!-- 유저 카드 신청 현황 조회 -->
     <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardAppStatusResponse" parameterType="Long">
     	<![CDATA[
-    	SELECT 
+    	SELECT  
+    		i.id AS id,
     		card_number, 
     		card_name, 
     		card_type, 

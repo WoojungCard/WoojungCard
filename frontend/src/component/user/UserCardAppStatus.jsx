@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userCardAppStatus } from "../../store/user/userSlice";
 import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 
 function UserCardAppStatus() {
 
@@ -17,7 +18,7 @@ function UserCardAppStatus() {
         <div className="mt-5">
             <h4 className="fw-bold text-center mb-5">카드신청현황조회</h4>
             <div className="container d-flex justify-content-center align-items-center">
-            <table>
+            <Table hover className="text-center">
                 <thead className="">
                     <th>카드번호</th>
                     <th>카드상품</th>
@@ -36,7 +37,7 @@ function UserCardAppStatus() {
                     </tr>
                 </tbody>
                 )}
-            </table>
+            </Table>
             </div>
         </div>
     );

@@ -75,11 +75,12 @@ export const userList = createAsyncThunk("/user/getUserList", async() => {
 // User Card Application Status
 export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
     const response = await api("GET", "/user/cardAppStatus");
+    console.log(response.data);
     return response.data;
 })
 
 // User Card Application
-export const userCardApp = createAsyncThunk("/user/cardApp", async(thunkAPI, request) => {
+export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thunkAPI) => {
     try {
         const response = await api("POST", "/user/cardApp", request);
         return response.data;    

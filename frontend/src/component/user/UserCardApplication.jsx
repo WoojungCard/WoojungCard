@@ -27,12 +27,13 @@ const onChangeHandler = (e) => {
 }
 
 const request = ({
-    "cardId" : cardInfo.id,
+    "cardId" : param.cardId,
     "requestDate" : insertRequestDate
 })
 
 const onClickHandler = (e) => {
     console.log(request);
+    console.log(insertRequestDate);
     e.preventDefault();
     dispatch(userCardApp(request));
     navigate("/user/cardAppStatus");
@@ -67,10 +68,9 @@ return (
             <Form.Group className="mb-3" controlId="formPlaintextUserTel">
                 <Form.Label className="mb-0 ">신청일</Form.Label>
                 <Form.Control
-                    type="text"
-                    maxLength={13}
+                    type="date"
                     className="mb-4"
-                    defaultValue={cardInfo.applicationDate}
+                    defaultValue={new Date()}
                     onChange={onChangeHandler}
                 />
             </Form.Group>
@@ -103,7 +103,7 @@ return (
                     type="text"
                     readOnly
                     // maxLength={13}
-                    className="mb-4"
+                    className="mb-4 bg-light"
                     defaultValue={userAppInfo.userTel}
                 />
             </Form.Group>
@@ -118,15 +118,4 @@ return (
         </div>
     );
 }
-
-// 신청일 입력시 하이픈 자동완성
-export function applicationDateAutoFormat(applicationDate) {
-	const number = applicationDate.trim().replace(/[^0-9]/g, "");
-  
-	if (number.length < 5) return number;
-	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
-	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");
-	return number.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-}
-
 export default UserCardApplication;

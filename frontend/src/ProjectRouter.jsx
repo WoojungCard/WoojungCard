@@ -13,6 +13,8 @@ import AdminLayout from "./component/layout/AdminLayout";
 import UserManagement from "./component/admin/user/UserManagement";
 import UserManagementDetail from "./component/admin/user/UserManagementDetail";
 import CardProductDetail from "./component/card/CardProductDetail";
+import UserCardAppHistory from "./component/admin/user/UserCardAppHitsory";
+import UserCardCancelHistory from "./component/admin/user/UserCardCancelHistory";
 
 const ProjectRouter = () => {
 	return (
@@ -40,7 +42,9 @@ const ProjectRouter = () => {
 				<Route path="/admin" element=<AdminLayout/> >
 					<Route path="userManagement" element=<UserManagement/> />
 					<Route path="userManagementDetail/:index" element=<UserManagementDetail/> />
-				</Route>
+					<Route path="userCardAppHistory" element=<UserCardAppHistory/> />
+					<Route path="userCardCancelHistory" element=<UserCardCancelHistory/> />
+				</Route> 
 			</Routes>
 		</BrowserRouter>
 	);

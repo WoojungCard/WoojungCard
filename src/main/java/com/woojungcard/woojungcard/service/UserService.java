@@ -19,7 +19,7 @@ import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.UserCardAppException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 
 public interface UserService {
 	// User Id Check
@@ -39,5 +39,5 @@ public interface UserService {
 	// User list
 	public List<UserDTO> userList() throws Exception;
 	// User Card Application
-	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws UserCardAppException ;
+	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException ;
 }

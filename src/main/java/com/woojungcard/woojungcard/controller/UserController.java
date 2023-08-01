@@ -26,7 +26,7 @@ import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.UserCardAppException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -82,7 +82,7 @@ public class UserController {
 	
 	// User Card Application
 	@PostMapping("/cardApp")
-	public ResponseEntity<String> userCardApp(@RequestBody UserCardAppRequest request) throws UserCardAppException {
+	public ResponseEntity<String> userCardApp(@RequestBody UserCardAppRequest request) throws ApplicationException {
 		return userService.userCardApp(request);
 	}
 	

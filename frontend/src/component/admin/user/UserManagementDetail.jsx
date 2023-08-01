@@ -47,7 +47,7 @@ function UserManagementDetail() {
                     </tbody>
                 </Table>
             </div>
-        </div>
+        </div> 
     );
 }
 
