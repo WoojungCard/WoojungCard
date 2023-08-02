@@ -3,18 +3,31 @@ import { ResponsiveBar, Bar, BarTooltip } from '@nivo/bar';
 
 const Barchart = () => {
     const handle = {
-        barClick: (data: any) => {
+        barClick: (data) => {
             console.log(data);
         },
 
-        legendClick: (data: any) => {
+        legendClick: (data) => {
             console.log(data);
         },
     };
 
     return (
         // chart height이 100%이기 때문이 chart를 덮는 마크업 요소에 height 설정
-        <div style={{ width: '600px', height: '350px', margin: '0 auto' }}>
+        <div className='position-relative' 
+             style={{ width: '600px', height: '350px', margin: '0 auto' }}>
+
+            {/* y축 값 위치 조정 */}
+            <div className='position-absolute fw-bold text-white'
+                 style={{zIndex: 1, left: '270px', top: '65px'}}>
+                <p className='mb-3 pb-1'>20대</p>
+                <p className='mb-3'>30대</p>
+                <p className='mb-3 pb-1'>40대</p>
+                <p className='mb-3 pb-1'>50대</p>
+                <p className='mb-3 pb-1'>60대</p>
+                <p className='mb-3 pb-1'>70대</p>
+            </div>
+
             <ResponsiveBar
 
                 layout='horizontal'
@@ -109,14 +122,15 @@ const Barchart = () => {
                 /**
                  * axis left 설정
                  */
-                axisLeft={{
-                    tickSize: 0, // 값 설명하기 위해 튀어나오는 점 크기
-                    tickPadding: 10, // tick padding
-                    tickRotation: 0, // tick 기울기
+                // axisLeft={{
+                    // tickSize: 0, // 값 설명하기 위해 튀어나오는 점 크기
+                    // tickPadding: 10, // tick padding
+                    // tickRotation: 0, // tick 기울기
                     // legend: 'price', // left 글씨
                     // legendPosition: 'middle', // 글씨 위치
-                    legendOffset: 60, // 글씨와 chart간 간격
-                }}
+                    // legendOffset: 60, // 글씨와 chart간 간격
+                // }}
+                axisLeft={null}
                 /**
                  * label 안보이게 할 기준 width
                  */
