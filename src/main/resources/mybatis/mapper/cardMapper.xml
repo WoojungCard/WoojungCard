@@ -16,21 +16,22 @@
         ]]>
     </select>
     
-    
     <!-- 카드 전체 리스트 조회 -->
 	<select id="cardList" resultType="com.woojungcard.woojungcard.domain.response.CardListResponse"	>
 	<![CDATA[
 	SELECT
-		id,
-		card_name,
-		card_type,
-		card_info,
-		register_date,
-		state
+		cp.id,
+		cp.card_name,
+		cp.card_type,
+		cp.card_info,
+		cp.register_date,
+		cp.state,
+		COUNT(ci.card_id) as count
 	FROM
-		card_product
-	WHERE
-		state = "PROCEEDING"	
+		card_product cp
+   	LEFT JOIN card_issued ci 
+   	ON cp.id = ci.card_id
+   	GROUP BY cp.id
 	]]>
 	</select>
 	
@@ -158,4 +159,5 @@
 		card_issued_id = #{id}
 	]]>
 	</update>
+
 </mapper>

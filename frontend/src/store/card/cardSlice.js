@@ -3,6 +3,7 @@ import { api } from "../../api";
 
 const initialState = {
     cardListData : [],
+    data: {},
     cardInfo: {},
     cardAppHistoryData: [],
     cardCancelHistoryData: [],
@@ -19,6 +20,7 @@ export const cardList = createAsyncThunk("/card/list", async() => {
 
 // Card Get Info
 export const cardGetInfo = createAsyncThunk("/card/getInfo/{cardId}", async (id) => {
+    // console.log(id);
     const response = await api("GET", `/card/getInfo/${id}`);
     return response.data;
 });
@@ -54,6 +56,7 @@ export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", asy
     console.log(response.data);
     return response.data;
 })
+
 
 const cardSlice = createSlice({
     name: "card",

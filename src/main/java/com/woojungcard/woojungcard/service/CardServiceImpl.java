@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
@@ -99,4 +100,5 @@ public class CardServiceImpl implements CardService {
 			throw new UpdateException();
 		}
 	}
+
 }

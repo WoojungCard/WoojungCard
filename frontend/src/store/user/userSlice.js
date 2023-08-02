@@ -66,6 +66,7 @@ export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
     return response.data;
 })
 
+// Get User List (ADMIN)
 export const userList = createAsyncThunk("/user/getUserList", async() => {
 	const response = await api("GET", "/user/getUserList");
     // console.log(response.data);

@@ -15,6 +15,10 @@ import UserManagementDetail from "./component/admin/user/UserManagementDetail";
 import CardProductDetail from "./component/card/CardProductDetail";
 import UserCardAppHistory from "./component/admin/user/UserCardAppHitsory";
 import UserCardCancelHistory from "./component/admin/user/UserCardCancelHistory";
+import CardManage from "./component/admin/card/CardManage";
+import CardManageDetail from "./component/admin/card/CardManageDetail";
+import CardNew from "./component/admin/card/CardNew";
+import FinancialManage from "./component/admin/financial/FinancialManage";
 
 const ProjectRouter = () => {
 	return (
@@ -44,7 +48,11 @@ const ProjectRouter = () => {
 					<Route path="userManagementDetail/:index" element=<UserManagementDetail/> />
 					<Route path="userCardAppHistory" element=<UserCardAppHistory/> />
 					<Route path="userCardCancelHistory" element=<UserCardCancelHistory/> />
-				</Route> 
+					<Route path="cardManage" element=<CardManage/> />
+					<Route path="cardManageDetail/:index" element=<CardManageDetail/> />
+					<Route path="cardNew" element=<CardNew/> />
+					<Route path="financialManage" element=<FinancialManage/> />
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	);

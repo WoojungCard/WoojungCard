@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
@@ -72,4 +73,5 @@ public class CardController {
 	public ResponseEntity<String> userCardCancelApprove(@RequestBody Long id) throws UpdateException {
 		return cardService.userCardCancelApprove(id);
 	}
+	
 }
