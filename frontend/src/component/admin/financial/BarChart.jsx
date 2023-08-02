@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ResponsiveBar, Bar, BarTooltip } from '@nivo/bar';
 
-const Barchart = () => {
+const BarChart = () => {
     const handle = {
         barClick: (data) => {
             console.log(data);
@@ -177,4 +177,4 @@ const Barchart = () => {
     );
 };
 
-export default Barchart;
+export default BarChart;
