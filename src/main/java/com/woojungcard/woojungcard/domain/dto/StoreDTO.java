@@ -14,7 +14,6 @@ public class StoreDTO {
 	private Long id;
 	private String businessNumber;
 	private String storePwd;
-	private String ownerName;
 	private String storeName;
 	private String representative;
 	private String storeZipCode;
@@ -25,5 +24,5 @@ public class StoreDTO {
 	private String businessType;
 	private LocalDate storeJoinDate;
 	private String status;
-	
+	private String auth;
 }

@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
+import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
+import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
@@ -26,7 +31,7 @@ public class StoreController {
 	private final StoreService storeService;
 	
 	@PostMapping("/idcheck")
-	public ResponseEntity<String> idCheck(@RequestBody StoreIdCheckRequest request)throws StoreIdCheckException{
+	public Boolean idCheck(@RequestBody StoreIdCheckRequest request)throws StoreIdCheckException{
 		return storeService.storeIdCheck(request);
 	}
 	
@@ -38,4 +43,14 @@ public class StoreController {
 	public ResponseEntity<String> storeUpdate(@RequestBody StoreUpdateRequest reqeust)throws StoreUpdateException{
 		return storeService.storeUpdate(reqeust);
 	}
+	@PostMapping("/login")
+	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest reqeust)throws LoginException{
+		return storeService.storeLogin(reqeust);
+	}
+	// User 	
+	//	@PostMapping("/login")
+	//	public UserLoginResponse userLogin(@RequestBody UserLoginRequest request) throws LoginException {
+	//		return userService.userLogin(request);
+	//	}
+	
 }

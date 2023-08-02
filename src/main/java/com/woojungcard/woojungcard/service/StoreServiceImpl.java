@@ -5,9 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
+import com.woojungcard.woojungcard.domain.dto.StoreDTO;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
+import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
@@ -25,12 +29,12 @@ private final EncryptConfig encryptConfig;
 private final JwtService jwtService;
 
 // store Id Check
-public ResponseEntity<String> storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException{
+public Boolean storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException{
 	Integer countId = storeRepository.storeIdCheck(request);
 	if (countId == 0) {
-		return new ResponseEntity<String>("사용 가능한 아이디입니다.", HttpStatus.OK);
+		return true;
 	} else {
-		throw new StoreIdCheckException();
+		return false;
 	}
 }
 
@@ -62,6 +66,20 @@ public ResponseEntity<String> storeUpdate(StoreUpdateRequest request) throws Sto
 		return new ResponseEntity<String>("변경이 완료되었습니다.", HttpStatus.OK);
 	}else {
 		throw new StoreUpdateException();
+	}
+}
+
+// Store Login
+public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginException {
+	String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), request.getBusinessNumber()); 
+	request.setStorePwd(encodedPwd);
+	StoreDTO store = storeRepository.storeLogin(request);
+	if (store.getId() != null) {
+		String accessToken = jwtService.createAccessToken(store.getId());
+		String refreshToken = jwtService.createRefreshToken(store.getId());
+		return new StoreLoginResponse(accessToken, refreshToken);                
+	} else {
+		throw new LoginException();
 	}
 }
 }

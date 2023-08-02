@@ -23,9 +23,33 @@
 	<insert id ="storeSignUp" parameterType="com.woojungcard.woojungcard.domain.request.StoreSignUpRequest">
 		<![CDATA[
 			INSERT INTO
-				store(business_Number,store_Pwd,store_name,representative,store_address,store_tel,business_start_date,business_type)				
+				store(business_Number,
+				store_pwd,
+				representative,
+				store_name,
+				store_zip_code,
+				store_address1, 
+				store_address2,
+				business_type,
+				business_start_date,
+				store_tel,
+				store_join_date,
+				status,
+				auth)		
 			VALUES
-				(#{businessNumber}, #{storePwd}, #{storeName}, #{representative},#{storeAddress},#{storeTel},#{businessStartDate},#{businessType})
+				(#{businessNumber}, 
+				#{storePwd},
+				#{representative},
+				#{storeName},
+				#{storeZipCode},
+				#{storeAddress1},
+				#{storeAddress2},
+				#{businessType},
+				#{businessStartDate},
+				#{storeTel},
+				now(),
+				"waiting",
+				"store")
 		]]>
 	</insert>
 	<update id="storeInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.StoreUpdateRequest">
@@ -33,7 +57,7 @@
 			UPDATE 
 				store
 			SET
-				owner_name= #{ownerName},
+				representative= #{representative},
 				store_pwd=#{storePwd},
 				store_zip_code=#{storeZipCode},
 				store_address1=#{storeAddress1},
@@ -54,5 +78,24 @@
 				id=#{id}
 		]]>
 	</select>
-	
+	<!-- 스토어 로그인 -->
+	<select id = "storeLogin" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO" parameterType="com.woojungcard.woojungcard.domain.request.StoreLoginRequest">
+		<![CDATA[
+			SELECT
+				id
+			FROM
+				store
+			WHERE
+				business_number = #{businessNumber} AND store_pwd = #{storePwd}
+		]]>
+	</select>
+	<!-- Get Store List -->
+	<select id = "storeList" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO">
+		<![CDATA[
+    	SELECT
+    		*
+    	FROM
+    		store
+    	]]>
+	</select>
 </mapper>

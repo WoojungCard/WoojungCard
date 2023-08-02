@@ -30,8 +30,7 @@ function StoreJoin() {
 	const [storeType, setStoreType] = useState('');
 	
 	const onChangeinputStoreId = (e) => {
-		const storeId = JSON.stringify(e.target.value);
-		setInsertStoreId(storeId);
+		setInsertStoreId(e.target.value);
 	};
 
 			

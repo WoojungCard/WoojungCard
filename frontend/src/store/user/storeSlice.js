@@ -28,6 +28,18 @@ export const storeSignUp = createAsyncThunk("/store/signup", async (store, thunk
     }
 })
 
+export const storeLogin = createAsyncThunk("/store/login", async(loginInfo2, thunkAPI) => {
+    try {
+		console.log(loginInfo2);
+        const response = await api("POST", "/store/login", loginInfo2);
+        console.log(response.data);
+        return response.data;
+    } catch (err) {
+        return thunkAPI.rejectWithValue(err.response);
+    }
+})
+
+
 const storeSlice = createSlice({
     name: "store",
     initialState,
@@ -53,6 +65,19 @@ const storeSlice = createSlice({
             .addCase(storeSignUp.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload.data;
+            })
+            .addCase(storeLogin.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(storeLogin.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+                localStorage.setItem("RefreshToken", action.payload.refreshToken);
+                localStorage.setItem("AccessToken", action.payload.accessToken);
+            })
+            .addCase(storeLogin.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             })
     }
 });
