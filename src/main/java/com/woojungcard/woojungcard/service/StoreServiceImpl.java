@@ -10,6 +10,7 @@ import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
@@ -82,4 +83,11 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 		throw new LoginException();
 	}
 }
+
+//Store Get Info
+	public StoreInfoResponse storeGetInfo() {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		StoreInfoResponse response = storeRepository.storeGetInfo(id);
+		return response;
+	}
 }

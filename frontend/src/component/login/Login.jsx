@@ -55,7 +55,7 @@ function Login() {
 		} else if (userType === 's') {
 			console.log(loginInfo2);
 			dispatch(storeLogin(loginInfo2));
-			//	navigate('/storeInfoUpdate')
+				navigate('/store/StoreInfoUpdate');
 			//console.log("store Login");
 		}
 	}; 

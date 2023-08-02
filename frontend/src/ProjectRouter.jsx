@@ -25,7 +25,6 @@ const ProjectRouter = () => {
 					<Route path="join" element=<Join/> />
 					<Route path="userJoin" element=<UserJoin/> />
 					<Route path="storeJoin" element=<StoreJoin/> />
-					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
 				</Route>
 
 				{/* 개인 고객 */}
@@ -34,6 +33,11 @@ const ProjectRouter = () => {
 					<Route path="cardapplication/:cardId" element=<UserCardApplication/> /> 
 					<Route path="cardApp" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
+				</Route>
+				
+				{/* 가맹점 */}
+				<Route path="/store" element=<MainLayout/> >
+					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
 				</Route>
 				
 				{/* 카드사 관리자 레이아웃 */}

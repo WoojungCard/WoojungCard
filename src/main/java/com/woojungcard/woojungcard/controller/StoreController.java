@@ -1,6 +1,7 @@
 package com.woojungcard.woojungcard.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +12,8 @@ import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
-import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
-import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
@@ -47,10 +47,10 @@ public class StoreController {
 	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest reqeust)throws LoginException{
 		return storeService.storeLogin(reqeust);
 	}
-	// User 	
-	//	@PostMapping("/login")
-	//	public UserLoginResponse userLogin(@RequestBody UserLoginRequest request) throws LoginException {
-	//		return userService.userLogin(request);
-	//	}
+	
+	@GetMapping("/info")
+	public StoreInfoResponse storeGetInfo() {
+		return storeService.storeGetInfo();
+	} 
 	
 }

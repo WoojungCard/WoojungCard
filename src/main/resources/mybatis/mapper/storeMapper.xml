@@ -52,6 +52,7 @@
 				"store")
 		]]>
 	</insert>
+	<!-- 스토어 정보 변경 -->
 	<update id="storeInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.StoreUpdateRequest">
 		<![CDATA[
 			UPDATE 
@@ -89,7 +90,31 @@
 				business_number = #{businessNumber} AND store_pwd = #{storePwd}
 		]]>
 	</select>
+
+	
+	<!-- 스토어 정보 조회 -->
 	<!-- Get Store List -->
+	<select id= "storeGetInfo" resultType="com.woojungcard.woojungcard.domain.response.StoreInfoResponse" parameterType="long">
+		<![CDATA[
+		SELECT
+			business_Number,
+			representative,
+			store_name,
+			store_zip_code,
+			store_address1, 
+			store_address2,
+			business_type,
+			business_start_date,
+			store_tel,
+			store_join_date,
+			status,
+			auth
+		FROM
+			store
+		WHERE
+			id = #{id}	
+		]]>
+	</select>
 	<select id = "storeList" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO">
 		<![CDATA[
     	SELECT

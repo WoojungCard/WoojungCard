@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 public class StoreUpdateRequest {
 	private Long id;
-	private String ownerName;
+	private String representative;
 	private String storePwd;
 	private String storeZipCode;
 	private String storeAddress1;
