@@ -14,7 +14,7 @@ const Barchart = () => {
 
     return (
         // chart height이 100%이기 때문이 chart를 덮는 마크업 요소에 height 설정
-        <div style={{ width: '800px', height: '500px', margin: '0 auto' }}>
+        <div style={{ width: '600px', height: '350px', margin: '0 auto' }}>
             <ResponsiveBar
 
                 layout='horizontal'
@@ -46,7 +46,7 @@ const Barchart = () => {
                 /**
                  * chart margin
                  */
-                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                margin={{ top: 50, right: 100, bottom: 30, left: 60 }}
                 /**
                  * chart padding (bar간 간격)
                  */
@@ -69,6 +69,7 @@ const Barchart = () => {
                         text: {
                             fontSize: 14,
                             fill: '#000000',
+                            display: 'none'
                         },
                     },
                     /**
@@ -110,7 +111,7 @@ const Barchart = () => {
                  */
                 axisLeft={{
                     tickSize: 0, // 값 설명하기 위해 튀어나오는 점 크기
-                    tickPadding: -50, // tick padding
+                    tickPadding: 10, // tick padding
                     tickRotation: 0, // tick 기울기
                     // legend: 'price', // left 글씨
                     // legendPosition: 'middle', // 글씨 위치
@@ -138,7 +139,7 @@ const Barchart = () => {
                         direction: 'row', // item 그려지는 방향
                         justify: false, // 글씨, 색상간 간격 justify 적용 여부
                         translateX: 120, // chart와 X 간격
-                        translateY: -15, // chart와 Y 간격
+                        translateY: -20, // chart와 Y 간격
                         itemsSpacing: 2, // item간 간격
                         itemWidth: 100, // item width
                         itemHeight: 20, // item height

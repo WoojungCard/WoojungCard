@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 const styles = {
     main: {
         textDecoration: 'none',
-        fontSize: 25,
+        fontSize: 22,
         fontWeight: 'bold',
         color: 'black'
     }
@@ -26,7 +26,7 @@ function AdminHeader() {
                     
                     <Link to={"/"} style={styles.main}>가맹점관리</Link>
                     
-                    <Link to={"/"} style={styles.main}>정산관리</Link>
+                    <Link to={"/admin/financialManage"} style={styles.main}>정산관리</Link>
                     
                     <Link to={"/"} style={styles.main}>로그아웃</Link>
                 </div>
