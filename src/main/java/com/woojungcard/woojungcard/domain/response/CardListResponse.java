@@ -3,7 +3,7 @@ package com.woojungcard.woojungcard.domain.response;
 import java.time.LocalDate;
 
 import com.woojungcard.woojungcard.domain.enums.CardType;
-import com.woojungcard.woojungcard.domain.enums.StateType;
+import com.woojungcard.woojungcard.domain.enums.ProductState;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +19,6 @@ public class CardListResponse {
 	private CardType cardType;
 	private String cardInfo;
 	private LocalDate registerDate;
-	private StateType state;
+	private ProductState state;
 	private long count;
 }

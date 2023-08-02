@@ -15,12 +15,12 @@ const initialState = {
 // Card All list (state = Proceeding)
 export const cardList = createAsyncThunk("/card/list", async() => {
     const response = await api("GET", "/card/list");
+    console.log(response.data);
     return response.data;
 })
 
 // Card Get Info
 export const cardGetInfo = createAsyncThunk("/card/getInfo/{cardId}", async (id) => {
-    // console.log(id);
     const response = await api("GET", `/card/getInfo/${id}`);
     return response.data;
 });

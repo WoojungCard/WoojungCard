@@ -21,6 +21,7 @@ function CardProductList() {
 			
 			<div className="row row-cols-2 pt-3 mx-5 px-5">
 			{cardListData?.map((el)=>
+			el.state === "PROCEEDING" &&
 				<Link to={`/user/cardapplication/${el.id}`}
 					style={{color: "black", textDecoration: "none"}}>
 						
@@ -37,10 +38,9 @@ function CardProductList() {
 								<span className="fw-bold">[{el.cardName}]</span><br/>
 								<span>{el.cardInfo}</span>
 							</div>
-						</div>
-						
+						</div>						
 				</Link>
-				)}
+)}
 			</div>
 		</div>		
 	);
