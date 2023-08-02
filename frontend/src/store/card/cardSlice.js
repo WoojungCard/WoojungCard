@@ -12,7 +12,7 @@ const initialState = {
     error: null
 }
 
-// Card All list (state = Proceeding)
+// Card All list
 export const cardList = createAsyncThunk("/card/list", async() => {
     const response = await api("GET", "/card/list");
     console.log(response.data);

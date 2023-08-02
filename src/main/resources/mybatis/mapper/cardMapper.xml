@@ -26,7 +26,7 @@
 		cp.card_info,
 		cp.register_date,
 		cp.state,
-		COUNT(ci.card_id) as count
+		COUNT(ci.card_id) AS count
 	FROM
 		card_product cp
    	LEFT JOIN card_issued ci 
