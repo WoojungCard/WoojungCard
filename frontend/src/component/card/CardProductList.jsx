@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import { cardList } from "../../store/card/cardSlice";
@@ -14,15 +14,31 @@ function CardProductList() {
 		dispatch(cardList());
 	},[])
 
+	const [cardType, setCardType] = useState("CREDIT");
+
+	const goToCheck = () => {
+		setCardType("CHECK");
+	};
+
+	const goToCredit = () => {
+		setCardType("CREDIT");
+	};
+
+
 	return (
 		<div className="container mt-5 pt-5">
+
+			<p onClick={goToCheck}>체크카드</p>
+			<p onClick={goToCredit}>신용카드</p>
 		
-			<h4 className="fw-bold text-center">신용카드</h4>
+			<h4 className="fw-bold text-center">{cardType === "CREDIT" ? "신용카드" : "체크카드"}</h4>
 			
 			<div className="row row-cols-2 pt-3 mx-5 px-5">
 			{cardListData?.map((el)=>
 			el.state === "PROCEEDING" &&
+			el.cardType === cardType &&
 				<Link to={`/user/cardapplication/${el.id}`}
+					key={el.id}
 					style={{color: "black", textDecoration: "none"}}>
 						
 						<div className="row my-4 py-2">
