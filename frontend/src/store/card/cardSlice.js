@@ -5,8 +5,10 @@ const initialState = {
     cardListData : [],
     data: {},
     cardInfo: {},
+    cardPossessionList: [],
     cardAppHistoryData: [],
     cardCancelHistoryData: [],
+    cardUsageHistory: [],
     data: {},
     status : "idle",
     error: null
@@ -15,7 +17,6 @@ const initialState = {
 // Card All list (state = Proceeding)
 export const cardList = createAsyncThunk("/card/list", async() => {
     const response = await api("GET", "/card/list");
-    console.log(response.data);
     return response.data;
 })
 
@@ -57,6 +58,18 @@ export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", asy
     return response.data;
 })
 
+// User Card Possession History
+export const userCardPossessionHistory = createAsyncThunk("/card/userCardPossession", async() => {
+    const response = await api("GET", "/card/userCardPossession");
+    return response.data;
+})
+
+// User Card Usage History
+export const userCardUsageHistory = createAsyncThunk("/card/userUsageHistory", async(request) => {
+    const response = await api("POST", "/card/userUsageHistory", request);
+    console.log(response.data);
+    return response.data;
+})
 
 const cardSlice = createSlice({
     name: "card",
@@ -131,6 +144,26 @@ const cardSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(userCardCancelApprove.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userCardPossessionHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userCardPossessionHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.cardPossessionList = action.payload;
+            })
+            .addCase(userCardPossessionHistory.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userCardUsageHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userCardUsageHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.cardUsageHistory = action.payload;
+            })
+            .addCase(userCardUsageHistory.rejected, (state, action) => {
                 state.status = "failed";
             })
     }

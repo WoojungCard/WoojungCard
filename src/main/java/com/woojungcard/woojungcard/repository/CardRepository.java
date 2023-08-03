@@ -6,11 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
 import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse;
 
 @Repository
 @Mapper
@@ -40,6 +42,11 @@ public interface CardRepository {
 	
 	// User Card Cancel Date Add
 	Integer addUserCardCancelDate(Long id);
+	
+	// User Card Possession History
+	List<String> userCardPossessionHistory(Long id);
 
+	// User Card Usage History
+	List<UserCardUsageHistoryResponse> userCardUsageHistory(UserCardUsageHistoryRequest request);
 
 }
