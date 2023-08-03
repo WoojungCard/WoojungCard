@@ -9,17 +9,10 @@ import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { storeGetInfo, storeIdCheck, storeSignUp } from "../../store/user/storeSlice";
+import { storeGetInfo, storeIdCheck, storeInfoUpdate, storeSignUp } from "../../store/user/storeSlice";
 
 // 가맹점 회원가입
 function StoreInfoUpdate() {
-	const { storeInfo } = useSelector((state) => state.store);
-	
-	const dispatch = useDispatch();
-	
-	  useEffect(()=> {
-        dispatch(storeGetInfo());
-    },[])
 	
 	const [insertStoreId, setInsertStoreId] = useState('');
 	const [insertStorePwd, setInsertStorePwd] = useState('');
@@ -32,6 +25,23 @@ function StoreInfoUpdate() {
 	const [insertStoreTel, setInsertStoreTel] = useState('');
 	
 	const [storeType, setStoreType] = useState('');
+	
+	const { storeInfo } = useSelector((state) => state.store);
+	
+	const dispatch = useDispatch();
+	
+  	useEffect(()=> {
+        dispatch(storeGetInfo());
+    },[]);
+    
+    useEffect(() => {
+		setInsertStoreRepresent(storeInfo.representative);
+		setZipCode(storeInfo.storeZipCode);
+		setInsertStoreAddr(storeInfo.storeAddress1);
+		setInsertStoreAddrDetail(storeInfo.storeAddress2);
+		setInsertStoreTel(storeInfo.storeTel);
+	}, [storeInfo]);
+	
 	
 	const onChangeinputStoreId = (e) => {
 		setInsertStoreId(e.target.value);
@@ -128,32 +138,25 @@ function StoreInfoUpdate() {
     const onChangeinputStoreAddrDetail = (e) => {
 		setInsertStoreAddrDetail(e.target.value);
 	};
+
 	
 	
 	
-	const store = ({
-	
-	"businessNumber" : insertStoreId,
-	"storePwd" : insertStorePwd,
-	"representative" : insertStoreRepresent, 
-	"storeName" : insertStoreName,
-	"storeZipCode" : zipCode,
-	"storeAddress1" :insertStoreAddr,
-	"storeAddress2" :insertStoreAddrDetail, 
-	"businessStartDate" : insertStoreDate,
-	"businessType" : storeType,
-	"storeTel" : insertStoreTel
+	const info = ({
+		"representative" : insertStoreRepresent, 
+		"storePwd" : insertStorePwd,
+		"storeZipCode" : zipCode,
+		"storeAddress1" :insertStoreAddr,
+		"storeAddress2" :insertStoreAddrDetail, 
+		"storeTel" : insertStoreTel
 	})
 	
-	
-//	가맹점 신청하기 클릭
-	const onClickStoreJoin = (e) => {
-		// e.prventDefault();
-		console.log(store);
-		dispatch(storeSignUp(store));
-	};
-	
-	
+	const onClickStoreInfoUpdate = (e) => {
+	    e.preventDefault();
+	    console.log(info);
+	    dispatch(storeInfoUpdate(info));
+	}
+
 	return (
 		<div className="mt-5">
 			<Container className="container d-flex justify-content-center my-3">
@@ -166,10 +169,10 @@ function StoreInfoUpdate() {
                             type="text" placeholder="사업자번호를 입력하세요"
                             onChange={onChangeinputStoreId}
                             onBlur={handleBlur}
-                             defaultValue={storeInfo.businessNumber}
+                            defaultValue={storeInfo.businessNumber}
                             className="mb-2"
                             disabled
-                            readOnly
+                            style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
                         />
                     </Form.Group>
                     
@@ -178,8 +181,9 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="비밀번호를 입력하세요"
+                            type="password" placeholder="변경할 비밀번호를 입력하세요"
                             onBlur={handlePwdBlur}
+                            Value={storeInfo.storePwd}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -189,9 +193,14 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextRepresent">
 						<Form.Label className="mb-0 ">대표자</Form.Label>
                         <Form.Control
-                            type="text" placeholder="대표자명을 입력하세요"
+                            type="text" 
+                            placeholder="대표자명을 입력하세요"
                             onChange={onChangeinputStoreRepresent}
+                            Value={storeInfo.representative}
+                 
                             className="mb-2"
+                            
+                          
                         />
                     </Form.Group>
                     
@@ -200,10 +209,11 @@ function StoreInfoUpdate() {
                         <Form.Control
                             type="text" placeholder="사업장명을 입력하세요"
                             onChange={onChangeinputStoreName}
+                            defaultValue={storeInfo.storeName}
                             className="mb-2"
                             disabled
-                            readOnly
-                            value={setInsertStoreName}
+                            style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
+                          
                         
                         />
                     </Form.Group>
@@ -214,20 +224,21 @@ function StoreInfoUpdate() {
                         type="text" placeholder="검색"
                         style={{width: "75px"}}
                         onClick={handleShow}
-                        value={zipCode}
+                        Value={storeInfo.storeZipCode}
                         className="mb-1"
-                        readOnly
+                    
                     />
                     <Form.Control
                         type="text" placeholder="사업장주소를 입력하세요"
-                        value={insertStoreAddr}
                         onClick={handleShow}
+                        Value={storeInfo.storeAddress1}
                         className="mb-1"
-                        readOnly
+                  
                     />
                     <Form.Control
                         type="text" placeholder="상세주소를 입력하세요"
                         onChange={onChangeinputStoreAddrDetail}
+                        Value={storeInfo.storeAddress2}
                         className="mb-2"
                     />
                     
@@ -241,7 +252,13 @@ function StoreInfoUpdate() {
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
-                        <Form.Select aria-label="Default select example" className="mb-2" onChange={handleStoreType}>
+                        <Form.Select aria-label="Default select example" className="mb-2" onChange={handleStoreType} 
+                        	 defaultValue={storeInfo.businessType}
+                        	 disabled
+                         	 style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
+                        >
+                      
+                        	
                         	<option>업종을 선택하세요</option>
                         	<option value="1">가전/가구</option>
                         	<option value="2">가정생활/서비스</option>
@@ -256,7 +273,8 @@ function StoreInfoUpdate() {
                         	<option value="11">자동차</option>
                         	<option value="12">주유</option>
                         	<option value="13">패션/잡화</option>
-					    </Form.Select>
+					    </Form.Select> 
+					   
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
@@ -264,11 +282,11 @@ function StoreInfoUpdate() {
                         <Form.Control
                             type="text" placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputUserBirth}
+                            defaultValue={storeInfo.businessStartDate}
                             maxLength={10}
-                            value={setInsertStoreDate}
                             className="mb-2"
                             disabled
-                            readOnly
+                            style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
                         />
                     </Form.Group>
 			        
@@ -278,14 +296,15 @@ function StoreInfoUpdate() {
                             type="text" placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
                             maxLength={13}
-                            value={insertStoreTel}
+                          	Value={storeInfo.storeTel}
                             className="mb-4"
                         />
                     </Form.Group>
 
                     <div className="d-grid gap-1">
-                        <Button className="px-3" variant="outline-dark" onClick={onClickStoreJoin}>신청하기</Button>
+                        <Button className="px-3" variant="outline-dark" onClick={onClickStoreInfoUpdate}>변경하기</Button>
                     </div>
+                    
                 </Form>
                         
             </Container>

@@ -40,12 +40,13 @@ public class StoreController {
 		return storeService.storeSignUp(request);
 	}
 	@PutMapping("/update")
-	public ResponseEntity<String> storeUpdate(@RequestBody StoreUpdateRequest reqeust)throws StoreUpdateException{
-		return storeService.storeUpdate(reqeust);
+	public ResponseEntity<String> storeUpdate(@RequestBody StoreUpdateRequest request)throws StoreUpdateException{
+		System.out.println(request);
+		return storeService.storeUpdate(request);
 	}
 	@PostMapping("/login")
-	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest reqeust)throws LoginException{
-		return storeService.storeLogin(reqeust);
+	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest request)throws LoginException{
+		return storeService.storeLogin(request);
 	}
 	
 	@GetMapping("/info")

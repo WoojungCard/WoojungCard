@@ -52,14 +52,13 @@ public ResponseEntity<String> storeSignUp(StoreSignUpRequest request) throws Sig
 }
  // store update
 public ResponseEntity<String> storeUpdate(StoreUpdateRequest request) throws StoreUpdateException{
-//	Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+	Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 
-	String businessNumber = storeRepository.findBNById(request.getId());
+	String businessNumber = storeRepository.findBNById(id);
 	
 	String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), businessNumber);
 	request.setStorePwd(encodedPwd);
-	
-//	request.setId(id);
+	request.setId(id);
 	
 	Integer updateRow = storeRepository.storeInfoUpdate(request);
 	
