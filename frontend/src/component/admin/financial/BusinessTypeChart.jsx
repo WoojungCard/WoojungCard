@@ -1,80 +1,58 @@
 import { ResponsiveBar } from "@nivo/bar";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { adminBusinessTypeData } from "../../../store/admin/adminSlice";
 
-function BusinessTypeChart() {
+function BusinessTypeChart(props) {
+  
+  const dispatch = useDispatch();
+  const {businessTypeData} = useSelector((state) => state.admin);
+  const [data, setData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
-    const data = [
-        {
-          "businessType": "가전/가구",
-          "lastYear": 94,
-          "thisYear": 198
-        },
-        {
-          "businessType": "가정/서..",
-          "lastYear": 125,
-          "thisYear": 49
-        },
-        {
-          "businessType": "교육/학원",
-          "lastYear": 87,
-          "thisYear": 0
-        },
-        {
-          "businessType": "문화/레저",
-          "lastYear": 200,
-          "thisYear": 128
-        },
-        {
-          "businessType": "미용",
-          "lastYear": 111,
-          "thisYear": 4
-        },
-        {
-          "businessType": "여행/교통",
-          "lastYear": 38,
-          "thisYear": 78
-        },
-        {
-          "businessType": "요식/유흥",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "유통",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "음/식료품",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "의료",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "자동차",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "주유",
-          "lastYear": 85,
-          "thisYear": 33
-        },
-        {
-          "businessType": "패션/잡화",
-          "lastYear": 85,
-          "thisYear": 33
-        }
-      ];
+  const selectedMonth = props.selectedMonth;
+  const lastYearMonth = props.lastYearMonth;
 
+  const paymentData = ({
+    "paymentMonth" : selectedMonth,
+    "paymentMonthLastYear" : lastYearMonth
+  });
+
+  useEffect(() => {
+    dispatch(adminBusinessTypeData(paymentData));
+  }, [selectedMonth]);
+
+  useEffect(() => {
+    setData(businessTypeData);
+  }, [businessTypeData]);
+
+  useEffect(() => {
+    console.log(data);
+
+    // const transformData = (data) => {
+    //   // const transformedData = [];
+    //   const lastYearCharges = {};
+    //   const thisYearCharges = {};
+
+    //   data.forEach((data) => {
+    //     const 
+    //     if (data.paymentMonth.include('2022')) {
+
+    //     }
+    //   })
+  
+    // return transformedData;
+    // }
+
+    // const newChartData = transformData(businessTypeData);
+    // setChartData(newChartData);
+    // console.log(chartData);
+  }, [data]);
 
     return (
         <div style={{ width: '1000px', height: '350px', margin: '0 auto' }}>
             <ResponsiveBar
-                data={data}
+                data={chartData}
                 keys={[
                     'lastYear',
                     'thisYear'
@@ -122,14 +100,7 @@ function BusinessTypeChart() {
                     legendOffset: 36
                 }}
                 axisRight={null}
-                axisBottom={{
-                    tickSize: 0,
-                    tickPadding: 5,
-                    tickRotation: 0,
-                    legend: '',
-                    legendPosition: 'middle',
-                    legendOffset: 32
-                }}
+                axisBottom={null}
                 axisLeft={null}
                 enableGridY={false}
                 enableLabel={false}
@@ -147,7 +118,7 @@ function BusinessTypeChart() {
                 legends={[
                     {
                         dataFrom: 'keys',
-                        anchor: 'bottom-right',
+                        anchor: 'top-right',
                         direction: 'column',
                         justify: false,
                         translateX: 120,

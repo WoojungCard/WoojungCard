@@ -275,9 +275,9 @@ function LineChart() {
                 axisTop={null}
                 axisRight={null}
                 axisBottom={{
-                    tickSize: 1,
+                    tickSize: 0,
                     tickPadding: 5,
-                    tickRotation: 0,
+                    tickRotation: -80,
                     // legend: 'transportation',
                     legendOffset: 36,
                     legendPosition: 'middle'

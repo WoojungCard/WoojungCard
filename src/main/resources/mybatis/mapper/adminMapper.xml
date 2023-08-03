@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woojungcard.woojungcard.repository.AdminRepository">
+
+	<!-- 성/연령별 소비현황 -->
+	<select id="genderAgeGroup" parameterType="com.woojungcard.woojungcard.domain.request.AdminDateRequest" resultType="com.woojungcard.woojungcard.domain.response.AdminAnalysisGenderAgeResponse">
+		<![CDATA[
+			SELECT
+				SUM(t.card_charge) AS total_charge,
+				u.user_gender,
+				DATE_FORMAT(t.payment_date, '%Y-%m') AS payment_month,
+				CASE
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 20 AND 29 THEN '20대'
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 30 AND 39 THEN '30대'
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 40 AND 49 THEN '40대'
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 50 AND 59 THEN '50대'
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 60 AND 69 THEN '60대'
+				    WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365) BETWEEN 70 AND 79 THEN '70대'
+				    ELSE '기타'
+				END AS age_group
+			FROM transaction t
+			JOIN card_issued ci 
+			ON t.card_issued_id = ci.id
+			JOIN user u 
+			ON u.id = ci.user_id
+			GROUP BY payment_month, age_group, u.user_gender
+			HAVING payment_month = #{paymentMonth}
+		]]>
+	</select>
+	
+	<!-- 업종별 소비현황 -->
+	<select id="businessTypeGroup" parameterType="com.woojungcard.woojungcard.domain.request.AdminDateRequest" resultType="com.woojungcard.woojungcard.domain.response.AdminAnalysisBusinessTypeResponse">
+		<![CDATA[
+			SELECT 
+				s.business_type, 
+				SUM(t.card_charge) AS total_charge,
+				DATE_FORMAT(t.payment_date, '%Y-%m') AS payment_month
+			FROM transaction t
+			JOIN store s ON t.store_id = s.id
+			GROUP BY s.business_type, payment_month
+			HAVING payment_month IN (#{paymentMonth}, #{paymentMonthLastYear})
+		]]>
+	</select>
+</mapper>

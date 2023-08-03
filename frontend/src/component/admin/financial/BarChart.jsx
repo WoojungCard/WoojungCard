@@ -1,16 +1,88 @@
 import * as React from 'react';
 import { ResponsiveBar, Bar, BarTooltip } from '@nivo/bar';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { adminGenderAgeData } from '../../../store/admin/adminSlice';
+import { useState } from 'react';
+import { useCallback } from 'react';
 
-const BarChart = () => {
-    const handle = {
-        barClick: (data) => {
-            console.log(data);
-        },
+const BarChart = (props) => {
 
-        legendClick: (data) => {
-            console.log(data);
-        },
-    };
+
+    const dispatch = useDispatch();
+    const {genderAgeData} = useSelector((state) => state.admin);
+    const [data, setData] = useState([]);
+    const [chartData, setChartData] = useState([]);
+
+    const selectedMonth = props.selectedMonth;
+    const lastYearMonth = props.lastYearMonth;
+    // console.log(selectedMonth);
+
+    const paymentData = ({
+        "paymentMonth" : selectedMonth,
+        "paymentMonthLastYear" : lastYearMonth
+    });
+
+
+    useEffect(() => {
+        dispatch(adminGenderAgeData(paymentData));
+    }, [selectedMonth]);
+
+    useEffect(() => {
+        setData(genderAgeData);
+    }, [genderAgeData]);
+
+    useEffect(() => {
+        // console.log(data);
+
+        // 그래프에 적용하기 위한 데이터 형식으로 변환
+        const transformData = (data) => {
+            const maleCharges = {};
+            const femaleCharges = {};
+        
+            data.forEach((data) => {
+                const ageGroup = data.ageGroup;
+                const totalCharge = data.totalCharge;
+            
+                if (data.userGender === 'MAN') {
+                    maleCharges[ageGroup] = (maleCharges[ageGroup] || 0) + totalCharge;
+                } else if (data.userGender === 'WOMAN') {
+                    femaleCharges[ageGroup] = (femaleCharges[ageGroup] || 0) + totalCharge;
+                }
+            });
+            
+            const transformedData = Object.keys(maleCharges).map((age) => {
+                return {
+                    age: age,
+                    Males: -maleCharges[age],
+                    Females: femaleCharges[age] || 0
+                };
+            });
+        
+            transformedData.sort((a, b) => {
+                const ageA = parseInt(a.age, 10);
+                const ageB = parseInt(b.age, 10);
+                return ageB - ageA;
+            });
+            
+            return transformedData;
+            
+        };
+
+        const newChartData = transformData(genderAgeData);
+        setChartData(newChartData);
+        
+    }, [data]);
+    
+    // const handle = {
+    //     barClick: (data) => {
+            // console.log(data);
+        // },
+
+        // legendClick: (data) => {
+            // console.log(data);
+    //     },
+    // };
 
     return (
         // chart height이 100%이기 때문이 chart를 덮는 마크업 요소에 height 설정
@@ -19,13 +91,13 @@ const BarChart = () => {
 
             {/* y축 값 위치 조정 */}
             <div className='position-absolute fw-bold text-white'
-                 style={{zIndex: 1, left: '270px', top: '65px'}}>
+                 style={{zIndex: 1, left: '270px', top: '65px', textShadow: '2px 2px black'}}>
                 <p className='mb-3 pb-1'>20대</p>
                 <p className='mb-3'>30대</p>
                 <p className='mb-3 pb-1'>40대</p>
                 <p className='mb-3 pb-1'>50대</p>
                 <p className='mb-3 pb-1'>60대</p>
-                <p className='mb-3 pb-1'>70대</p>
+                <p className=''>70대</p>
             </div>
 
             <ResponsiveBar
@@ -40,14 +112,7 @@ const BarChart = () => {
                 /**
                  * chart에 사용될 데이터
                  */
-                data={[
-                    { age: '70대', Males: -1200, Females: 1000 },
-                    { age: '60대', Males: -1200, Females: 1000 },
-                    { age: '50대', Males: -1200, Females: 1000 },
-                    { age: '40대', Males: -1200, Females: 1000 },
-                    { age: '30대', Males: -2200, Females: 2000 },
-                    { age: '20대', Males: -3200, Females: 3000 },
-                ]}
+                data={chartData}
                 /**
                  * chart에 보여질 데이터 key (측정되는 값)
                  */
@@ -64,6 +129,10 @@ const BarChart = () => {
                  * chart padding (bar간 간격)
                  */
                 padding={0.2}
+
+                minValue={-10000000}
+
+                maxValue={10000000}
                 /**
                  * chart 색상
                  */
@@ -142,7 +211,7 @@ const BarChart = () => {
                 /**
                  * bar 클릭 이벤트
                  */
-                onClick={handle.barClick}
+                // onClick={handle.barClick}
                 /**
                  * legend 설정 (default로 우측 하단에 있는 색상별 key 표시)
                  */
@@ -169,7 +238,7 @@ const BarChart = () => {
                                 },
                             },
                         ],
-                        onClick: handle.legendClick, // legend 클릭 이벤트
+                        // onClick: handle.legendClick, // legend 클릭 이벤트
                     },
                 ]}
             />
