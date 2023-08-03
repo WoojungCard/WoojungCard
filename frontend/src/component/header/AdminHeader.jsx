@@ -24,7 +24,7 @@ function AdminHeader() {
                     
                     <Link to={"/admin/userManagement"} style={styles.main}>고객관리</Link>
                     
-                    <Link to={"/"} style={styles.main}>가맹점관리</Link>
+                    <Link to={"/admin/storeManagement"} style={styles.main}>가맹점관리</Link>
                     
                     <Link to={"/admin/financialManage"} style={styles.main}>정산관리</Link>
                     
