@@ -9,13 +9,19 @@ import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
 import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest;
 import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
+import com.woojungcard.woojungcard.domain.enums.PayerType;
+import com.woojungcard.woojungcard.domain.enums.PaymentState;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardPossessionResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse;
 import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.PayBillException;
 import com.woojungcard.woojungcard.exception.UpdateException;
 import com.woojungcard.woojungcard.exception.UserCardApproveException;
 import com.woojungcard.woojungcard.jwt.JwtService;
@@ -106,7 +112,7 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	// User Card Possession History
-	public List<String> userCardPossessionHistory() {
+	public List<UserCardPossessionResponse> userCardPossessionHistory() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		return cardRepository.userCardPossessionHistory(id);
 	}
@@ -117,5 +123,21 @@ public class CardServiceImpl implements CardService {
 		request.setId(id);
 		return cardRepository.userCardUsageHistory(request);
 	}
-
+	
+	// User Pay Card Bill
+	public ResponseEntity<String> userPayCardBill(UserPayCardBillRequest request) throws PayBillException {
+		request.setPayer(PayerType.USER);
+		request.setPaymentState(PaymentState.FULL);
+		Integer insertRow = cardRepository.userPayCardBill(request);
+		if (insertRow != 0) {
+			return new ResponseEntity<>("납부 완료되었습니다.", HttpStatus.OK);
+		} else {
+			throw new PayBillException();
+		}
+	}
+	
+	// User Pay Bill History
+	public Long userPayBillHistory(UserPayBillHistoryRequest request) {
+		return cardRepository.userPayBillHistory(request);
+	}
 }

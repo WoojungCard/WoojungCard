@@ -161,12 +161,18 @@
 	</update>
 	
 	<!-- 고객 카드 보유 내역 조회 -->
-	<select id="userCardPossessionHistory" resultType="String" parameterType="Long">
+	<select id="userCardPossessionHistory" resultType="com.woojungcard.woojungcard.domain.response.UserCardPossessionResponse" parameterType="Long">
 	<![CDATA[
 	SELECT
-		card_number
+		i.id AS id, 
+		i.card_number AS card_number,
+		p.card_type AS card_type
 	FROM
-		card_issued
+		card_issued AS i
+	INNER JOIN
+		card_product AS p
+	ON
+		i.card_id = p.id
 	WHERE
 		user_id = #{id}
 	ORDER BY
@@ -209,7 +215,7 @@
 			WHERE 
 				i.user_id = #{id}
 			AND 
-	 			i.card_number = #{cardNumber}
+	 			i.id = #{cardIssuedId}
 			)
 	AND
 	 	YEAR(t.payment_date) = #{yearChoice} 
@@ -219,5 +225,32 @@
 		approval_number
 	]]>
 	</select>
-
+	
+	<!-- 유저 카드 청구 금액 납부 -->
+	<insert id="userPayCardBill" parameterType="com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest">
+	<![CDATA[
+	INSERT INTO
+		payment(payer, target_id, target_year, target_month, payment, payment_date, payment_state)
+	VALUES
+		(#{payer}, #{targetId}, #{targetYear}, #{targetMonth}, #{payment}, now(), #{paymentState})
+	]]>
+	</insert>
+	
+	<!-- 유저 카드 납부 금액 조회 -->
+	<select id="userPayBillHistory" parameterType="com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest" resultType="Long">
+	<![CDATA[
+	SELECT 
+		sum(payment) 
+	FROM
+		payment 
+	WHERE 
+		payer = "USER" 
+	AND 
+		target_id = #{cardIssuedId} 
+	AND 
+		target_year = #{targetYear} 
+	AND 
+		target_month = #{targetMonth}
+	]]>
+	</select>
 </mapper>

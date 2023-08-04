@@ -9,6 +9,7 @@ const initialState = {
     cardAppHistoryData: [],
     cardCancelHistoryData: [],
     cardUsageHistory: [],
+    payBillHistory: {},
     data: {},
     status : "idle",
     error: null
@@ -61,13 +62,26 @@ export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", asy
 // User Card Possession History
 export const userCardPossessionHistory = createAsyncThunk("/card/userCardPossession", async() => {
     const response = await api("GET", "/card/userCardPossession");
+    console.log(response.data);
     return response.data;
 })
 
 // User Card Usage History
 export const userCardUsageHistory = createAsyncThunk("/card/userUsageHistory", async(request) => {
     const response = await api("POST", "/card/userUsageHistory", request);
-    console.log(response.data);
+    return response.data;
+})
+
+// User Pay Card Bill
+export const userPayCardBill = createAsyncThunk("/card/userPayCardBill", async(request) => {
+    const response = await api("POST", "/card/userPayCardBill", request);
+    return response.data;
+})
+
+// User Pay Bill History
+export const userPayBillHistory = createAsyncThunk("/card/userPayBillHistory", async(request) => {
+    console.log(request);
+    const response = await api("POST", "/card/userPayBillHistory", request);
     return response.data;
 })
 
@@ -164,6 +178,26 @@ const cardSlice = createSlice({
                 state.cardUsageHistory = action.payload;
             })
             .addCase(userCardUsageHistory.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userPayCardBill.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userPayCardBill.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+            })
+            .addCase(userPayCardBill.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userPayBillHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userPayBillHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.payBillHistory = action.payload;
+            })
+            .addCase(userPayBillHistory.rejected, (state, action) => {
                 state.status = "failed";
             })
     }

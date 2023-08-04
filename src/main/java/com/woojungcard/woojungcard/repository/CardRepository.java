@@ -3,15 +3,19 @@ package com.woojungcard.woojungcard.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
 import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest;
 import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardPossessionResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse;
 
 @Repository
@@ -34,7 +38,7 @@ public interface CardRepository {
 	// Card_Canceled Add
 	Integer userCardCanceledAdd(Long id);
 	
-	// Card Cancel Application History
+	// Card Cancel Application History 
 	List<CardCancelHistoryResponse> userCardCancelHistory();
 	
 	// User Card Cancel Approve
@@ -44,9 +48,14 @@ public interface CardRepository {
 	Integer addUserCardCancelDate(Long id);
 	
 	// User Card Possession History
-	List<String> userCardPossessionHistory(Long id);
+	List<UserCardPossessionResponse> userCardPossessionHistory(Long id);
 
 	// User Card Usage History
 	List<UserCardUsageHistoryResponse> userCardUsageHistory(UserCardUsageHistoryRequest request);
+	
+	// User Pay Card Bill
+	Integer userPayCardBill(UserPayCardBillRequest reuqest);
 
+	// User Pay Bill History
+	Long userPayBillHistory(UserPayBillHistoryRequest request);
 }
