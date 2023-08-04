@@ -21,6 +21,7 @@ import CardManageDetail from "./component/admin/card/CardManageDetail";
 import CardNew from "./component/admin/card/CardNew";
 import FinancialManage from "./component/admin/financial/FinancialManage";
 import StoreManagement from "./component/admin/store/StoreManagement";
+import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 
 const ProjectRouter = () => {
 	return (
@@ -60,6 +61,7 @@ const ProjectRouter = () => {
 					<Route path="cardNew" element=<CardNew/> />
 					<Route path="financialManage" element=<FinancialManage/> />
 					<Route path="storeManagement" element=<StoreManagement/> />
+					<Route path="storeAppManagement" element=<StoreAppManagement/> />
 				</Route>
 			</Routes>
 		</BrowserRouter>
