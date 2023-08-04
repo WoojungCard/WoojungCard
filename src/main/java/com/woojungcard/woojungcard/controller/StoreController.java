@@ -1,5 +1,7 @@
 package com.woojungcard.woojungcard.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,8 @@ import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -54,4 +58,13 @@ public class StoreController {
 		return storeService.storeGetInfo();
 	} 
 	
+	// Store Application Info
+	@GetMapping("/storeAppInfo")
+	public List<StoreAppInfoResponse> storeAppInfo() {
+		return storeService.storeAppInfo();
+	}
+	@GetMapping("/storeAppStatus")
+	public List<StoreAppStatusResponse> storeAppStatus(){
+		return storeService.storeAppStatus();
+	}
 }

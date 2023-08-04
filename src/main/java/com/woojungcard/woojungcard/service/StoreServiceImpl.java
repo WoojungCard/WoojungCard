@@ -1,5 +1,7 @@
 package com.woojungcard.woojungcard.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -88,5 +92,14 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		StoreInfoResponse response = storeRepository.storeGetInfo(id);
 		return response;
+	}
+	
+//store Application Info
+	public List<StoreAppInfoResponse> storeAppInfo(){
+		return storeRepository.storeAppInfo();
+	}
+//store Application Status
+	public List<StoreAppStatusResponse> storeAppStatus(){
+		return storeRepository.storeAppStatus();
 	}
 }

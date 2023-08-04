@@ -10,6 +10,8 @@ import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
@@ -25,5 +27,8 @@ public interface StoreRepository {
 	String findBNById(Long id);
 	StoreDTO storeLogin(StoreLoginRequest request) throws LoginException;
 	StoreInfoResponse storeGetInfo(Long id);
+	//Store Application Status
+	List<StoreAppInfoResponse> storeAppInfo();
+	List<StoreAppStatusResponse> storeAppStatus();
 	List<StoreDTO> storeList();
 }

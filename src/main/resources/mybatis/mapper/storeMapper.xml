@@ -115,12 +115,21 @@
 			id = #{id}	
 		]]>
 	</select>
-	<select id = "storeList" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO">
+	
+	<!--  스토어 등록 정보 조회 -->
+	<select id = "storeAppInfo" resultType="com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse">
 		<![CDATA[
     	SELECT
-    		*
+    		business_Number,
+			representative,
+			store_name,
+			business_type,
+			business_start_date,
+			store_tel
     	FROM
     		store
+    	WHERE
+    		status = "USE"
     	]]>
 	</select>
 </mapper>

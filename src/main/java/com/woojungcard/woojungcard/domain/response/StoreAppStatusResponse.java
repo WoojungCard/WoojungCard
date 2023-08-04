@@ -1,7 +1,5 @@
 package com.woojungcard.woojungcard.domain.response;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,20 +8,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class StoreInfoResponse {
-	private Long id;
+public class StoreAppStatusResponse {
 	private String businessNumber;
-//	private String storePwd;
-	private String storeName;
 	private String representative;
+	private String storeName;
+	private String businessType;
 	private String storeZipCode;
 	private String storeAddress1;
 	private String storeAddress2;
-	private String storeTel;
-	private LocalDate businessStartDate;
-	private String businessType;
-	private LocalDate storeJoinDate;
+	private int businessStartDate;
+	private int storeTel;
 	private String status;
-	private String auth;
-
-} 
+}
