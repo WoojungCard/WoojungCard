@@ -65,7 +65,7 @@ function UserManagement() {
                                                 style={{textDecoration: "none", color: "black"}}>
                                                     {item.userName}
                                             </Link>
-                                            </td>
+                                        </td>
                                         <td>{item.userBirth}</td>
                                         <td>{item.userTel}</td>
                                     </tr>

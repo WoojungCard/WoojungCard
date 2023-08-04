@@ -5,6 +5,7 @@ const initialState = {
     data: {},
     storeIdCheckResult : "",
     storeInfo : {},
+    storeListData : [],
     status : "idle",
     loginStatus : "idle",
     error: null
@@ -40,6 +41,13 @@ export const storeLogin = createAsyncThunk("/store/login", async(loginInfo2, thu
         return thunkAPI.rejectWithValue(err.response);
     }
 })
+
+export const storeList = createAsyncThunk("/store/storeAppInfo", async() => {
+	const response = await api("GET", "/store/storeAppInfo");
+
+	return response.data;	
+})
+	
 
 // store Get Info
 export const storeGetInfo = createAsyncThunk("/store/info", async() => {
@@ -121,6 +129,14 @@ const storeSlice = createSlice({
                 state.status = "failed";
                 state.error = action.payload;
             })
+            .addCase(storeList.rejected, (state, action)=> {
+				state.status = "failed";
+				state.error = action.payload;
+			})
+			.addCase(storeList.fulfilled,(state, action)=> {
+				state.status = "successed";
+				state.storeListData = action.payload;
+			})
     }
 });
 export default storeSlice.reducer;

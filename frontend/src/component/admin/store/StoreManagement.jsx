@@ -5,9 +5,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { storeList } from "../../../store/store/storeSlice";
 
 function StoreManagement() {
-
+	const dispatch = useDispatch();
+	const {storeListData} = useSelector((state) => state.store);
+	
+	useEffect(() => {
+        dispatch(storeList());
+    }, []);
+	
     // 상호명 검색
     const searchStore = (e) => {
         if (e.key === "Enter") {
@@ -47,8 +54,8 @@ function StoreManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {
-                            userListData.map((item, index) => {
+                        {
+                            storeListData.map((item, index) => {
                                 index = index + 1;
                                 return (
                                     <tr key={index}>
@@ -57,15 +64,19 @@ function StoreManagement() {
                                             <Link to={`/admin/userManagementDetail/${index}`} 
                                                 state={{index: `${(index - 1)}`}} 
                                                 style={{textDecoration: "none", color: "black"}}>
-                                                    {item.userName}
+                                                    {item.businessNumber}
                                             </Link>
                                         </td>
-                                        <td>{item.userBirth}</td>
-                                        <td>{item.userTel}</td>
+                                        <td>{item.storeName}</td>
+                                        <td>{item.representative}</td>
+                                        <td>{item.businessType}</td>
+                                        <td>{item.businessStartDate}</td>
+                                        <td>{item.storeTel}</td>
+                                        
                                     </tr>
                                 )
                             })
-                        } */}
+                        }
                     </tbody>
                 </Table>
             </div>
