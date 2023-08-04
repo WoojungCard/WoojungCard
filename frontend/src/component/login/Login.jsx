@@ -8,7 +8,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../store/user/userSlice";
-import { storeLogin } from "../../store/user/storeSlice";
+import { storeLogin } from "../../store/store/storeSlice";
 
 // 로그인
 function Login() {
@@ -70,10 +70,10 @@ function Login() {
 					<Form.Group className="row mb-4" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="userType" defaultValue="u" value={userType} onChange={handleUserType}>
 					        <ToggleButton  variant="outline-dark" id="tbg-radio-1" value="u">
-					          개인 고객
+					          	개인 고객
 					        </ToggleButton>
 					        <ToggleButton variant="outline-dark" id="tbg-radio-2" value="s">
-					          가맹점
+					          	가맹점
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>

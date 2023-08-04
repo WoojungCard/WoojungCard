@@ -5,20 +5,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userList } from "../../../store/user/userSlice";
 
-// 카드사 관리자_고객 관리 목록
-function UserManagement() {
+function StoreManagement() {
 
-    const dispatch = useDispatch();
-    const {userListData} = useSelector((state) => state.user);
-
-    useEffect(() => {
-        dispatch(userList());
-    }, []);
-
-    // 고객명 검색
-    const searchUser = (e) => {
+    // 상호명 검색
+    const searchStore = (e) => {
         if (e.key === "Enter") {
             
         }
@@ -26,17 +17,17 @@ function UserManagement() {
 
     return (
         <div className="container mt-5 pt-4">
-            <h4 className="fw-bold text-center">고객정보 조회</h4>
+            <h4 className="fw-bold text-center">가맹점정보조회</h4>
             
             <div className="container w-75">
                 <div className="d-flex justify-content-end mb-1">
                     <Form>
                         <Form.Group as={Row} className="mb-2 pe-0" controlId="searchUserName">
-                            <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>고객명</Form.Label>
+                            <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>상호명</Form.Label>
                             <Col>
                                 <Form.Control 
                                     size="sm" type="text" className="bg-light"
-                                    onKeyPress={searchUser}
+                                    onKeyPress={searchStore}
                                 />
                             </Col>
                         </Form.Group>
@@ -47,13 +38,16 @@ function UserManagement() {
                     <thead className="">
                         <tr>
                             <th>No.</th>
-                            <th>고객명</th>
-                            <th>생년월일</th>
+                            <th>사업자번호</th>
+                            <th>상호</th>
+                            <th>대표자</th>
+                            <th>업종</th>
+                            <th>사업개시일</th>
                             <th>연락처</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {/* {
                             userListData.map((item, index) => {
                                 index = index + 1;
                                 return (
@@ -65,13 +59,13 @@ function UserManagement() {
                                                 style={{textDecoration: "none", color: "black"}}>
                                                     {item.userName}
                                             </Link>
-                                            </td>
+                                        </td>
                                         <td>{item.userBirth}</td>
                                         <td>{item.userTel}</td>
                                     </tr>
                                 )
                             })
-                        }
+                        } */}
                     </tbody>
                 </Table>
             </div>
@@ -79,4 +73,4 @@ function UserManagement() {
     );
 }
 
-export default UserManagement;
+export default StoreManagement;

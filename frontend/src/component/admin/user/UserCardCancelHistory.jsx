@@ -1,0 +1,65 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userCardCancelApprove, userCardCancelHistory } from "../../../store/card/cardSlice";
+import { Button, Table } from "react-bootstrap";
+
+function UserCardCancelHistory() {
+
+    const {cardCancelHistoryData} = useSelector((state) => state.card);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(userCardCancelHistory());
+    }, []);
+
+    const onClickHandler = (e)=>{
+        e.preventDefault();
+        console.log(e.target.value);
+        dispatch(userCardCancelApprove(e.target.value));
+    }
+
+    return (
+        <div className="container mt-5 pt-4">
+        <div className="container w-75">
+        <h4 className="fw-bold text-center mb-5">해지신청 내역</h4>
+        <div className="container d-flex justify-content-center align-items-center">
+            <Table hover className="text-center">
+                <thead>
+                    <tr>
+                        <th>카드번호</th>
+                        <th>카드상품</th>
+                        <th>신용/체크</th>
+                        <th>해지신청일</th>
+                        <th>신청인</th>
+                        <th>생년월일</th>
+                        <th>연락처</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {cardCancelHistoryData?.map((el)=>
+                    <tr>
+                        <td>{el.cardNumber}</td>
+                        <td>{el.cardName}</td>
+                        <td>{el.cardType === "CREDIT" ? "신용카드" : "체크카드"}</td>
+                        <td>{el.requestDate}</td>
+                        <td>{el.userName}</td>
+                        <td>{el.userBirth}</td>
+                        <td>{el.userTel}</td>
+                        <td>{!el.cancelDate ? <Button 
+                        value={el.id} 
+                        onClick={onClickHandler}
+                        className="px-3" 
+                        variant="outline-dark"
+                        >승인</Button> : "승인완료"}</td>
+                    </tr>
+                    )}
+                </tbody>
+            </Table>
+        </div>
+        </div>
+    </div>  
+    );
+}
+export default UserCardCancelHistory;

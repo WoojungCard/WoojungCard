@@ -12,6 +12,8 @@ import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 import com.woojungcard.woojungcard.exception.UpdateException;
 import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserCardApproveException;
 
 @RestControllerAdvice
 public class ExceptionConfig {
@@ -56,4 +58,17 @@ public class ExceptionConfig {
 	public ResponseEntity<String> StoreFindByIdException(StoreFindBNByIdException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	// User Card Application Exception
+	@ExceptionHandler(ApplicationException.class)
+	public ResponseEntity<String> applicationException(ApplicationException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	// User Card Application Approve Exception
+	@ExceptionHandler(UserCardApproveException.class)
+	public ResponseEntity<String> userCardApproveException(UserCardApproveException e){
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 }
+

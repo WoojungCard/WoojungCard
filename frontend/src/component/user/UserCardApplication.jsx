@@ -1,25 +1,43 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { userCardAppInfo } from "../../store/user/userSlice";
-import { useParams } from "react-router-dom";
+import { userCardApp, userCardAppInfo } from "../../store/user/userSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import { cardGetInfo } from "../../store/card/cardSlice";
 
 
 function UserCardApplication() {
 
 const {userAppInfo} = useSelector((state) => state.user);
+const {cardInfo} = useSelector((state) => state.card);
 
 const dispatch = useDispatch();
 const param = useParams();
-
-const  cardId = 2;
+const navigate = useNavigate();
 
 useEffect(() => {
     dispatch(cardGetInfo(param.cardId));
     dispatch(userCardAppInfo());
 }, [])
 
+const [insertRequestDate, setInsertRequestDate] = useState('');
+
+const onChangeHandler = (e) => {
+    setInsertRequestDate(e.target.value);
+}
+
+const request = ({
+    "cardId" : param.cardId,
+    "requestDate" : insertRequestDate
+})
+
+const onClickHandler = (e) => {
+    console.log(request);
+    console.log(insertRequestDate);
+    e.preventDefault();
+    dispatch(userCardApp(request));
+    navigate("/user/cardAppStatus");
+}
 
 return (
     <div className="mt-5">
@@ -33,7 +51,7 @@ return (
                     type="text" 
                     readOnly           
                     className="mb-3 bg-light"
-                    // defaultValue={userInfo.userName}
+                    defaultValue={cardInfo.cardName}
                 />
             </Form.Group>
             
@@ -43,15 +61,17 @@ return (
                     type="text"
                     readOnly           
                     className="mb-3 bg-light"
+                    defaultValue={cardInfo.cardType === "CREDIT" ? "신용카드" : "체크카드"}
                 />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPlaintextUserTel">
                 <Form.Label className="mb-0 ">신청일</Form.Label>
                 <Form.Control
-                    type="text"
-                    maxLength={13}
+                    type="date"
                     className="mb-4"
+                    defaultValue={new Date()}
+                    onChange={onChangeHandler}
                 />
             </Form.Group>
 
@@ -81,14 +101,15 @@ return (
                 <Form.Label className="mb-0 ">연락처</Form.Label>
                 <Form.Control
                     type="text"
-                    maxLength={13}
-                    className="mb-4"
+                    readOnly
+                    // maxLength={13}
+                    className="mb-4 bg-light"
                     defaultValue={userAppInfo.userTel}
                 />
             </Form.Group>
 
             <div className="d-grid gap-1">
-                <Button className="px-3" variant="outline-dark" >신청하기</Button>
+                <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>신청하기</Button>
             </div>
                 
             </Form>
@@ -97,15 +118,4 @@ return (
         </div>
     );
 }
-
-// 신청일 입력시 하이픈 자동완성
-export function applicationDateAutoFormat(applicationDate) {
-	const number = applicationDate.trim().replace(/[^0-9]/g, "");
-  
-	if (number.length < 5) return number;
-	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
-	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");
-	return number.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-}
-
 export default UserCardApplication;

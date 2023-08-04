@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { api } from "../../api";
+import { async } from "q";
 
 const initialState = {
     data: {},
@@ -7,6 +8,7 @@ const initialState = {
     idCheckResult : "",
     userInfo : {},
     userAppInfo : {},
+    userCardAppStatusData : [],
     status : "idle",
     loginStatus : "idle",
     error: null
@@ -64,17 +66,35 @@ export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
     return response.data;
 })
 
+// Get User List (ADMIN)
 export const userList = createAsyncThunk("/user/getUserList", async() => {
 	const response = await api("GET", "/user/getUserList");
     // console.log(response.data);
 	return response.data;
 })
 
+// User Card Application Status
+export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
+    const response = await api("GET", "/user/cardAppStatus");
+    console.log(response.data);
+    return response.data;
+})
+
+// User Card Application
+export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thunkAPI) => {
+    try {
+        const response = await api("POST", "/user/cardApp", request);
+        return response.data;    
+    } catch (err) {
+        return thunkAPI.rejectWithValue(err.response);
+    }
+})
+
 const userSlice = createSlice({
     name: "user",
     initialState,
     extraReducers(builder) {
-        builder
+        builder 
             .addCase(userIdCheck.pending, (state, action) => {
                 state.status = "loading";
             })
@@ -145,6 +165,28 @@ const userSlice = createSlice({
             .addCase(userList.fulfilled, (state, action) => {
                 state.status = "fulfilled";
                 state.userListData = action.payload;
+            })
+            .addCase(userCardAppStatus.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userCardAppStatus.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userCardAppStatusData = action.payload;
+            })
+            .addCase(userCardAppStatus.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(userCardApp.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(userCardApp.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+            })
+            .addCase(userCardApp.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             })
     }
 });

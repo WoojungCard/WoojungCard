@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.woojungcard.woojungcard.repository.CardRepository">
+
+	<!-- 카드 발급 신청 내역 -->
     <select id="cardApplication" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse">
     	<![CDATA[
         SELECT 
@@ -13,4 +15,149 @@
        		id = #{id}
         ]]>
     </select>
+    
+    <!-- 카드 전체 리스트 조회 -->
+	<select id="cardList" resultType="com.woojungcard.woojungcard.domain.response.CardListResponse"	>
+	<![CDATA[
+	SELECT
+		cp.id,
+		cp.card_name,
+		cp.card_type,
+		cp.card_info,
+		cp.register_date,
+		cp.state,
+		COUNT(ci.card_id) as count
+	FROM
+		card_product cp
+   	LEFT JOIN card_issued ci 
+   	ON cp.id = ci.card_id
+   	GROUP BY cp.id
+	]]>
+	</select>
+	
+	<!-- 고객 카드신청 내역 조회 -->
+	<select id="cardAppHistory" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse">
+	<![CDATA[
+	SELECT
+		i.id AS id,
+		card_name,
+		card_type,
+		request_date, 
+		user_name,
+		user_birth,
+		user_tel
+	FROM 
+		card_issued AS i 
+	INNER JOIN 
+		card_product AS p 
+	ON 
+		i.card_id = p.id 
+	INNER JOIN 
+		user AS u 
+	ON 
+		i.user_id = u.id
+	WHERE
+		i.state = "WATING"
+	ORDER BY
+		request_date
+	]]>
+	</select>
+	
+	
+	<!-- 개인 고객 카드 요청 승인 -->
+	<update id="userCardAppAprove" parameterType="com.woojungcard.woojungcard.domain.request.UserCardApproveRequest">
+	<![CDATA[
+	UPDATE
+		card_issued
+	SET
+		state = "USE",
+		expiration_date = Date_ADD(now(), INTERVAL 5 YEAR),
+		card_number = #{cardNumber}
+	WHERE
+		id = #{id}
+	]]>	
+	</update>
+	
+	<!-- 고객 카드 해지 신청 -->
+	<update id="userCardCancelApp" parameterType="Long">
+	<![CDATA[
+	UPDATE
+		card_issued
+	SET
+		state = "STOPPING"
+	WHERE
+		id = #{id}
+	]]>
+	</update>
+	
+	<!-- card_cencled 테이블에 추가 -->
+	<insert id="userCardCanceledAdd" parameterType="Long">
+	<![CDATA[
+	INSERT INTO
+		card_canceled(card_issued_id, request_date)
+	VALUES
+		(#{id}, now())
+	]]>
+	</insert>
+	
+	<!-- 고객 카드 정지 신청 내역 조회 -->
+	<select id="userCardCancelHistory" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse">
+	<![CDATA[
+	SELECT 
+		c.id AS id, 
+		i.card_number AS card_number, 
+		p.card_name AS card_name, 
+		p.card_type AS card_type, 
+		c.request_date AS request_date, 
+		u.user_name AS user_name, 
+		u.user_birth AS user_birth, 
+		u.user_tel AS user_tel,
+		c.cancel_date AS cancel_date
+	FROM 
+		card_canceled AS c 
+	INNER JOIN 
+		card_issued AS i 
+	ON 
+		c.card_issued_id = i.id 
+	INNER 
+		JOIN card_product AS p 
+	ON 
+		i.card_id = p.id 
+	INNER JOIN 
+		user AS u 
+	ON 
+		u.id = i.user_id
+	]]>
+	</select>
+	
+	<!-- 고객 카드 정시 신청 승인 -->
+	<update id="userCardCancelApprove" parameterType="Long">
+	<![CDATA[
+	UPDATE
+		card_issued
+	SET
+		state = "CANCELED"
+	WHERE
+		id = (
+		SELECT
+			c.card_issued_id AS id
+		FROM
+			card_canceled AS c
+		WHERE
+			c.id = #{id})
+	]]>
+	</update>
+	
+	<!-- 고객 카드 정지 신청 일자 추가 (card_canceled) -->
+	<update id="addUserCardCancelDate" parameterType="Long">
+	<![CDATA[
+	UPDATE
+		card_canceled
+	SET
+		cancel_date = now()
+	WHERE
+		card_issued_id = #{id}
+	]]>
+	</update>
+
 </mapper>

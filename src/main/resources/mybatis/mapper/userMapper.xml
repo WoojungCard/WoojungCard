@@ -82,7 +82,9 @@
     <select id="userCardAppInfo" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse" parameterType="Long">
     	<![CDATA[
     	SELECT
-    		user_name, user_birth, user_tel
+    		user_name, 
+    		user_birth, 
+    		user_tel
    		FROM
    			user
   		WHERE
@@ -91,14 +93,16 @@
     </select>
     
     <!-- 유저 카드 신청 현황 조회 -->
-    <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse" parameterType="Long">
+    <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardAppStatusResponse" parameterType="Long">
     	<![CDATA[
-    	SELECT 
+    	SELECT  
+    		i.id AS id,
     		card_number, 
     		card_name, 
     		card_type, 
     		request_date, 
-    		expiration_date 
+    		expiration_date,
+    		i.state as state
    		FROM  
    			card_issued AS i 
  		INNER JOIN 
@@ -107,8 +111,6 @@
  			i.card_id = p.id 
  		WHERE 
  			user_id = #{id}
- 		AND 
- 			(expiration_date <= now()+7 OR expiration_date is null)
 		]]>
     </select>
 
@@ -121,4 +123,14 @@
     		user
     	]]>
     </select>
+    
+    <!-- 유저 카드 신청 -->
+    <insert id="userCardApp" parameterType="com.woojungcard.woojungcard.domain.request.UserCardAppRequest">
+    <![CDATA[
+    INSERT INTO
+    	card_issued (user_id, card_id, request_date, state)
+   	VALUES
+   		(#{userId}, #{cardId}, #{requestDate}, "WATING")
+    ]]>
+    </insert>
 </mapper>

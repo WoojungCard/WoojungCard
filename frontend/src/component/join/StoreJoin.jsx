@@ -9,7 +9,7 @@ import DaumPostcode from 'react-daum-postcode';
 import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { storeIdCheck, storeSignUp } from "../../store/user/storeSlice";
+import { storeIdCheck, storeSignUp } from "../../store/store/storeSlice";
 
 // 가맹점 회원가입
 function StoreJoin() {

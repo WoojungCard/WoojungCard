@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./user/userSlice";
-import storeSlice from "./user/storeSlice";
+import storeSlice from "./store/storeSlice";
 import cardSlice from "./card/cardSlice";
 
 export default configureStore({
