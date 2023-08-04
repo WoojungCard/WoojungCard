@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { addDays } from "date-fns";
 import moment from "moment";
 
+// 카드사 관리자_정산관리
 function FinancialManage() {
 
     const [selectedDate, setSelectedDate] = useState(new Date());

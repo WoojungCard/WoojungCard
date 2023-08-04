@@ -1,267 +1,61 @@
 import * as React from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { adminDailyData } from '../../../store/admin/adminSlice';
 
+// 일별 카드소비 동향
 function LineChart() {
-    const data = [
-        {
-          "id": "2023",
-          "color": "hsl(293, 70%, 50%)",
-          "data": [
-            {
-              "x": "7월1일",
-              "y": 239
-            },
-            {
-              "x": "7월2일",
-              "y": 102
-            },
-            {
-              "x": "7월3일",
-              "y": 188
-            },
-            {
-              "x": "7월4일",
-              "y": 147
-            },
-            {
-              "x": "7월5일",
-              "y": 30
-            },
-            {
-              "x": "7월6일",
-              "y": 193
-            },
-            {
-              "x": "7월7일",
-              "y": 237
-            },
-            {
-              "x": "7월8일",
-              "y": 17
-            },
-            {
-              "x": "7월9일",
-              "y": 290
-            },
-            {
-              "x": "7월10일",
-              "y": 206
-            },
-            {
-              "x": "7월11일",
-              "y": 264
-            },
-            {
-              "x": "7월12일",
-              "y": 142
-            },
-            {
-              "x": "7월13일",
-              "y": 108
-            },
-            {
-              "x": "7월14일",
-              "y": 108
-            },
-            {
-              "x": "7월15일",
-              "y": 108
-            },
-            {
-              "x": "7월16일",
-              "y": 108
-            },
-            {
-              "x": "7월17일",
-              "y": 108
-            },
-            {
-              "x": "7월18일",
-              "y": 108
-            },
-            {
-              "x": "7월19일",
-              "y": 108
-            },
-            {
-              "x": "7월20일",
-              "y": 108
-            },
-            {
-              "x": "7월21일",
-              "y": 108
-            },
-            {
-              "x": "7월22일",
-              "y": 108
-            },
-            {
-              "x": "7월23일",
-              "y": 108
-            },
-            {
-              "x": "7월24일",
-              "y": 108
-            },
-            {
-              "x": "7월25일",
-              "y": 108
-            },
-            {
-              "x": "7월26일",
-              "y": 108
-            },
-            {
-              "x": "7월27일",
-              "y": 108
-            },
-            {
-              "x": "7월28일",
-              "y": 108
-            },
-            {
-              "x": "7월29일",
-              "y": 108
-            },
-            {
-              "x": "7월30일",
-              "y": 108
+
+    const dispatch = useDispatch();
+    const {dailyData} = useSelector((state) => state.admin);
+    const [rawData, setRawData] = useState([]);
+    const [chartData, setChartData] = useState([]);
+
+    useEffect(() => {
+        dispatch(adminDailyData());
+    }, []);
+
+    useEffect(() => {
+        setRawData(dailyData);
+    }, [dailyData]);
+
+    useEffect(() => {
+        const transformData = (rawData) => {
+            const transformedData = {};
+          
+            for (const data of rawData) {
+                const { totalCharge, paymentDate } = data;
+                const [year, month, day] = paymentDate.split('-');
+            
+                if (!transformedData[year]) {
+                    transformedData[year] = {
+                        id: year,
+                        data: [],
+                    };
+                }
+            
+                transformedData[year].data.push({
+                    x: `${Number(month)}월${Number(day)}일`,
+                    y: totalCharge,
+                });
             }
-          ]
-        },
-        
-        {
-          "id": "2022",
-          "color": "hsl(280, 70%, 50%)",
-          "data": [
-            {
-              "x": "7월1일",
-              "y": 292
-            },
-            {
-              "x": "7월2일",
-              "y": 244
-            },
-            {
-              "x": "7월3일",
-              "y": 141
-            },
-            {
-              "x": "7월4일",
-              "y": 48
-            },
-            {
-              "x": "7월5일",
-              "y": 55
-            },
-            {
-              "x": "7월6일",
-              "y": 299
-            },
-            {
-              "x": "7월7일",
-              "y": 107
-            },
-            {
-              "x": "7월8일",
-              "y": 46
-            },
-            {
-              "x": "7월9일",
-              "y": 124
-            },
-            {
-              "x": "7월10일",
-              "y": 55
-            },
-            {
-              "x": "7월11일",
-              "y": 77
-            },
-            {
-              "x": "7월12일",
-              "y": 108
-            },
-            {
-              "x": "7월13일",
-              "y": 108
-            },
-            {
-              "x": "7월14일",
-              "y": 108
-            },
-            {
-              "x": "7월15일",
-              "y": 108
-            },
-            {
-              "x": "7월16일",
-              "y": 108
-            },
-            {
-              "x": "7월17일",
-              "y": 108
-            },
-            {
-              "x": "7월18일",
-              "y": 108
-            },
-            {
-              "x": "7월19일",
-              "y": 108
-            },
-            {
-              "x": "7월20일",
-              "y": 108
-            },
-            {
-              "x": "7월21일",
-              "y": 108
-            },
-            {
-              "x": "7월22일",
-              "y": 108
-            },
-            {
-              "x": "7월23일",
-              "y": 108
-            },
-            {
-              "x": "7월24일",
-              "y": 108
-            },
-            {
-              "x": "7월25일",
-              "y": 108
-            },
-            {
-              "x": "7월26일",
-              "y": 108
-            },
-            {
-              "x": "7월27일",
-              "y": 108
-            },
-            {
-              "x": "7월28일",
-              "y": 108
-            },
-            {
-              "x": "7월29일",
-              "y": 108
-            },
-            {
-              "x": "7월30일",
-              "y": 108
-            }
-          ]
-        }
-      ];
+          
+            return Object.values(transformedData);
+        };
+
+        const transformedData = transformData(rawData);
+
+        setChartData(transformedData);
+      
+    }, [rawData]);
+    
       
     return (
         <div style={{ width: '1200px', height: '300px', margin: '0 auto' }}>
             <ResponsiveLine
-                data={data}
+                data={chartData}
                 margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
                 xScale={{ type: 'point' }}
                 yScale={{
@@ -297,7 +91,7 @@ function LineChart() {
                         direction: 'row',
                         justify: false,
                         translateX: 40,
-                        translateY: -20,
+                        translateY: -40,
                         itemsSpacing: 0,
                         itemDirection: 'left-to-right',
                         itemWidth: 80,

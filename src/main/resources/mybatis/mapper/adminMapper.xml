@@ -42,4 +42,37 @@
 			HAVING payment_month IN (#{paymentMonth}, #{paymentMonthLastYear})
 		]]>
 	</select>
+	
+	<!-- 일별 카드소비 동향 -->
+	<select id="dailyConsumption" resultType="com.woojungcard.woojungcard.domain.response.AdminAnalysisDailyResponse">
+		<![CDATA[
+			SELECT
+			    SUM(card_charge) AS total_charge,
+			    payment_date
+			FROM transaction
+			WHERE 
+			    (payment_date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND payment_date <= CURDATE())
+			    OR
+			    (payment_date >= DATE_SUB(DATE_SUB(CURDATE(), INTERVAL 1 YEAR), INTERVAL 1 MONTH) AND payment_date <= DATE_SUB(CURDATE(), INTERVAL 1 YEAR))
+			GROUP BY payment_date
+			ORDER BY payment_date
+		]]>
+	</select>
+	
+	<!-- 전체 카드 매출액(전년과 비교) -->
+	<select id="totalSales" resultType="com.woojungcard.woojungcard.domain.response.AdminAnalysisTotalSalesResponse">
+		<![CDATA[
+			SELECT
+			    (SELECT SUM(card_charge) 
+			     FROM transaction
+			     WHERE payment_date >= DATE_FORMAT(CURDATE(), '%Y-01-01')
+			    ) AS this_year_total,
+			    
+			    (SELECT SUM(card_charge)
+			     FROM transaction
+			     WHERE payment_date >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 YEAR), '%Y-01-01')
+			       AND payment_date <= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+			    ) AS last_year_total
+		]]>
+	</select>
 </mapper>

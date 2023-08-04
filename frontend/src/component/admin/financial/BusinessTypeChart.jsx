@@ -2,60 +2,79 @@ import { ResponsiveBar } from "@nivo/bar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { adminBusinessTypeData } from "../../../store/admin/adminSlice";
+import moment from "moment";
 
+// 업종별 카드소비현황
 function BusinessTypeChart(props) {
-  
-  const dispatch = useDispatch();
-  const {businessTypeData} = useSelector((state) => state.admin);
-  const [data, setData] = useState([]);
-  const [chartData, setChartData] = useState([]);
 
-  const selectedMonth = props.selectedMonth;
-  const lastYearMonth = props.lastYearMonth;
+    const dispatch = useDispatch();
+    const {businessTypeData} = useSelector((state) => state.admin);
+    const [rawData, setRawData] = useState([]);
+    const [chartData, setChartData] = useState([]);
 
-  const paymentData = ({
-    "paymentMonth" : selectedMonth,
-    "paymentMonthLastYear" : lastYearMonth
-  });
+    const now = moment(new Date()).format('yyyy');
+    const lastYear = `${now-1}`;
+    const thisYear = `${now}`;
 
-  useEffect(() => {
-    dispatch(adminBusinessTypeData(paymentData));
-  }, [selectedMonth]);
+    const selectedMonth = props.selectedMonth;
+    const lastYearMonth = props.lastYearMonth;
 
-  useEffect(() => {
-    setData(businessTypeData);
-  }, [businessTypeData]);
+    const paymentData = ({
+        "paymentMonth" : selectedMonth,
+        "paymentMonthLastYear" : lastYearMonth
+    });
 
-  useEffect(() => {
-    console.log(data);
+    useEffect(() => {
+        dispatch(adminBusinessTypeData(paymentData));
+    }, [selectedMonth]);
 
-    // const transformData = (data) => {
-    //   // const transformedData = [];
-    //   const lastYearCharges = {};
-    //   const thisYearCharges = {};
+    useEffect(() => {
+        setRawData(businessTypeData);
+    }, [businessTypeData]);
 
-    //   data.forEach((data) => {
-    //     const 
-    //     if (data.paymentMonth.include('2022')) {
+    useEffect(() => {
+        // console.log(rawData);
 
-    //     }
-    //   })
-  
-    // return transformedData;
-    // }
+        const transformData = (rawData) => {
+            const transformedData = {};
 
-    // const newChartData = transformData(businessTypeData);
-    // setChartData(newChartData);
-    // console.log(chartData);
-  }, [data]);
+            for (const data of rawData) {
+                const { businessType, totalCharge, paymentMonth } = data;
+            
+                if (!transformedData[businessType]) {
+                    transformedData[businessType] = {
+                        [lastYear]: null,
+                        [thisYear]: null,
+                    };
+                }
+            
+                if (paymentMonth.includes(now)) {
+                    transformedData[businessType].thisYear = totalCharge;
+                } else {
+                    transformedData[businessType].lastYear = totalCharge;
+                }
+            }
+        
+            return Object.keys(transformedData).map((businessType) => ({
+                businessType,
+                [lastYear]: transformedData[businessType].lastYear,
+                [thisYear]: transformedData[businessType].thisYear,
+            }));
+        };
+        
+        const transformedData = transformData(rawData);
+
+        setChartData(transformedData);
+
+    }, [rawData]);
 
     return (
         <div style={{ width: '1000px', height: '350px', margin: '0 auto' }}>
             <ResponsiveBar
                 data={chartData}
                 keys={[
-                    'lastYear',
-                    'thisYear'
+                    [lastYear],
+                    [thisYear]
                 ]}
                 indexBy="businessType"
                 margin={{ top: 50, right: 130, bottom: 50, left: 60 }}

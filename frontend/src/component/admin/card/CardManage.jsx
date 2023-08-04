@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cardList } from "../../../store/card/cardSlice";
 
+// 카드사 관리자_카드관리
 function CardManage() {
 
     const dispatch = useDispatch();

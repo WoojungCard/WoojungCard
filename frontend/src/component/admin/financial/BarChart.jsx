@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { adminGenderAgeData } from '../../../store/admin/adminSlice';
 import { useState } from 'react';
-import { useCallback } from 'react';
 
+// 성/연령별 소비현황
 const BarChart = (props) => {
-
 
     const dispatch = useDispatch();
     const {genderAgeData} = useSelector((state) => state.admin);
