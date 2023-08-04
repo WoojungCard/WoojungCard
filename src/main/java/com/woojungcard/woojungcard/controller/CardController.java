@@ -5,18 +5,25 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest;
+import com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest;
 import com.woojungcard.woojungcard.domain.dto.CardProductDTO;
 import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse;
 import com.woojungcard.woojungcard.domain.response.CardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardPossessionResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse;
 import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.PayBillException;
 import com.woojungcard.woojungcard.exception.UpdateException;
 import com.woojungcard.woojungcard.exception.UserCardApproveException;
 import com.woojungcard.woojungcard.repository.CardRepository;
@@ -55,7 +62,7 @@ public class CardController {
 		return cardService.userCardAppAprove(request);
 	}
 	
-	
+	 
 	// User Card Cancel Application
 	@PutMapping("/cancelApp")
 	public ResponseEntity<String> userCardCancelApp(@RequestBody Long id) throws ApplicationException {
@@ -74,4 +81,27 @@ public class CardController {
 		return cardService.userCardCancelApprove(id);
 	}
 	
+	// User Card Possession History
+	@GetMapping("/userCardPossession")
+	public List<UserCardPossessionResponse> userCardPossessionHistory() {
+		return cardService.userCardPossessionHistory();
+	}
+	
+	// User Card Usage History
+	@PostMapping("/userUsageHistory")
+	public List<UserCardUsageHistoryResponse> userCardUsageHistory(@RequestBody UserCardUsageHistoryRequest request) {
+		return cardService.userCardUsageHistory(request);
+	}	
+	
+	// User Pay Card Bill
+	@PostMapping("/userPayCardBill")
+	public ResponseEntity<String> userPayCardBill(@RequestBody UserPayCardBillRequest request) throws PayBillException {
+		return cardService.userPayCardBill(request);
+	}
+	
+	// User Pay Bill History
+	@PostMapping("/userPayBillHistory")
+	public Long userPayBillHistory(@RequestBody UserPayBillHistoryRequest request) {
+		return cardService.userPayBillHistory(request);
+	}
 }

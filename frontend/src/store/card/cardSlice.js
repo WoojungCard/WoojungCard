@@ -5,8 +5,11 @@ const initialState = {
     cardListData : [],
     data: {},
     cardInfo: {},
+    cardPossessionList: [],
     cardAppHistoryData: [],
     cardCancelHistoryData: [],
+    cardUsageHistory: [],
+    payBillHistory: {},
     data: {},
     status : "idle",
     error: null
@@ -15,7 +18,6 @@ const initialState = {
 // Card All list (state = Proceeding)
 export const cardList = createAsyncThunk("/card/list", async() => {
     const response = await api("GET", "/card/list");
-    console.log(response.data);
     return response.data;
 })
 
@@ -57,6 +59,31 @@ export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", asy
     return response.data;
 })
 
+// User Card Possession History
+export const userCardPossessionHistory = createAsyncThunk("/card/userCardPossession", async() => {
+    const response = await api("GET", "/card/userCardPossession");
+    console.log(response.data);
+    return response.data;
+})
+
+// User Card Usage History
+export const userCardUsageHistory = createAsyncThunk("/card/userUsageHistory", async(request) => {
+    const response = await api("POST", "/card/userUsageHistory", request);
+    return response.data;
+})
+
+// User Pay Card Bill
+export const userPayCardBill = createAsyncThunk("/card/userPayCardBill", async(request) => {
+    const response = await api("POST", "/card/userPayCardBill", request);
+    return response.data;
+})
+
+// User Pay Bill History
+export const userPayBillHistory = createAsyncThunk("/card/userPayBillHistory", async(request) => {
+    console.log(request);
+    const response = await api("POST", "/card/userPayBillHistory", request);
+    return response.data;
+})
 
 const cardSlice = createSlice({
     name: "card",
@@ -131,6 +158,46 @@ const cardSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(userCardCancelApprove.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userCardPossessionHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userCardPossessionHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.cardPossessionList = action.payload;
+            })
+            .addCase(userCardPossessionHistory.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userCardUsageHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userCardUsageHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.cardUsageHistory = action.payload;
+            })
+            .addCase(userCardUsageHistory.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userPayCardBill.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userPayCardBill.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+            })
+            .addCase(userPayCardBill.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(userPayBillHistory.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(userPayBillHistory.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.payBillHistory = action.payload;
+            })
+            .addCase(userPayBillHistory.rejected, (state, action) => {
                 state.status = "failed";
             })
     }
