@@ -46,7 +46,9 @@ function Login() {
 			dispatch(userLogin(loginInfo));
 			// if (loginStatus === "successed") {
 				navigate('/user/cardapplication/${2}');
-			// } 
+			// } else {
+			// 	console.log("로그인실패");
+			// }
 		} else if (userType === 's') {
 			console.log("store Login");
 		}

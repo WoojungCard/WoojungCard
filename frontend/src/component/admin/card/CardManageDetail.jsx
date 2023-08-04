@@ -12,7 +12,7 @@ function CardManageDetail() {
     const dispatch = useDispatch();
     const {cardListData} = useSelector((state) => state.card);
     const cardData = cardListData[index];
-    console.log(cardData);
+    // console.log(cardData);
 
     const customHeight = {
         height: "40px",
@@ -35,42 +35,44 @@ function CardManageDetail() {
             
             <div className="row justify-content-center mt-5">
                 <Table className="text-center w-50 fs-5">
-                    <tr style={customHeight}>
-                        <th>카드명</th>
-                        <td>
-                            {cardData.cardName}
-                        </td>
-                    </tr>
-                    <tr style={customHeight}>
-                        <th>신용/체크</th>
-                        <td>
-                            {cardData.cardType}
-                        </td>
-                    </tr>
-                    <tr style={customHeight}>
-                        <th>등록일</th>
-                        <td>
-                            {cardData.registerDate}
-                        </td>
-                    </tr>
-                    <tr style={customHeight}>
-                        <th>가입자 수</th>
-                        <td>
-                            {cardData.count}
-                        </td>
-                    </tr>
-                    <tr style={customHeight}>
-                        <th>설명</th>
-                        <td>
-                            {cardData.cardInfo}
-                        </td>
-                    </tr>
-                    <tr style={customHeight}>
-                        <th>비고</th>
-                        <td>
-                            {cardData.state}
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr style={customHeight}>
+                            <th>카드명</th>
+                            <td>
+                                {cardData.cardName}
+                            </td>
+                        </tr>
+                        <tr style={customHeight}>
+                            <th>신용/체크</th>
+                            <td>
+                                {cardData.cardType}
+                            </td>
+                        </tr>
+                        <tr style={customHeight}>
+                            <th>등록일</th>
+                            <td>
+                                {cardData.registerDate}
+                            </td>
+                        </tr>
+                        <tr style={customHeight}>
+                            <th>가입자 수</th>
+                            <td>
+                                {cardData.count}
+                            </td>
+                        </tr>
+                        <tr style={customHeight}>
+                            <th>설명</th>
+                            <td>
+                                {cardData.cardInfo}
+                            </td>
+                        </tr>
+                        <tr style={customHeight}>
+                            <th>비고</th>
+                            <td>
+                                {cardData.state}
+                            </td>
+                        </tr>
+                    </tbody>
                 </Table>
             </div>
 

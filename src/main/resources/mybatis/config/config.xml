@@ -12,5 +12,6 @@
         <mapper resource="mybatis/mapper/userMapper.xml"/>
         <mapper resource="mybatis/mapper/storeMapper.xml"/>
         <mapper resource="mybatis/mapper/cardMapper.xml"/>
+        <mapper resource="mybatis/mapper/adminMapper.xml"/>
     </mappers>
 </configuration>

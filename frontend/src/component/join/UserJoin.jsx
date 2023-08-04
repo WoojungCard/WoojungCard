@@ -28,8 +28,6 @@ function UserJoin() {
 	};
 	
 	const onChangeinputUserId = (e) => {
-		// 아이디 입력시 "" 같이 출력 수정해야함
-		// let userId = JSON.stringify();
 		setInsertUserId(e.target.value);
 	};
 	
