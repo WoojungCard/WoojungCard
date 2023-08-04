@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
@@ -14,6 +15,7 @@ import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
+import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 
@@ -29,4 +31,6 @@ public interface StoreService {
 	public List<StoreAppInfoResponse> storeAppInfo();
 	
 	public List<StoreAppStatusResponse> storeAppStatus();
+	//Store Application status change
+	public StoreAppStatusResponse storeAppStatusChange(StoreAppStatusChangeRequest request);
 }

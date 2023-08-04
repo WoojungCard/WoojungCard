@@ -1,5 +1,6 @@
 package com.woojungcard.woojungcard.service;
 
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
+import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
@@ -18,6 +20,7 @@ import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
+import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 import com.woojungcard.woojungcard.jwt.JwtService;
@@ -101,5 +104,10 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 //store Application Status
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeRepository.storeAppStatus();
+	}
+//store Application Status change
+	public StoreAppStatusResponse storeAppStatusChange(StoreAppStatusChangeRequest request){
+		System.out.println(request.getId());
+		return storeRepository.storeAppStatusChange(request);
 	}
 }

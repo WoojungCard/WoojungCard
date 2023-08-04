@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class StoreAppStatusResponse {
+	private Long id;
 	private String businessNumber;
 	private String representative;
 	private String storeName;
@@ -16,7 +17,7 @@ public class StoreAppStatusResponse {
 	private String storeZipCode;
 	private String storeAddress1;
 	private String storeAddress2;
-	private int businessStartDate;
-	private int storeTel;
+	private String businessStartDate;
+	private String storeTel;
 	private String status;
 }

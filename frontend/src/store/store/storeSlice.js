@@ -6,6 +6,7 @@ const initialState = {
     storeIdCheckResult : "",
     storeInfo : {},
     storeListData : [],
+    StoreAppStatusData : [],
     status : "idle",
     loginStatus : "idle",
     error: null
@@ -66,7 +67,12 @@ export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thu
         return thunkAPI.rejectWithValue(err.response);
     }
 })
-
+//store Application Status
+export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>{
+    const response = await api("GET","/store/storeAppStatus");
+    console.log(response.data);
+    return response.data;
+})
 
 const storeSlice = createSlice({
     name: "store",
