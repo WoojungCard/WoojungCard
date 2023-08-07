@@ -139,4 +139,9 @@ public class CardServiceImpl implements CardService {
 	public Long userPayBillHistory(UserPayBillHistoryRequest request) {
 		return cardRepository.userPayBillHistory(request);
 	}
+	
+	// Find Card Type By Id
+	public String findCardTypeById(Long id) {
+		return cardRepository.findCardTypeById(id);
+	}
 }

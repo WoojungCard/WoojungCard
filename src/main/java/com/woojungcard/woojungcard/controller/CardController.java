@@ -104,4 +104,11 @@ public class CardController {
 	public Long userPayBillHistory(@RequestBody UserPayBillHistoryRequest request) {
 		return cardService.userPayBillHistory(request);
 	}
+	
+	// Find Card Type By Id
+	@PostMapping("/findCardTypeById")
+	public String findCardTypeById(@RequestBody Long id) {
+		return cardService.findCardTypeById(id);
+	}
+	
 }

@@ -19,9 +19,8 @@ import CardManage from "./component/admin/card/CardManage";
 import CardManageDetail from "./component/admin/card/CardManageDetail";
 import CardNew from "./component/admin/card/CardNew";
 import FinancialManage from "./component/admin/financial/FinancialManage";
-import UserCardUsageHistory from "./component/user/UserCardUsageHistory";
-import UserHeader from "./component/header/UserHeader";
 import UserLayout from "./component/layout/UserLayout";
+import UserCardUsageHistoryForm from "./component/user/UserCardUsageHistory/UserCardUsageHistoryForm";
 
 const ProjectRouter = () => {
 	return (
@@ -43,7 +42,7 @@ const ProjectRouter = () => {
 					<Route path="cardapplication/:cardId" element=<UserCardApplication/> /> 
 					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
-					<Route path="cardUsageHistory" element=<UserCardUsageHistory/> />
+					<Route path="cardUsageHistory" element=<UserCardUsageHistoryForm/> />
 				</Route>
 				
 				{/* 카드사 관리자 레이아웃 */}

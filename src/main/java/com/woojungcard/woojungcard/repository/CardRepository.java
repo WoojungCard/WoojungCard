@@ -56,4 +56,7 @@ public interface CardRepository {
 
 	// User Pay Bill History
 	Long userPayBillHistory(UserPayBillHistoryRequest request);
+	
+	// Find Card Type By Id
+	String findCardTypeById(Long id);
 }
