@@ -51,4 +51,7 @@ public interface CardService {
 	
 	// User Pay Bill History
 	public Long userPayBillHistory(UserPayBillHistoryRequest request);
+	
+	// Find Card Type By Id
+	public String findCardTypeById(Long id);
 }

@@ -253,4 +253,20 @@
 		target_month = #{targetMonth}
 	]]>
 	</select>
+	
+	<!-- Find Card Type By Id -->
+	<select id="findCardTypeById" parameterType="Long" resultType="String">
+	<![CDATA[
+	SELECT
+		p.card_type AS card_type
+	FROM
+		card_issued AS i
+	INNER JOIN
+		card_product AS p
+	ON
+		i.card_id = p.id
+	WHERE
+		i.id = #{id}
+	]]>
+	</select>
 </mapper>

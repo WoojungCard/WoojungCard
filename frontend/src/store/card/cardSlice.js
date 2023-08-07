@@ -11,6 +11,7 @@ const initialState = {
     cardUsageHistory: [],
     payBillHistory: {},
     data: {},
+    cardType: {},
     status : "idle",
     error: null
 }
@@ -77,11 +78,15 @@ export const userPayCardBill = createAsyncThunk("/card/userPayCardBill", async(r
 
 // User Pay Bill History
 export const userPayBillHistory = createAsyncThunk("/card/userPayBillHistory", async(request) => {
-    console.log(request);
     const response = await api("POST", "card/userPayBillHistory", request);
-    console.log(response.data);
     return response.data;
 })
+
+// Find Card Type By Id
+export const findCardTypeById = createAsyncThunk("/card/findCardTypeById", async(id) => {
+    const response = await api("POST", "/card/findCardTypeById", id);
+    return response.data;
+}) 
 
 const cardSlice = createSlice({
     name: "card",
@@ -196,6 +201,16 @@ const cardSlice = createSlice({
                 state.payBillHistory = action.payload;
             })
             .addCase(userPayBillHistory.rejected, (state, action) => {
+                state.status = "failed";
+            })
+            .addCase(findCardTypeById.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(findCardTypeById.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.cardType = action.payload;
+            })
+            .addCase(findCardTypeById.rejected, (state, action) => {
                 state.status = "failed";
             })
     }
