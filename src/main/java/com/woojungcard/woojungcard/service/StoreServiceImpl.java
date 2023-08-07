@@ -101,13 +101,14 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 	public List<StoreAppInfoResponse> storeAppInfo(){
 		return storeRepository.storeAppInfo();
 	}
+	
 //store Application Status
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeRepository.storeAppStatus();
 	}
+	
 //store Application Status change
-	public StoreAppStatusResponse storeAppStatusChange(StoreAppStatusChangeRequest request){
-		System.out.println(request.getId());
-		return storeRepository.storeAppStatusChange(request);
+	public StoreAppStatusResponse storeAppStatusChange(Long id){
+		return storeRepository.storeAppStatusChange(id);
 	}
 }

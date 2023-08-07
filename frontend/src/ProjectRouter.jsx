@@ -21,6 +21,7 @@ import CardManageDetail from "./component/admin/card/CardManageDetail";
 import CardNew from "./component/admin/card/CardNew";
 import FinancialManage from "./component/admin/financial/FinancialManage";
 import StoreManagement from "./component/admin/store/StoreManagement";
+import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 
 const ProjectRouter = () => {
 	return (
@@ -47,6 +48,7 @@ const ProjectRouter = () => {
 				{/* 가맹점 */}
 				<Route path="/store" element=<MainLayout/> >
 					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
+					
 				</Route>
 				
 				{/* 카드사 관리자 레이아웃 */}
@@ -60,6 +62,7 @@ const ProjectRouter = () => {
 					<Route path="cardNew" element=<CardNew/> />
 					<Route path="financialManage" element=<FinancialManage/> />
 					<Route path="storeManagement" element=<StoreManagement/> />
+					<Route path="storeAppManagement" element=<StoreAppManagement/> />
 				</Route>
 			</Routes>
 		</BrowserRouter>

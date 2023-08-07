@@ -132,25 +132,27 @@
     		status = "USE"
     	]]>
 	</select>
+
 	<!-- 스토어 승인상태 조회 -->
 	<select id = "storeAppStatus" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
 		<![CDATA[
-    	SELECT
-    		id,
-	   		business_Number,
-			representative,
-			store_name,
-			business_type,
-			store_zip_code,
-			store_address1, 
-			store_address2,
-			business_start_date,
-			store_tel,
-			status
-    	FROM
-    		store
+	    	SELECT
+	    		id,
+		   		business_number,
+				representative,
+				store_name,
+				business_type,
+				store_zip_code,
+				store_address1, 
+				store_address2,
+				business_start_date,
+				store_tel,
+				status
+	    	FROM
+	    		store
     	]]>
 	</select>
+
 	<!--  스토어 승인으로 변경 -->
 		<select id = "storeAppStatusChange" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
 		<![CDATA[

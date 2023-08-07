@@ -32,6 +32,6 @@ public interface StoreRepository {
 	//Store Application Status
 	List<StoreAppInfoResponse> storeAppInfo();
 	List<StoreAppStatusResponse> storeAppStatus();
-	StoreAppStatusResponse storeAppStatusChange(StoreAppStatusChangeRequest request); 
+	StoreAppStatusResponse storeAppStatusChange(Long id); 
 	List<StoreDTO> storeList();
 }

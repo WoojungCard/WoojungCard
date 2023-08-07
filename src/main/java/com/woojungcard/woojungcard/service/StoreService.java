@@ -31,6 +31,7 @@ public interface StoreService {
 	public List<StoreAppInfoResponse> storeAppInfo();
 	
 	public List<StoreAppStatusResponse> storeAppStatus();
+	
 	//Store Application status change
-	public StoreAppStatusResponse storeAppStatusChange(StoreAppStatusChangeRequest request);
+	public StoreAppStatusResponse storeAppStatusChange(Long id);
 }

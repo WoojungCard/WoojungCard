@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class StoreAppInfoResponse {
+	private Long id;
 	private String businessNumber;
 	private String representative;
 	private String storeName;

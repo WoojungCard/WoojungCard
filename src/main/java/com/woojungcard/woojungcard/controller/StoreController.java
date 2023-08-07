@@ -69,9 +69,9 @@ public class StoreController {
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeService.storeAppStatus();
 	}
+	
 	@PutMapping("/storeAppStatusChange")
-	public StoreAppStatusResponse storeAppStatusChange(@RequestBody StoreAppStatusChangeRequest request)throws StoreAppStatusChangeException{
-		System.out.println(request.getId());
-		return storeService.storeAppStatusChange(request);
+	public StoreAppStatusResponse storeAppStatusChange(@RequestBody Long id)throws StoreAppStatusChangeException{
+		return storeService.storeAppStatusChange(id);
 	}
 }

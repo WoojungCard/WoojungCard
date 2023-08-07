@@ -34,9 +34,9 @@ export const storeSignUp = createAsyncThunk("/store/signup", async (store, thunk
 
 export const storeLogin = createAsyncThunk("/store/login", async(loginInfo2, thunkAPI) => {
     try {
-		console.log(loginInfo2);
+		// console.log(loginInfo2);
         const response = await api("POST", "/store/login", loginInfo2);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -45,7 +45,6 @@ export const storeLogin = createAsyncThunk("/store/login", async(loginInfo2, thu
 
 export const storeList = createAsyncThunk("/store/storeAppInfo", async() => {
 	const response = await api("GET", "/store/storeAppInfo");
-
 	return response.data;	
 })
 	
@@ -61,7 +60,7 @@ export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thu
     try {
 		console.log(info);
         const response = await api("PUT", "/store/update", info);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -70,8 +69,14 @@ export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thu
 //store Application Status
 export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>{
     const response = await api("GET","/store/storeAppStatus");
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
+})
+
+//store Application Status Change
+export const StoreAppStatusChange = createAsyncThunk("/store/storeAppStatusChange",async()=>{
+    const response = await api("PUT","/store/storeAppStatusChage");
+   	return response.data;
 })
 
 const storeSlice = createSlice({
@@ -143,6 +148,21 @@ const storeSlice = createSlice({
 				state.status = "successed";
 				state.storeListData = action.payload;
 			})
+			.addCase(StoreAppStatus.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(StoreAppStatus.fulfilled,(state, action)=> {
+				state.status = "successed";
+				state.StoreAppStatusData = action.payload;
+			})
+			.addCase(StoreAppStatusChange.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+            })
+            .addCase(StoreAppStatusChange.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
     }
 });
 export default storeSlice.reducer;
