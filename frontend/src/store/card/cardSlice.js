@@ -78,8 +78,8 @@ export const userPayCardBill = createAsyncThunk("/card/userPayCardBill", async(r
 // User Pay Bill History
 export const userPayBillHistory = createAsyncThunk("/card/userPayBillHistory", async(request) => {
     console.log(request);
-    const response = await api("POST", "/card/userPayBillHistory", request);
-    console.log(response.data)
+    const response = await api("POST", "card/userPayBillHistory", request);
+    console.log(response.data);
     return response.data;
 })
 

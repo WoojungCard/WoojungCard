@@ -17,7 +17,6 @@ function UserCardInfo() {
 
     const onClickHandler = (e)=>{
         e.preventDefault();
-        console.log(e.target.value);
         dispatch(userCardCancelApp(e.target.value));
     }
     
@@ -38,6 +37,8 @@ function UserCardInfo() {
             el.cardState !== "WATING" &&
                 <tr>
                     <td>{<Link 
+                    to={"/user/cardUsageHistory"}
+                    state={{"cardIssuedId" : el.id, "cardNumber" : el.cardNumber}}
                     style={{textDecoration: "none", color: "black"}}>
                         {el.cardNumber}
                     </Link>}</td>

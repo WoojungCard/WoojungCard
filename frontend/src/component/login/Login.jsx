@@ -45,7 +45,7 @@ function Login() {
 		if (userType === 'u') {
 			dispatch(userLogin(loginInfo));
 			// if (loginStatus === "successed") {
-				navigate('/user/cardapplication/${2}');
+				navigate("/cardProduct");
 			// } else {
 			// 	console.log("로그인실패");
 			// }
@@ -57,7 +57,6 @@ function Login() {
 	return (
 		<div>
 			<Container className="container d-flex justify-content-center align-items-center" style={{height: "700px"}}>
-				
 				
 				<Form style={{width: "400px"}}>
 					

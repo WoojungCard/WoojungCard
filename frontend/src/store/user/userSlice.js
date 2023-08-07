@@ -69,14 +69,12 @@ export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
 // Get User List (ADMIN)
 export const userList = createAsyncThunk("/user/getUserList", async() => {
 	const response = await api("GET", "/user/getUserList");
-    // console.log(response.data);
 	return response.data;
 })
 
 // User Card Application Status
 export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
     const response = await api("GET", "/user/cardAppStatus");
-    console.log(response.data);
     return response.data;
 })
 
@@ -93,6 +91,16 @@ export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thun
 const userSlice = createSlice({
     name: "user",
     initialState,
+    reducers: {
+        logout: (state) => {
+            state.data = initialState.data;
+            state.status = initialState.status;
+            state.error = initialState.error;
+            state.userInfo = initialState.userInfo;
+            localStorage.clear();
+            alert("로그아웃 되었습니다.");
+        },
+    },
     extraReducers(builder) {
         builder 
             .addCase(userIdCheck.pending, (state, action) => {
@@ -191,3 +199,4 @@ const userSlice = createSlice({
     }
 });
 export default userSlice.reducer;
+export const {logout} = userSlice.actions;

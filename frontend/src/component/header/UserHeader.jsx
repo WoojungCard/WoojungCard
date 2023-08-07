@@ -12,8 +12,8 @@ const styles = {
     }
 };
 
-// 로그인 전 보여지는 메인 헤더
-function MainHeader(props) {
+// 로그인 후 보여지는 메인 헤더
+function UserHeader(props) {
 
     const {userInfo} = useSelector((state)=>state.user);
 
@@ -41,7 +41,7 @@ function MainHeader(props) {
                                 <b>{userInfo.userName}님</b>
                             </div>
                             <div className="col" style={styles.main}>
-                                <span onClick={onClickHandler}>
+                                <span onClick={onClickHandler} >
                                     로그아웃
                                 </span>
                             </div>
@@ -57,4 +57,4 @@ function MainHeader(props) {
 	);
 }
 
-export default MainHeader;
+export default UserHeader;
