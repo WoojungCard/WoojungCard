@@ -154,7 +154,7 @@
 	</select>
 
 	<!--  스토어 승인으로 변경 -->
-		<select id = "storeAppStatusChange" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
+		<select id = "storeAppStatusChange" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
 		<![CDATA[
     		UPDATE 
 				store

@@ -16,18 +16,17 @@ function StoreAppManagement() {
 	
 	const {StoreAppStatusData} = useSelector((state) => state.store);
     
-  	useEffect(() => {
+    useEffect(() => {
         dispatch(StoreAppStatus());
     }, []);
- 
     
     const statusChange = ({
 		"status" : insertStatus
 	})
 	
-	const onClickStoreChange = (e) => {
-	    // dispatch(StoreAppStatusChange(e.target.value));
-	};
+	// const onClickStoreChange = (e) => {
+	//     // dispatch(StoreAppStatusChange(e.target.value));
+	// };
 	
 
     return (
@@ -51,9 +50,18 @@ function StoreAppManagement() {
                         </tr>
                     </thead>
                     <tbody>
-                       {
-                            StoreAppStatusData.map((item, id) => {
-                                id = id + 1;
+                        {
+                            StoreAppStatusData.map((item, index) => {
+                                index = index + 1;
+                                
+                                const onClickStoreChange = (e) => {
+                                    // console.log(e.target.value);
+                                    const id = e.target.value;
+                                    dispatch(StoreAppStatusChange(id));
+                                };
+                                
+                                const id = item.id;
+
                                 return (
                                     <tr key={id}>
                                         <td>{id}</td>
@@ -69,16 +77,16 @@ function StoreAppManagement() {
                                                 className="rounded-pill" 
                                                 variant="outline-info" 
                                                 size="sm"
-                                                onClick={()=>dispatch(StoreAppStatusChange(`${item.id}`))}
+                                                value={item.id}
+                                                onClick={onClickStoreChange}
                                                 >
                                                     승인
                                             </Button>
                                         </td>
                                     </tr>
-                       		 )
-                       
-                      	 })
-                      }
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
             </div>

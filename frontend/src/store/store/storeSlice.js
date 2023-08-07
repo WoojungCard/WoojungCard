@@ -74,8 +74,8 @@ export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>
 })
 
 //store Application Status Change
-export const StoreAppStatusChange = createAsyncThunk("/store/storeAppStatusChange",async()=>{
-    const response = await api("PUT","/store/storeAppStatusChage");
+export const StoreAppStatusChange = createAsyncThunk("/store/storeAppStatusChange",async(id, thunkAPI)=>{
+    const response = await api("PUT","/store/storeAppStatusChange", id);
    	return response.data;
 })
 
