@@ -162,11 +162,9 @@ function UserCardUsageHistory() {
                             <div className="col" style={{width: "100px"}}>
                                 <p className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</p>
                             </div>
-                            {diff !== null && !isNaN(diff) && (
-                                <div className="col" style={{width: "100px"}}>
-                                    <span className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}원</span>
-                                </div>
-                            )}
+                            <div className="col" style={{width: "100px"}}>
+                                <span className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}원</span>
+                            </div>
                         </div> 
                     </div>
                     <div className="d-flex justify-content-end">
