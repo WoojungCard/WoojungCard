@@ -150,6 +150,8 @@
 				status
 	    	FROM
 	    		store
+	    	WHERE 
+	    		status = 'waiting'
     	]]>
 	</select>
 

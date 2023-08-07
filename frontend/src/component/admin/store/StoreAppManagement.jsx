@@ -23,11 +23,6 @@ function StoreAppManagement() {
     const statusChange = ({
 		"status" : insertStatus
 	})
-	
-	// const onClickStoreChange = (e) => {
-	//     // dispatch(StoreAppStatusChange(e.target.value));
-	// };
-	
 
     return (
         <div className="container mt-5 pt-4">
