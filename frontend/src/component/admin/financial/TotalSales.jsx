@@ -38,7 +38,7 @@ function TotalSales() {
                     <span className="fw-bold fs-3">원</span>
                     <br />
                     <span className={`fw-bold fs-4 ${diff > 0 ? 'text-danger' : 'text-primary'}`}>
-                        {diff > 0 ? `${diff.toLocaleString()}원` : `-${Math.abs(diff.toLocaleString())}원`}
+                        {diff > 0 ? `+${diff.toLocaleString()}원` : `-${Math.abs(diff.toLocaleString())}원`}
                     </span>
                     <span className="fw-bold text-danger">(전년대비)</span>
                 </div>

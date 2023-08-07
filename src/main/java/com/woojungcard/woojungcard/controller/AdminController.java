@@ -3,6 +3,7 @@ package com.woojungcard.woojungcard.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.woojungcard.woojungcard.domain.response.AdminAnalysisBusinessTypeResp
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisDailyResponse;
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisGenderAgeResponse;
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisTotalSalesResponse;
+import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,5 +48,11 @@ public class AdminController {
 	@GetMapping("/getTotalData")
 	public AdminAnalysisTotalSalesResponse totalSales() {
 		return adminService.totalSales();
+	}
+	
+	// 고객별 카드 목록
+	@PostMapping("/getUserCardData")
+	public List<CardAppStatusResponse> userCardAppStatus(@RequestBody Long id) {
+		return adminService.userCardAppStatus(id);
 	}
 }

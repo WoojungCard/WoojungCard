@@ -7,6 +7,7 @@ import com.woojungcard.woojungcard.domain.response.AdminAnalysisBusinessTypeResp
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisDailyResponse;
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisGenderAgeResponse;
 import com.woojungcard.woojungcard.domain.response.AdminAnalysisTotalSalesResponse;
+import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 
 public interface AdminService {
 	
@@ -21,4 +22,8 @@ public interface AdminService {
 	
 	// 전체 카드 매출액(전년도와 비교)
 	public AdminAnalysisTotalSalesResponse totalSales();
+
+	// 고객별 카드 관리
+	public List<CardAppStatusResponse> userCardAppStatus(Long id);
+
 }

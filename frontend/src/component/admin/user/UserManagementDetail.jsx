@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { adminManageUserCard } from "../../../store/admin/adminSlice";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 
 function UserManagementDetail() {
 
@@ -16,11 +18,42 @@ function UserManagementDetail() {
     const userData = userListData[index];
     // console.log(userData);
 
+    const {userCardData} = useSelector((state) => state.admin);
+
+    useEffect(() => {
+        dispatch(adminManageUserCard(userData.id));
+        // console.log(userCardData);
+    }, []);
+
+    const popoverClickUserName = (
+        <Popover id="popover-click-user-name">
+            <div className="container my-2">
+                <span>{userData.userName}/</span>
+                <span>{userData.userId}/</span>
+                <span>{userData.userGender === "MAN" ? "남" : "여"}</span>
+                <br />
+                <span>{userData.userBirth}/</span>
+                <br />
+                <span>{userData.userTel}</span>
+            </div>
+        </Popover>
+    )
+
 
     return (
         <div className="container mt-5 pt-4">
             <div className="container w-75">
-                <h5 className="fw-bold text-start mb-4">"{userData.userName}"님 카드 내역 조회</h5>
+                <h5 className="fw-bold text-start mb-4">
+                    <OverlayTrigger
+                        trigger={"click"}
+                        rootClose
+                        placement="left"
+                        overlay={popoverClickUserName}
+                    >
+                        <span>"{userData.userName}"</span>
+                    </OverlayTrigger>
+                    님 카드 내역 조회
+                    </h5>
 
                 <Table hover className="text-center">
                     <thead className="">
@@ -35,15 +68,22 @@ function UserManagementDetail() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>청년혜택카드</td>
-                            <td>5107-4135-5135-2425</td>
-                            <td>체크카드</td>
-                            <td>2023-07-17</td>
-                            <td>2023-07-16</td>
-                            <td>유효</td>
-                        </tr>
+                        {
+                            userCardData.map((item, index) => {
+                                index = index + 1;
+                                return (
+                                    <tr key={index}>
+                                        <td>{index}</td>
+                                        <td>{item.cardName}</td>
+                                        <td>{item.cardNumber}</td>
+                                        <td>{item.cardType}</td>
+                                        <td>{item.requestDate}</td>
+                                        <td>{item.expirationDate}</td>
+                                        <td>{item.state}</td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
             </div>

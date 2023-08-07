@@ -6,6 +6,7 @@ const initialState = {
     businessTypeData : [],
     dailyData : [],
     totalSalesData : {},
+    userCardData : [],
     data : {},
     status : "idle",
     error: null
@@ -32,6 +33,11 @@ export const adminDailyData = createAsyncThunk("/admin/getDailyData", async() =>
 export const adminTotalSalesData = createAsyncThunk("/admin/getTotalData", async() => {
     const response = await api("GET", "/admin/getTotalData");
     // console.log(response.data);
+    return response.data;
+})
+
+export const adminManageUserCard = createAsyncThunk("/admin/getUserCardData", async(id) => {
+    const response = await api("POST", "/admin/getUserCardData", id);
     return response.data;
 })
 
@@ -67,6 +73,17 @@ const adminSlice = createSlice({
             .addCase(adminTotalSalesData.fulfilled, (state, action) => {
                 state.status = "successed";
                 state.totalSalesData = action.payload;
+            })
+            .addCase(adminManageUserCard.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(adminManageUserCard.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userCardData = action.payload;
+            })
+            .addCase(adminManageUserCard.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             })
     }
 });
