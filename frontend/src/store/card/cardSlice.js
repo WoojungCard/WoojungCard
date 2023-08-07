@@ -53,16 +53,13 @@ export const userCardCancelHistory = createAsyncThunk("/card/cancelAppHistory", 
 
 // User Card Cancel Approve
 export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", async(id) => {
-    console.log(id);
     const response = await api("PUT", "/card/cancelApprove", id);
-    console.log(response.data);
     return response.data;
 })
 
 // User Card Possession History
 export const userCardPossessionHistory = createAsyncThunk("/card/userCardPossession", async() => {
     const response = await api("GET", "/card/userCardPossession");
-    console.log(response.data);
     return response.data;
 })
 
@@ -82,6 +79,7 @@ export const userPayCardBill = createAsyncThunk("/card/userPayCardBill", async(r
 export const userPayBillHistory = createAsyncThunk("/card/userPayBillHistory", async(request) => {
     console.log(request);
     const response = await api("POST", "/card/userPayBillHistory", request);
+    console.log(response.data)
     return response.data;
 })
 

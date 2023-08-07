@@ -166,11 +166,14 @@ function UserCardUsageHistory() {
                             <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}</b>
                         </div>
                         <div className="" style={{width: "130px"}}>
-                            <b>납부금: </b>
+                            <b>납부금: {payBillHistory}</b>
+                        </div>
+                        <div className="" style={{width: "130px"}}>
+                            <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}</b>
                         </div>
                     </div>
 
-                    <div className="d-grid gap-1">
+                    <div>
                         <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>납부하기</Button>
                     </div>
                 </div>

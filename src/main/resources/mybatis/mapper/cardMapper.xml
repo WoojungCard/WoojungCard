@@ -184,45 +184,45 @@
 	<select id="userCardUsageHistory" parameterType="com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest" resultType="com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse">
 	<![CDATA[
 	SELECT 
-		t.payment_date AS payment_date, 
-		t.approval_number AS approval_number, 
-		s.business_number AS business_number, 
-		s.store_name AS store_name, 
-		s.business_type AS business_type, 
-		t.installment AS installment, 
-		t.card_charge AS card_charge,
-		MIN(IF(t.installment > n.installment_months , t.card_charge * (n.interest_rate/100), null)) AS interest_bee
+	    MIN(t.payment_date) AS payment_date, 
+	    t.approval_number AS approval_number, 
+	    s.business_number AS business_number, 
+	    s.store_name AS store_name, 
+	    s.business_type AS business_type, 
+	    t.installment AS installment, 
+	    t.card_charge AS card_charge,
+	    MIN(IF(t.installment > n.installment_months , t.card_charge * (n.interest_rate/100), null)) AS interest_bee
 	FROM 
-		transaction AS t 
+	    transaction AS t 
 	INNER JOIN 
-		store AS s 
+	    store AS s 
 	ON 
-		t.store_id = s.id
+	    t.store_id = s.id
 	INNER JOIN
-		card_issued AS i
+	    card_issued AS i
 	ON 
-		i.id = t.card_issued_id
+	    i.id = t.card_issued_id
 	INNER JOIN
-		installment AS n
+	    installment AS n
 	ON
-		n.card_id = i.card_id
+	    n.card_id = i.card_id
 	WHERE
-		card_issued_id IN (
-			SELECT 
-				i.id 
-			FROM 
-				card_issued AS i 
-			WHERE 
-				i.user_id = #{id}
-			AND 
-	 			i.id = #{cardIssuedId}
-			)
+	    card_issued_id IN (
+	        SELECT 
+	            i.id 
+	        FROM 
+	            card_issued AS i 
+	        WHERE 
+	            i.user_id = #{id}
+	        AND 
+	            i.id = #{cardIssuedId}
+	        )
 	AND
-	 	YEAR(t.payment_date) = #{yearChoice} 
+	    YEAR(t.payment_date) = #{yearChoice} 
 	AND  
-	 	MONTH(t.payment_date) = #{monthChoice}
+	    MONTH(t.payment_date) = #{monthChoice}
 	GROUP BY
-		approval_number
+	    t.approval_number, s.business_number, s.store_name, s.business_type, t.installment, t.card_charge;
 	]]>
 	</select>
 	
