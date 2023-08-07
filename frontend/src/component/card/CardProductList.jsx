@@ -42,7 +42,7 @@ function CardProductList() {
 					</ToggleButton>
 				</ToggleButtonGroup>
 			</div>
-			
+
 			<div className="row row-cols-2 pt-3 mx-5 px-5">
 			{cardListData?.map((el)=>
 			el.state === "PROCEEDING" &&

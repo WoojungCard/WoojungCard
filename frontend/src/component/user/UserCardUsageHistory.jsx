@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { userCardPossessionHistory, userCardUsageHistory, userPayBillHistory, userPayCardBill } from "../../store/card/cardSlice";
+import { useLocation } from "react-router-dom";
 
 function UserCardUsageHistory() {
+
+    const location = useLocation();
+    // const cardIssuedId = location.state.cardIssuedId;
+    // const cardNumber = location.state.cardNumber;
 
     const {cardPossessionList, cardUsageHistory, payBillHistory} = useSelector((state) => state.card);
 
@@ -11,8 +16,8 @@ function UserCardUsageHistory() {
 
     const [request, setRequest] = useState({
         "cardIssuedId" : "",
-        "yearChoice" : "",
-        "monthChoice" : ""
+        "yearChoice" : new Date().getFullYear(),
+        "monthChoice" : new Date().getMonth()+1,
     })
 
     useEffect(()=>{
@@ -41,21 +46,21 @@ function UserCardUsageHistory() {
     }, [cardUsageHistory])
 
     const [selectRequest, setSelectRequest] = useState({
-        "cardIssuedId": 0,
-        "targetYear": 0,
-        "targetMonth": 0
+        "cardIssuedId": "",
+        "targetYear": new Date().getFullYear(),
+        "targetMonth": new Date().getMonth()+1,
     })
 
     const [payRequest, setPayRequest] = useState({
         "targetId" : "",
-        "targetYear" : "",
-        "targetMonth" : "",
+        "targetYear" : new Date().getFullYear(),
+        "targetMonth" : new Date().getMonth()+1,
         "payment" : 0
     })
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        dispatch(userPayCardBill(payRequest));
+        dispatch(userPayCardBill(payRequest));        
     }
 
     return (
@@ -69,7 +74,7 @@ function UserCardUsageHistory() {
                             <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>카드번호</Form.Label>
                                 <Col> 
                                     <Form.Select column sm="3" className="px-0 text-center" onChange={onChangeHandler} name="cardIssuedId" style={{fontSize: "13px", width: "200px"}}>
-                                        <option>카드를 선택해주세요.</option>
+                                        {/* <option disabled selected>{cardNumber}</option> */}
                                         {cardPossessionList?.map((el) => 
                                         <option value={el.id} >{el.cardNumber}</option>
                                         )}
@@ -85,6 +90,7 @@ function UserCardUsageHistory() {
                             <Form.Label column sm="3" className="px-0 text-end w-40" style={{fontSize: "13px"}}>년도</Form.Label>
                             <Col>
                                 <Form.Select column sm="3" className="px-0 text-center" onChange={onChangeHandler} name="yearChoice" style={{fontSize: "13px", width: "100px"}}>
+                                    <option disabled selected>{new Date().getFullYear()}</option>
                                     <option>2023</option>
                                     <option>2022</option>
                                     <option>2021</option>
@@ -98,6 +104,7 @@ function UserCardUsageHistory() {
                             <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>월</Form.Label>
                             <Col>
                                 <Form.Select column sm="3" className="px-0 text-center" onChange={onChangeHandler} name="monthChoice" style={{fontSize: "13px", width: "100px"}}>
+                                        <option disabled selected>{new Date().getMonth()+1}</option>
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -155,9 +162,8 @@ function UserCardUsageHistory() {
                             <div className="col" style={{width: "100px"}}>
                                 <p className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</p>
                             </div>
-                            
                             <div className="col" style={{width: "100px"}}>
-                                <p className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}</p>
+                                <span className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}원</span>
                             </div>
                         </div> 
                     </div>
@@ -165,12 +171,12 @@ function UserCardUsageHistory() {
                         <div className="" style={{width: "130px"}}>
                             <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}</b>
                         </div>
-                        <div className="" style={{width: "130px"}}>
+                        {/* <div className="" style={{width: "130px"}}>
                             <b>납부금: {payBillHistory}</b>
                         </div>
                         <div className="" style={{width: "130px"}}>
                             <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}</b>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div>

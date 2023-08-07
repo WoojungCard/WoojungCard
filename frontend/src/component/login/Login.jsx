@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
@@ -20,6 +20,7 @@ function Login() {
 	const [insertLoginId, setInsertLoginId] = useState('');
 	const [insertLoginPwd, setInsertLoginPwd] = useState('');
 	const [userType, setUserType] = useState('u');
+
 	
 //	개인고객, 가맹점 선택하여 로그인
 	const handleUserType = (e) => {
@@ -45,7 +46,9 @@ function Login() {
 		if (userType === 'u') {
 			dispatch(userLogin(loginInfo));
 			// if (loginStatus === "successed") {
-				navigate('/user/cardapplication/${2}');
+			
+			navigate("/cardProduct", {replace : true});
+			navigate(0);
 			// } else {
 			// 	console.log("로그인실패");
 			// }
@@ -53,11 +56,11 @@ function Login() {
 			console.log("store Login");
 		}
 	};
+
 	
 	return (
 		<div>
 			<Container className="container d-flex justify-content-center align-items-center" style={{height: "700px"}}>
-				
 				
 				<Form style={{width: "400px"}}>
 					
