@@ -8,7 +8,7 @@ const initialState = {
     storeListData : [],
     StoreAppStatusData : [],
     status : "idle",
-    loginStatus : "idle",
+    storeLoginStatus : "idle",
     error: null
 }
 
@@ -106,16 +106,16 @@ const storeSlice = createSlice({
                 state.error = action.payload.data;
             })
             .addCase(storeLogin.pending, (state, action) => {
-                state.status = "loading";
+                state.storeLoginStatus = "loading";
             })
             .addCase(storeLogin.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.storeLoginStatus = "successed";
                 state.data = action.payload;
                 localStorage.setItem("RefreshToken", action.payload.refreshToken);
                 localStorage.setItem("AccessToken", action.payload.accessToken);
             })
             .addCase(storeLogin.rejected, (state, action) => {
-                state.status = "failed";
+                state.storeLoginStatus = "failed";
                 state.error = action.payload;
             })
             .addCase(storeGetInfo.pending, (state, action) => {  

@@ -14,6 +14,7 @@ import { storeLogin } from "../../store/store/storeSlice";
 function Login() {
 
 	const {loginStatus} = useSelector((state) => state.user);
+	const {storeLoginStatus} = useSelector((state) => state.store);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -53,19 +54,26 @@ function Login() {
 		} else if (userType === 's') {
 			// console.log(loginInfo2);
 			dispatch(storeLogin(loginInfo2));
-			navigate('/store/StoreInfoUpdate');
-			navigate(0);
 		}
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		if (loginStatus === "successed") {
 			navigate("/user", {replace : true});
 			navigate(0);
 		} else if (loginStatus === "failed") {
 			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
 		}
-	},[loginStatus])
+	}, [loginStatus]);
+
+	useEffect(() => {
+		if (storeLoginStatus === "successed") {
+			navigate("/store", {replace : true});
+			navigate(0);
+		} else if (storeLoginStatus === "failed") {
+			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
+		}
+	}, [storeLoginStatus]);
 
 	
 	return (
