@@ -24,14 +24,11 @@ function StoreAppManagement() {
 		"status" : insertStatus
 	})
 	
-	
-
     return (
         <div className="container mt-5 pt-4">
             <h4 className="fw-bold text-center">가맹점신청내역</h4>
             
 			<div className="container mt-4">
-      		
                 <Table hover className="text-center">
                     <thead className="">
                         <tr>

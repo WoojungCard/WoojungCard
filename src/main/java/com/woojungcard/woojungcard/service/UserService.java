@@ -24,20 +24,28 @@ import com.woojungcard.woojungcard.exception.ApplicationException;
 public interface UserService {
 	// User Id Check
 	public Boolean userIdCheck(UserIdCheckRequest request) throws UserIdCheckException;
+	
 	// User Sign Up
 	public ResponseEntity<String> userSignUp(UserSignUpRequest request) throws SignUpException;
+	
 	// User Login
 	public UserLoginResponse userLogin(UserLoginRequest request) throws LoginException;
+	
 	// User Get Info
 	public UserInfoResponse userGetInfo();
+	
 	// User Info Update
 	public ResponseEntity<String> userInfoUpdate(UserInfoUpdateRequest request) throws UpdateException;
+	
 	// User Card Application Info
 	public UserCardAppInfoResponse userCardAppInfo();
+	
 	// User Card Application Status
 	public List<CardAppStatusResponse> userCardAppStatus();
+	
 	// User list
 	public List<UserDTO> userList() throws Exception;
+	
 	// User Card Application
 	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException ;
 }

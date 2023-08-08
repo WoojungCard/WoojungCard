@@ -6,8 +6,6 @@ import { findCardTypeById, userCardPossessionHistory } from "../../../store/card
 import CreditCardUsageHistory from "./CreditCardUsageHistory";
 import CheckCardUsageHistory from "./CheckCardUsageHistory";
 
-
-
 function UserCardUsageHistoryForm() {
 
     const location = useLocation();

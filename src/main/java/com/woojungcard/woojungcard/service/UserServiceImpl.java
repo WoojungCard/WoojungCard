@@ -32,9 +32,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	
-private final UserRepository userRepository;
-private final EncryptConfig encryptConfig;
-private final JwtService jwtService;
+	private final UserRepository userRepository;
+	private final EncryptConfig encryptConfig;
+	private final JwtService jwtService;
 
 	// User Id Check
 	public Boolean userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{

@@ -118,10 +118,7 @@ function StoreJoin() {
 		setInsertStoreAddrDetail(e.target.value);
 	};
 	
-	
-	
 	const store = ({
-	
 	"businessNumber" : insertStoreId,
 	"storePwd" : insertStorePwd,
 	"representative" : insertStoreRepresent, 
@@ -169,7 +166,11 @@ function StoreJoin() {
                         />
                     </Form.Group>
                     
-                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.</p>}
+                    {idAlertOpen && (
+						<p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>
+							&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.
+						</p>
+					)}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
@@ -181,7 +182,11 @@ function StoreJoin() {
                         />
                     </Form.Group>
                     
-                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
+                    {pwdAlertOpen && (
+						<p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>
+							&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.
+						</p>
+					)}
                     
                     <Form.Group className="mb-3" controlId="formPlaintextRepresent">
 						<Form.Label className="mb-0 ">대표자</Form.Label>
