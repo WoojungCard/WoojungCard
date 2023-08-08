@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { logout, userGetInfo } from "../../store/user/userSlice";
 import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
@@ -21,7 +21,7 @@ const styles = {
     }
 };
 
-// 로그인 후 보여지는 메인 헤더
+// 로그인 후 개인고객용 헤더
 function UserHeader(props) {
 
     const [show, setShow] = useState(false);
@@ -32,13 +32,16 @@ function UserHeader(props) {
     const {userInfo} = useSelector((state)=>state.user);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         dispatch(userGetInfo());
     },[])
 
-    const onClickHandler = () => {
+    function onClickLogOut() {
         dispatch(logout());
+        navigate("/", {replace : true});
+        navigate(0);
     }
 
 	return (	
@@ -77,7 +80,7 @@ function UserHeader(props) {
                             <div className="col-2" style={styles.main}>
                                 <span 
                                     style={{cursor: "pointer"}}
-                                    onClick={onClickHandler}
+                                    onClick={onClickLogOut}
                                 >
                                     로그아웃
                                 </span>
@@ -157,7 +160,7 @@ function UserHeader(props) {
                                     <div className="" style={styles.main}>
                                         <span 
                                             style={{cursor: "pointer"}}
-                                            onClick={onClickHandler}
+                                            onClick={onClickLogOut}
                                         >
                                             로그아웃
                                         </span>
