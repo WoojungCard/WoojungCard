@@ -46,6 +46,7 @@ export const userCardAppApprove = createAsyncThunk("/card/approve", async(id) =>
 // User Card Cancel Apllication
 export const userCardCancelApp = createAsyncThunk("/card/cancelApp", async(id) => {
     const response = await api("PUT", "/card/cancelApp", id);
+    console.log(response.data);
     return response.data; 
 })
 

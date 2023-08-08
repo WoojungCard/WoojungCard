@@ -13,6 +13,7 @@ const initialState = {
     updateStatus : "idle",
     loginStatus : "idle",
     appStatus : "idle",
+    signUpStatus : "idle",
     error: null
 }
 
@@ -116,14 +117,14 @@ const userSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userSignUp.pending, (state, action) => {
-                state.status = "loading";
+                state.signUpStatus = "loading";
             })
             .addCase(userSignUp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.signUpStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userSignUp.rejected, (state, action) => {
-                state.status = "failed";
+                state.signUpStatus = "failed";
                 state.error = action.payload.data;
             })
             .addCase(userLogin.pending, (state, action) => {

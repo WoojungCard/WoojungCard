@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import { logout, userGetInfo } from "../../store/user/userSlice";
+import { checkJwt } from "../../store/token/tokenSlice";
 import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 
@@ -43,6 +44,11 @@ function UserHeader(props) {
         navigate("/", {replace : true});
         navigate(0);
     }
+
+    useEffect(() => {
+        dispatch(checkJwt());
+        setInterval(dispatch(checkJwt()), 60000 * 25);
+      }, []);
 
 	return (	
 		<div className={""} id={"div-header"}>

@@ -60,15 +60,16 @@ public ResponseEntity<String> storeSignUp(StoreSignUpRequest request) throws Sig
  // store update
 public ResponseEntity<String> storeUpdate(StoreUpdateRequest request) throws StoreUpdateException{
 	Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
-
-	String businessNumber = storeRepository.findBNById(id);
-	
-	String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), businessNumber);
-	request.setStorePwd(encodedPwd);
 	request.setId(id);
-	
+	if (request.getStorePwd().isEmpty()) {
+		String oldPWd = storeRepository.findPwdById(id);
+		request.setStorePwd(oldPWd);
+	} else {
+		String businessNumber = storeRepository.findBNById(id);
+		String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), businessNumber);
+		request.setStorePwd(encodedPwd);
+	}
 	Integer updateRow = storeRepository.storeInfoUpdate(request);
-	
 	if(updateRow != 0) {
 		return new ResponseEntity<String>("변경이 완료되었습니다.", HttpStatus.OK);
 	}else {

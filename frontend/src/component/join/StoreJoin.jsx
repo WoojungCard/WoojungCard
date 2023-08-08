@@ -10,10 +10,11 @@ import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { storeIdCheck, storeSignUp } from "../../store/store/storeSlice";
+import { useNavigate } from "react-router-dom";
 
 // 가맹점 회원가입
 function StoreJoin() {
-	const { storeIdCheckResult } = useSelector((state) => state.store);
+	const { storeIdCheckResult,signUpStatus } = useSelector((state) => state.store);
 	
 	const dispatch =useDispatch();
 	
@@ -43,7 +44,6 @@ function StoreJoin() {
 	
 	const handleBlur = (e) => {
 		dispatch(storeIdCheck(insertStoreId));
-		console.log(insertStoreId);
 		if (storeIdCheckResult === false) {
 			setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
 		}else{
@@ -74,13 +74,6 @@ function StoreJoin() {
 		setInsertStoreName(e.target.value);
 	};
 		
-//	const onChangeinputStoreStartDate = (e) => {
-//		setInsertStoreDate(e.target.value);
-//	};
-//	const onChangeinputStoreStartDate = (e) => {
-//		const targetValue = DateAutoFormat(e.target.value);
-//		setInsertStoreDate(targetValue);
-//	}
 	const onChangeinputUserBirth = (e) => {
 		const targetValue = birthAutoFormat(e.target.value);
 		setInsertStoreDate(targetValue);
@@ -144,10 +137,19 @@ function StoreJoin() {
 	
 //	가맹점 신청하기 클릭
 	const onClickStoreJoin = (e) => {
-		// e.prventDefault();
-		console.log(store);
+		e.preventDefault();
 		dispatch(storeSignUp(store));
 	};
+
+	const navigate = useNavigate();
+
+	useEffect(()=>{
+		if (signUpStatus === "successed") {
+			navigate("/");
+		} else if (signUpStatus === "failed") {
+			alert("등록에 실패하였습니다. 다시 시도해주세요.");
+		}
+	},[signUpStatus])
 	
 	
 	return (
