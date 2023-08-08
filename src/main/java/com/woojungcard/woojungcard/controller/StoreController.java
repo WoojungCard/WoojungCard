@@ -19,10 +19,12 @@ import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
+import com.woojungcard.woojungcard.exception.StoreSalesManagementException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 import com.woojungcard.woojungcard.service.StoreService;
 
@@ -73,5 +75,9 @@ public class StoreController {
 	@PutMapping("/storeAppStatusChange")
 	public StoreAppStatusResponse storeAppStatusChange(@RequestBody Long id)throws StoreAppStatusChangeException{
 		return storeService.storeAppStatusChange(id);
+	}
+	@GetMapping("/storeSalesManagement")
+	public List<StoreSalesManagementResponse> storeSalesManagement(){
+		return storeService.storeSalesManagement();
 	}
 }

@@ -13,6 +13,7 @@ import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
@@ -34,4 +35,7 @@ public interface StoreService {
 	
 	//Store Application status change
 	public StoreAppStatusResponse storeAppStatusChange(Long id);
+	
+	//Store salesManagement
+	public List<StoreSalesManagementResponse> storeSalesManagement();
 }

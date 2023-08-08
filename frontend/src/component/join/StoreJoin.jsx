@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
@@ -16,6 +17,7 @@ function StoreJoin() {
 	const { storeIdCheckResult } = useSelector((state) => state.store);
 	
 	const dispatch =useDispatch();
+	const navigate = useNavigate();
 	
 	const [insertStoreId, setInsertStoreId] = useState('');
 	const [insertStorePwd, setInsertStorePwd] = useState('');
@@ -147,6 +149,7 @@ function StoreJoin() {
 		// e.prventDefault();
 		console.log(store);
 		dispatch(storeSignUp(store));
+		navigate('/login/login');
 	};
 	
 	

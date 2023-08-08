@@ -59,7 +59,7 @@
 			store
 		SET
 			representative = #{representative},
-			store_pwd = #{storePwd},
+			store_pwd      = #{storePwd},
 			store_zip_code = #{storeZipCode},
 			store_address1 = #{storeAddress1},
 			store_address2 = #{storeAddress2},
@@ -156,7 +156,7 @@
 	</select>
 
 	<!--  스토어 승인으로 변경 -->
-		<select id = "storeAppStatusChange" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
+		<select id = "storeAppStatusChange" parameterType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse" resultType="Integer">
 		<![CDATA[
     		UPDATE 
 				store
@@ -166,5 +166,18 @@
 			WHERE id = #{id}
     	]]>
 	</select>
-	
+	<!--  스토어 매출관리 조회 -->
+	<select id = "storeSalesManagement" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
+			<![CDATA[
+	    	SELECT
+	    		*
+	    	FROM
+	    		store
+	    		INNER JOIN
+	    		transaction 
+	    	ON
+	    	store.id = transaction.id;
+	    	
+    	]]>
+	</select>
 </mapper>
