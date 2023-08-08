@@ -114,7 +114,8 @@
 			card_type, 
 			request_date, 
 			a.approval_date,
-			i.state as state
+			i.state as state,
+			expiration_date
 		FROM  
 			card_issued AS i 
 		INNER JOIN 
@@ -126,7 +127,7 @@
 		ON
 			i.id = a.card_issued_id
 		WHERE 
-			user_id = #{id} AND (i.state = "WATING" OR i.state = "USE");
+			user_id = #{id}
 		]]>
     </select>
 
