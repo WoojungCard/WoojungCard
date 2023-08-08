@@ -167,16 +167,23 @@
     	]]>
 	</select>
 	<!--  스토어 매출관리 조회 -->
-	<select id = "storeSalesManagement" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
+	<select id = "storeSalesManagement" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
 			<![CDATA[
 	    	SELECT
-	    		*
+				card_issued_id,
+				store_id,
+				approval_number,
+				payment_date,
+				installment,
+				card_charge
 	    	FROM
 	    		store
 	    		INNER JOIN
 	    		transaction 
 	    	ON
-	    	store.id = transaction.id;
+	    		store.id = transaction.store_id
+			WHERE 
+				store.id = #{id}
 	    	
     	]]>
 	</select>

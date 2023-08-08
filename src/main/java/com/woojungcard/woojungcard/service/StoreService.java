@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
+import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
@@ -37,5 +38,5 @@ public interface StoreService {
 	public StoreAppStatusResponse storeAppStatusChange(Long id);
 	
 	//Store salesManagement
-	public List<StoreSalesManagementResponse> storeSalesManagement();
+	public List<StoreSalesManagementResponse> storeSalesManagement(Long id);
 }

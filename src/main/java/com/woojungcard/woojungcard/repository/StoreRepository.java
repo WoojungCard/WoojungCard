@@ -36,6 +36,6 @@ public interface StoreRepository {
 	List<StoreAppStatusResponse> storeAppStatus();
 	StoreAppStatusResponse storeAppStatusChange(Long id); 
 	List<StoreDTO> storeList();
-	List<StoreSalesManagementResponse> storeSalesManagement();
+	List<StoreSalesManagementResponse> storeSalesManagement(Long id);
 	
 }

@@ -11,6 +11,7 @@ import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
+import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
@@ -111,8 +112,8 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 		return storeRepository.storeAppStatusChange(id);
 	}
 
-//
-//	public List<StoreSalesManagementResponse> storeSalesManageMent() {
-//		return storeRepository.storeSalesManagement();
-//	}
+//store Application Management 
+	public List<StoreSalesManagementResponse> storeSalesManagement(Long id) {
+		return storeRepository.storeSalesManagement(id);
+	}
 }
