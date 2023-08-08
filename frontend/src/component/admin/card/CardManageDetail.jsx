@@ -12,7 +12,6 @@ function CardManageDetail() {
     const dispatch = useDispatch();
     const {cardListData} = useSelector((state) => state.card);
     const cardData = cardListData[index];
-    // console.log(cardData);
 
     const customHeight = {
         height: "40px",

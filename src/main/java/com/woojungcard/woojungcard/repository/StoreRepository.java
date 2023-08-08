@@ -21,15 +21,25 @@ import com.woojungcard.woojungcard.exception.StoreUpdateException;
 @Repository
 @Mapper
 public interface StoreRepository {
+	
 	Integer storeSignUp(StoreSignUpRequest request) throws SignUpException;
+	
 	Integer storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException;
+	
 	Integer storeInfoUpdate(StoreUpdateRequest request) throws StoreUpdateException;
+	
 	String findBNById(Long id);
+	
 	StoreDTO storeLogin(StoreLoginRequest request) throws LoginException;
+	
 	StoreInfoResponse storeGetInfo(Long id);
+	
 	//Store Application Status
 	List<StoreAppInfoResponse> storeAppInfo();
+	
 	List<StoreAppStatusResponse> storeAppStatus();
+	
 	StoreAppStatusResponse storeAppStatusChange(Long id); 
+	
 	List<StoreDTO> storeList();
 }

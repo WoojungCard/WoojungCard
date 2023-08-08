@@ -9,6 +9,7 @@ import { adminDailyData } from '../../../store/admin/adminSlice';
 function LineChart() {
 
     const dispatch = useDispatch();
+
     const {dailyData} = useSelector((state) => state.admin);
     const [rawData, setRawData] = useState([]);
     const [chartData, setChartData] = useState([]);
@@ -24,7 +25,7 @@ function LineChart() {
     useEffect(() => {
         const transformData = (rawData) => {
             const transformedData = {};
-          
+
             for (const data of rawData) {
                 const { totalCharge, paymentDate } = data;
                 const [year, month, day] = paymentDate.split('-');
@@ -41,17 +42,17 @@ function LineChart() {
                     y: totalCharge,
                 });
             }
-          
+            
             return Object.values(transformedData);
         };
 
         const transformedData = transformData(rawData);
 
         setChartData(transformedData);
-      
+    
     }, [rawData]);
     
-      
+    
     return (
         <div style={{ width: '1200px', height: '300px', margin: '0 auto' }}>
             <ResponsiveLine

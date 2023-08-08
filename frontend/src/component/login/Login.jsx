@@ -96,10 +96,10 @@ function Login() {
 					<Form.Group className="row mb-4" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="userType" defaultValue="u" value={userType} onChange={handleUserType}>
 					        <ToggleButton  variant="outline-dark" id="tbg-radio-1" value="u">
-					          	개인 고객
+								개인 고객
 					        </ToggleButton>
 					        <ToggleButton variant="outline-dark" id="tbg-radio-2" value="s">
-					          	가맹점
+								가맹점
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>
@@ -107,7 +107,8 @@ function Login() {
 					<Form.Group className="mb-3" controlId="formPlaintextUserId">
 						<Col sm>
                             <Form.Control
-                                type="text" placeholder="아이디"
+                                type="text" 
+								placeholder="아이디"
                                 onChange={onChangeLoginId}
                                 className="mb-3"
                             />
@@ -117,7 +118,8 @@ function Login() {
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                         <Col sm>
                             <Form.Control
-                                type="password" placeholder="비밀번호"
+                                type="password" 
+								placeholder="비밀번호"
                                 onChange={onChangeLoginPwd}
                             />
                         </Col>

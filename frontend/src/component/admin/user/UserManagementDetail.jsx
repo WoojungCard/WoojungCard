@@ -14,15 +14,14 @@ function UserManagementDetail() {
     const index = location.state.index;
     
     const dispatch = useDispatch();
+
     const {userListData} = useSelector((state) => state.user);
     const userData = userListData[index];
-    // console.log(userData);
 
     const {userCardData} = useSelector((state) => state.admin);
 
     useEffect(() => {
         dispatch(adminManageUserCard(userData.id));
-        // console.log(userCardData);
     }, []);
 
     const popoverClickUserName = (
@@ -56,7 +55,7 @@ function UserManagementDetail() {
                     </h5>
 
                 <Table hover className="text-center">
-                    <thead className="">
+                    <thead>
                         <tr>
                             <th>No.</th>
                             <th>카드상품</th>

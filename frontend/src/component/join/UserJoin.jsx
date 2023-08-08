@@ -102,7 +102,8 @@ function UserJoin() {
 					<Form.Group controlId="formPlaintextUserId">
 						<Form.Label className="mb-0">아이디</Form.Label>
                         <Form.Control
-                            type="text" placeholder="아이디를 입력하세요"
+                            type="text" 
+							placeholder="아이디를 입력하세요"
                             onChange={onChangeinputUserId}
                             onBlur={handleIdBlur}
                             className="mb-3"
@@ -114,7 +115,8 @@ function UserJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="비밀번호를 입력하세요"
+                            type="password" 
+							placeholder="비밀번호를 입력하세요"
                             maxLength={25}
                             onBlur={handlePwdBlur}
                             className="mb-3"
@@ -126,7 +128,8 @@ function UserJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextUserName">
 						<Form.Label className="mb-0 ">이름</Form.Label>
                         <Form.Control
-                            type="text" placeholder="홍길동"
+                            type="text" 
+							placeholder="홍길동"
                             onChange={onChangeinputUserName}
                             className="mb-3"
                         />
@@ -135,7 +138,8 @@ function UserJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextUserBirth">
 						<Form.Label className="mb-0 ">생년월일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="생년월일 8자리"
+                            type="text" 
+							placeholder="생년월일 8자리"
                             onChange={onChangeinputUserBirth}
                             maxLength={10}
 							value ={insertUserBirth}
@@ -146,10 +150,10 @@ function UserJoin() {
                     <Form.Group className="row mb-2" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="gender" value={gender} onChange={handleGender}>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-1" value="MAN">
-					          남자
+					          	남자
 					        </ToggleButton>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-2" value="WOMAN">
-					          여자
+					          	여자
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>
@@ -157,7 +161,8 @@ function UserJoin() {
 			        <Form.Group className="mb-3" controlId="formPlaintextUserTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="연락처를 입력하세요"
+                            type="text" 
+							placeholder="연락처를 입력하세요"
                             onChange={onChangeinputUserTel}
                             maxLength={13}
                             value={insertUserTel}
@@ -178,18 +183,18 @@ function UserJoin() {
 
 // 연락처 입력시 하이픈 자동완성
 export function phoneNumberAutoFormat(phoneNumber) {
-  const number = phoneNumber.trim().replace(/[^0-9]/g, "");
+	const number = phoneNumber.trim().replace(/[^0-9]/g, "");
 
-  if (number.length < 4) return number;
-  if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
-  if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
-  return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+	if (number.length < 4) return number;
+	if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
+	if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
+	return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
 }
 
 // 생년월일 입력시 하이픈 자동완성
 export function birthAutoFormat(birth) {
 	const number = birth.trim().replace(/[^0-9]/g, "");
-  
+	
 	if (number.length < 5) return number;
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");

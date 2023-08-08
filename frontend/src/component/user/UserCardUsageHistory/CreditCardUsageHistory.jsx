@@ -13,11 +13,11 @@ const CreditCardUsageHistory = (props)=>{
     const yearChoice = props.yearChoice;
     const monthChoice = props.monthChoice;
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(userCardUsageHistory({"cardIssuedId" : cardIssuedId, "yearChoice" : yearChoice, "monthChoice" : monthChoice}));
     },[cardIssuedId, yearChoice, monthChoice]);
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(userPayBillHistory({"cardIssuedId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice}));
     }, [cardIssuedId, yearChoice, monthChoice])
 
@@ -31,7 +31,7 @@ const CreditCardUsageHistory = (props)=>{
             <div>
             <b>신용카드</b>
                 <Table hover className="text-center">
-                    <thead className="">
+                    <thead>
                         <tr>
                             <th>일자</th>
                             <th>승인번호</th>

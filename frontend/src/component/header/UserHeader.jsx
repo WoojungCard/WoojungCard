@@ -56,25 +56,35 @@ function UserHeader(props) {
                         <div className="row justify-content-between w-100">
                             
                             <div className="col-2">
-                                <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                <Link to={"/user"} style={styles.main}>
+                                    우정카드
+                                </Link>
                             </div>
                             
 
                             <div className="col-2">
-                                <Link to={"/user/cardInfo"} style={styles.main}>카드상품</Link>
+                                <Link to={"/user/cardInfo"} style={styles.main}>
+                                    카드상품
+                                </Link>
                             </div>
 
                             <div className="col-2">
-                                <Link to={"/admin/cardManage"} style={styles.main}>나의카드</Link>
+                                <Link to={"/admin/cardManage"} style={styles.main}>
+                                    나의카드
+                                </Link>
                             </div>
 
                             <div className="col-2">
-                                <Link to={"/admin/cardManage"} style={styles.main}>내정보</Link>
+                                <Link to={"/admin/cardManage"} style={styles.main}>
+                                    내정보
+                                </Link>
                             </div>
                             
                     
                             <div className="col-2 d-flex align-items-center justify-content-end pe-0">
-                                <h5 className="fw-bold mb-0">{userInfo.userName}님</h5>
+                                <h5 className="fw-bold mb-0">
+                                    {userInfo.userName}님
+                                </h5>
                             </div>
 
                             <div className="col-2" style={styles.main}>
@@ -90,10 +100,14 @@ function UserHeader(props) {
                     ) : (
                         <div className="row justify-content-between w-100">
                             <div className="col">
-                                <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                <Link to={"/user"} style={styles.main}>
+                                    우정카드
+                                </Link>
                             </div>
                             <div className="col-1">
-                                <Link to={"/login"} style={styles.main}>로그인</Link>
+                                <Link to={"/login"} style={styles.main}>
+                                    로그인
+                                </Link>
                             </div>
                         </div>
                     )}
@@ -116,45 +130,65 @@ function UserHeader(props) {
                                     className={"container justify-content-between align-items-start"}>
                                     
                                     <div className="col-2">
-                                        <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                        <Link to={"/user"} style={styles.main}>
+                                            우정카드
+                                        </Link>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/user"} style={styles.main}>카드상품</Link>
+                                            <Link to={"/user"} style={styles.main}>
+                                                카드상품
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user"} style={styles.sub}>신용카드/체크카드</Link>
+                                            <Link to={"/user"} style={styles.sub}>
+                                                신용카드/체크카드
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user/cardAppStatus"} style={styles.sub}>카드신청현황조회</Link>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-column col-2">
-                                        <div>
-                                            <Link to={"/user/cardInfo"} style={styles.main}>나의카드</Link>
-                                        </div>
-                                        <div>
-                                            <Link to={"/user/cardInfo"} style={styles.sub}>카드정보</Link>
-                                        </div>
-                                        <div>
-                                            <Link to={"/user/cardUsageHistory"} style={styles.sub}>카드이용조회</Link>
+                                            <Link to={"/user/cardAppStatus"} style={styles.sub}>
+                                                카드신청현황조회
+                                            </Link>
                                         </div>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/user/infoChange"} style={styles.main}>내정보</Link>
+                                            <Link to={"/user/cardInfo"} style={styles.main}>
+                                                나의카드
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user/infoChange"} style={styles.sub}>회원정보수정</Link>
+                                            <Link to={"/user/cardInfo"} style={styles.sub}>
+                                                카드정보
+                                            </Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/cardUsageHistory"} style={styles.sub}>
+                                                카드이용조회
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-column col-2">
+                                        <div>
+                                            <Link to={"/user/infoChange"} style={styles.main}>
+                                                내정보
+                                            </Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/infoChange"} style={styles.sub}>
+                                                회원정보수정
+                                            </Link>
                                         </div>
                                     </div>
                                     
                             
                                     <div className="col-2 d-flex align-items-center justify-content-end">
-                                        <h5 className="fw-bold mb-0 mt-2">{userInfo.userName}님</h5>
+                                        <h5 className="fw-bold mb-0 mt-2">
+                                            {userInfo.userName}님
+                                        </h5>
                                     </div>
 
                                     <div className="" style={styles.main}>

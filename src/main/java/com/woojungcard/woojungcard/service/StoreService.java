@@ -21,9 +21,13 @@ import com.woojungcard.woojungcard.exception.StoreUpdateException;
 
 public interface StoreService {
 	public Boolean storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException;
+	
 	public ResponseEntity<String> storeSignUp(StoreSignUpRequest request) throws SignUpException;
+	
 	public ResponseEntity<String> storeUpdate(StoreUpdateRequest request) throws StoreUpdateException;
+	
 	public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginException;
+	
 	//Store get Info
 	public StoreInfoResponse storeGetInfo();
 	

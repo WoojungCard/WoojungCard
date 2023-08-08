@@ -20,28 +20,28 @@ function UserCardUsageHistory() {
         "monthChoice" : new Date().getMonth()+1,
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(userCardPossessionHistory());
     }, [])
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(userPayBillHistory(selectRequest));
     }, [request])
 
-    const onChangeHandler = (e)=>{
+    const onChangeHandler = (e) => {
         const {name, value} = e.target;
         setRequest({...request, [name] : value});
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(userCardUsageHistory(request));
     },[request]);
 
-    useEffect(()=>{
+    useEffect(() => {
         setPayRequest({...payRequest, "targetId" : request.cardIssuedId, "targetYear" : request.yearChoice, "targetMonth" : request.monthChoice, "payment" : cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)});
     }, [cardUsageHistory])
 
-    useEffect(()=>{
+    useEffect(() => {
         setSelectRequest({...selectRequest, "cardIssuedId" : request.cardIssuedId, "targetYear" : request.yearChoice, "targetMonth" : request.monthChoice});
     }, [cardUsageHistory])
 
@@ -124,66 +124,66 @@ function UserCardUsageHistory() {
                 </div>
             </div>
 
+            <div>
+                <Table hover className="text-center">
+                    <thead className="">
+                        <tr>
+                            <th>일자</th>
+                            <th>승인번호</th>
+                            <th>사업자번호</th>
+                            <th>가맹점명</th>
+                            <th>업종</th>
+                            <th>할부</th>
+                            <th>카드청구액</th>
+                            <th>할부이자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cardUsageHistory?.map((el) => 
+                        <tr>
+                            <td>{el.paymentDate}</td>
+                            <td>{el.approvalNumber}</td>
+                            <td>{el.businessNumber}</td> 
+                            <td>{el.storeName}</td>
+                            <td>{el.businessType}</td>
+                            <td>{el.installment === 0 ? "일시불" : el.installment}</td>
+                            <td>{el.cardCharge}</td>
+                            <td>{el.interestBee}</td>
+                        </tr>
+                        )}
+                    </tbody>
+                </Table>
+
+                <div className="d-flex justify-content-end">
+                    <div className="row">
+                        <div className="col" style={{width: "100px"}}>
+                            <p className="">건수 : {cardUsageHistory?.length}</p>
+                        </div>
+                        <div className="col" style={{width: "100px"}}>
+                            <p className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</p>
+                        </div>
+                        <div className="col" style={{width: "100px"}}>
+                            <span className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}원</span>
+                        </div>
+                    </div> 
+                </div>
+                <div className="d-flex justify-content-end">
+                    <div className="" style={{width: "130px"}}>
+                        <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}</b>
+                    </div>
+                    {/* <div className="" style={{width: "130px"}}>
+                        <b>납부금: {payBillHistory}</b>
+                    </div>
+                    <div className="" style={{width: "130px"}}>
+                        <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}</b>
+                    </div> */}
+                </div>
+
                 <div>
-                    <Table hover className="text-center">
-                        <thead className="">
-                            <tr>
-                                <th>일자</th>
-                                <th>승인번호</th>
-                                <th>사업자번호</th>
-                                <th>가맹점명</th>
-                                <th>업종</th>
-                                <th>할부</th>
-                                <th>카드청구액</th>
-                                <th>할부이자</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cardUsageHistory?.map((el) => 
-                            <tr>
-                                <td>{el.paymentDate}</td>
-                                <td>{el.approvalNumber}</td>
-                                <td>{el.businessNumber}</td> 
-                                <td>{el.storeName}</td>
-                                <td>{el.businessType}</td>
-                                <td>{el.installment === 0 ? "일시불" : el.installment}</td>
-                                <td>{el.cardCharge}</td>
-                                <td>{el.interestBee}</td>
-                            </tr>
-                            )}
-                        </tbody>
-                    </Table>
-
-                    <div className="d-flex justify-content-end">
-                        <div className="row">
-                            <div className="col" style={{width: "100px"}}>
-                                <p className="">건수 : {cardUsageHistory?.length}</p>
-                            </div>
-                            <div className="col" style={{width: "100px"}}>
-                                <p className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</p>
-                            </div>
-                            <div className="col" style={{width: "100px"}}>
-                                <span className="">{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}원</span>
-                            </div>
-                        </div> 
-                    </div>
-                    <div className="d-flex justify-content-end">
-                        <div className="" style={{width: "130px"}}>
-                            <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}</b>
-                        </div>
-                        {/* <div className="" style={{width: "130px"}}>
-                            <b>납부금: {payBillHistory}</b>
-                        </div>
-                        <div className="" style={{width: "130px"}}>
-                            <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}</b>
-                        </div> */}
-                    </div>
-
-                    <div>
-                        <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>납부하기</Button>
-                    </div>
+                    <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>납부하기</Button>
                 </div>
             </div>
+        </div>
     )
 }
 export default UserCardUsageHistory;

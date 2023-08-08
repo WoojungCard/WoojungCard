@@ -57,21 +57,29 @@ function StoreHeader(props) {
                         <div className="row justify-content-between w-100">
                             
                             <div className="col-2">
-                                <Link to={"/store"} style={styles.main}>우정카드</Link>
+                                <Link to={"/store"} style={styles.main}>
+                                    우정카드
+                                </Link>
                             </div>
                             
 
                             <div className="col-2">
-                                <Link to={"/store"} style={styles.main}>가맹점</Link>
+                                <Link to={"/store"} style={styles.main}>
+                                    가맹점
+                                </Link>
                             </div>
 
                             <div className="col-2">
-                                <Link to={"/store/StoreInfoUpdate"} style={styles.main}>가맹점정보</Link>
+                                <Link to={"/store/StoreInfoUpdate"} style={styles.main}>
+                                    가맹점정보
+                                </Link>
                             </div>                            
                             
                     
                             <div className="col-2 d-flex align-items-center justify-content-end pe-0">
-                                <h5 className="fw-bold mb-0">{storeInfo.storeName}님</h5>
+                                <h5 className="fw-bold mb-0">
+                                    {storeInfo.storeName}님
+                                </h5>
                             </div>
 
                             <div className="col-2" style={styles.main}>
@@ -87,10 +95,14 @@ function StoreHeader(props) {
                     ) : (
                         <div className="row justify-content-between w-100">
                             <div className="col">
-                                <Link to={"/store"} style={styles.main}>우정카드</Link>
+                                <Link to={"/store"} style={styles.main}>
+                                    우정카드
+                                </Link>
                             </div>
                             <div className="col-1">
-                                <Link to={"/login"} style={styles.main}>로그인</Link>
+                                <Link to={"/login"} style={styles.main}>
+                                    로그인
+                                </Link>
                             </div>
                         </div>
                     )}
@@ -113,32 +125,46 @@ function StoreHeader(props) {
                                     className={"container justify-content-between align-items-start"}>
                                     
                                     <div className="col-2">
-                                        <Link to={"/store"} style={styles.main}>우정카드</Link>
+                                        <Link to={"/store"} style={styles.main}>
+                                            우정카드
+                                        </Link>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/store"} style={styles.main}>가맹점</Link>
+                                            <Link to={"/store"} style={styles.main}>
+                                                가맹점
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/store"} style={styles.sub}>가맹점 매출관리</Link>
+                                            <Link to={"/store"} style={styles.sub}>
+                                                가맹점 매출관리
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/store"} style={styles.sub}>매출입금내역</Link>
+                                            <Link to={"/store"} style={styles.sub}>
+                                                매출입금내역
+                                            </Link>
                                         </div>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/store/StoreInfoUpdate"} style={styles.main}>가맹점정보</Link>
+                                            <Link to={"/store/StoreInfoUpdate"} style={styles.main}>
+                                                가맹점정보
+                                            </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/store/StoreInfoUpdate"} style={styles.sub}>가맹점정보관리</Link>
+                                            <Link to={"/store/StoreInfoUpdate"} style={styles.sub}>
+                                                가맹점정보관리
+                                            </Link>
                                         </div>
                                     </div>
                             
                                     <div className="col-2 d-flex align-items-center justify-content-end">
-                                        <h5 className="fw-bold mb-0 mt-2">{storeInfo.storeName}님</h5>
+                                        <h5 className="fw-bold mb-0 mt-2">
+                                            {storeInfo.storeName}님
+                                        </h5>
                                     </div>
 
                                     <div className="" style={styles.main}>

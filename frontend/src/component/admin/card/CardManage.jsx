@@ -51,7 +51,7 @@ function CardManage() {
                 </div>
 
                 <Table hover className="text-center">
-                    <thead className="">
+                    <thead>
                         <tr>
                             <th>No.</th>
                             <th>카드명</th>

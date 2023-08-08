@@ -120,14 +120,14 @@ function StoreInfoUpdate() {
     let fullAddress = data.address;
     let extraAddress = "";
     if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+		if (data.bname !== "") {
+			extraAddress += data.bname;
+		}
+		if (data.buildingName !== "") {
+			extraAddress +=
+			extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+		}
+		fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
     setShow(false);
@@ -181,7 +181,8 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="변경할 비밀번호를 입력하세요"
+                            type="password" 
+							placeholder="변경할 비밀번호를 입력하세요"
                             onBlur={handlePwdBlur}
                             value={storeInfo.storePwd}
                             className="mb-2"
@@ -197,46 +198,44 @@ function StoreInfoUpdate() {
                             placeholder="대표자명을 입력하세요"
                             onChange={onChangeinputStoreRepresent}
                             value={storeInfo.representative}
-                 
                             className="mb-2"
-                            
-                          
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreName">
 						<Form.Label className="mb-0 ">사업장명</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업장명을 입력하세요"
+                            type="text" 
+							placeholder="사업장명을 입력하세요"
                             onChange={onChangeinputStoreName}
                             defaultValue={storeInfo.storeName}
                             className="mb-2"
                             disabled
                             style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
-                          
-                        
                         />
                     </Form.Group>
                     
                     
 					<Form.Label className="mb-0 ">사업장주소</Form.Label>
 					<Form.Control
-                        type="text" placeholder="검색"
+                        type="text" 
+						placeholder="검색"
                         style={{width: "75px"}}
                         onClick={handleShow}
                         value={storeInfo.storeZipCode}
                         className="mb-1"
-                    
                     />
+
                     <Form.Control
-                        type="text" placeholder="사업장주소를 입력하세요"
+                        type="text" 
+						placeholder="사업장주소를 입력하세요"
                         onClick={handleShow}
                         value={storeInfo.storeAddress1}
                         className="mb-1"
-                  
                     />
                     <Form.Control
-                        type="text" placeholder="상세주소를 입력하세요"
+                        type="text" 
+						placeholder="상세주소를 입력하세요"
                         onChange={onChangeinputStoreAddrDetail}
                         value={storeInfo.storeAddress2}
                         className="mb-2"
@@ -253,12 +252,12 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
                         <Form.Select aria-label="Default select example" className="mb-2" onChange={handleStoreType} 
-                        	 defaultValue={storeInfo.businessType}
-                        	 disabled
-                         	 style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
+							defaultValue={storeInfo.businessType}
+							disabled
+							style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
                         >
-                      
-                        	
+
+
                         	<option>업종을 선택하세요</option>
                         	<option value="1">가전/가구</option>
                         	<option value="2">가정생활/서비스</option>
@@ -274,13 +273,14 @@ function StoreInfoUpdate() {
                         	<option value="12">주유</option>
                         	<option value="13">패션/잡화</option>
 					    </Form.Select> 
-					   
+					
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업개시일 8자리를 입력하세요"
+                            type="text" 
+							placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputUserBirth}
                             defaultValue={storeInfo.businessStartDate}
                             maxLength={10}
@@ -293,7 +293,8 @@ function StoreInfoUpdate() {
 			        <Form.Group className="mb-3" controlId="formPlaintextStoreTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="연락처를 입력하세요"
+                            type="text" 
+							placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
                             maxLength={13}
                           	value={storeInfo.storeTel}
@@ -313,7 +314,7 @@ function StoreInfoUpdate() {
 }
 export function DateAutoFormat(date) {
 	const number = date.trim().replace(/[^0-9]/g, "");
-  
+	
 	if (number.length < 5) return number;
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");

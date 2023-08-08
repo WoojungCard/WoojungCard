@@ -15,7 +15,6 @@ const BarChart = (props) => {
 
     const selectedMonth = props.selectedMonth;
     const lastYearMonth = props.lastYearMonth;
-    // console.log(selectedMonth);
 
     const paymentData = ({
         "paymentMonth" : selectedMonth,

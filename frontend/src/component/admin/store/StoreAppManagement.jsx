@@ -50,7 +50,6 @@ function StoreAppManagement() {
                                 index = index + 1;
                                 
                                 const onClickStoreChange = (e) => {
-                                    // console.log(e.target.value);
                                     const id = e.target.value;
                                     dispatch(StoreAppStatusChange(id));
                                 };

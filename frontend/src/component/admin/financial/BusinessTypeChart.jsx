@@ -33,7 +33,6 @@ function BusinessTypeChart(props) {
     }, [businessTypeData]);
 
     useEffect(() => {
-        // console.log(rawData);
 
         const transformData = (rawData) => {
             const transformedData = {};
