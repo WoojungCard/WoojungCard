@@ -1,4 +1,4 @@
-package com.woojungcard.woojungcard.domain.request;
+package com.woojungcard.woojungcard.domain.response;
 
 import java.time.LocalDate;
 
@@ -10,18 +10,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class StoreSignUpRequest {
+public class StoreInfoResponse {
+	private Long id;
 	private String businessNumber;
-	private String storePwd;
-	private String representative;
+//	private String storePwd;
 	private String storeName;
+	private String representative;
 	private String storeZipCode;
 	private String storeAddress1;
 	private String storeAddress2;
-	private String businessType;
-	private LocalDate businessStartDate;
 	private String storeTel;
-	private String storeJoinDate;
+	private LocalDate businessStartDate;
+	private String businessType;
+	private LocalDate storeJoinDate;
 	private String status;
 	private String auth;
-}
+
+} 
