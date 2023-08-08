@@ -52,7 +52,7 @@ function Login() {
 			dispatch(userLogin(loginInfo));
 			// if (loginStatus === "successed") {
 			
-			navigate("/cardProduct", {replace : true});
+			navigate("/user", {replace : true});
 			navigate(0);
 			// } else {
 			// 	console.log("로그인실패");
