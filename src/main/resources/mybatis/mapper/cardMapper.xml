@@ -78,6 +78,16 @@
 	]]>	
 	</update>
 	
+	<!-- 개인 고객 카드 승인시 card_application_approve 테이블 추가 -->
+	<insert id="insertCardApplicationApproval" parameterType="Long">
+	<![CDATA[
+	INSERT INTO
+		card_application_approval(card_issued_id, approval_date)
+	VALUES
+		(#{id}, now())
+	]]>
+	</insert>
+	
 	<!-- 고객 카드 해지 신청 -->
 	<update id="userCardCancelApp" parameterType="Long">
 	<![CDATA[
@@ -90,7 +100,7 @@
 	]]>
 	</update>
 	
-	<!-- card_cencled 테이블에 추가 -->
+	<!-- 고객 카드 해지 신청시 card_canceled 테이블 추가 -->
 	<insert id="userCardCanceledAdd" parameterType="Long">
 	<![CDATA[
 	INSERT INTO
@@ -156,7 +166,7 @@
 	SET
 		cancel_date = now()
 	WHERE
-		card_issued_id = #{id}
+		id = #{id}
 	]]>
 	</update>
 	

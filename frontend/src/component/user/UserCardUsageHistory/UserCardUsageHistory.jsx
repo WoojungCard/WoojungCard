@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { findCardTypeById, userCardPossessionHistory, userCardUsageHistory, userPayBillHistory, userPayCardBill } from "../../store/card/cardSlice";
+import { findCardTypeById, userCardPossessionHistory, userCardUsageHistory, userPayBillHistory, userPayCardBill } from "../../../store/card/cardSlice";
 import { useLocation } from "react-router-dom";
 
 function UserCardUsageHistory() {

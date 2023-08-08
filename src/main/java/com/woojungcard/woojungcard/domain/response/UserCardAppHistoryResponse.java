@@ -15,8 +15,8 @@ import lombok.Setter;
 public class UserCardAppHistoryResponse {
 	private Long id;
 	private String cardName;
-	private CardType cartType;
-	private LocalDate applicationDate;
+	private CardType cardType;
+	private LocalDate requestDate;
 	private String userName;
 	private LocalDate userBirth;
 	private String userTel;

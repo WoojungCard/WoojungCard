@@ -81,11 +81,18 @@ private final JwtService jwtService;
 	
 	// User Info Update
 	public ResponseEntity<String> userInfoUpdate(UserInfoUpdateRequest request) throws UpdateException {
-		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();                  
-		String userId = userRepository.findUserIdById(id);
-		String encodedPwd = encryptConfig.getEncrypt(request.getUserPwd(), userId);
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setId(id);
-		request.setUserPwd(encodedPwd);
+		
+		if (request.getUserPwd().isEmpty()) {
+			String oldPwd = userRepository.userOldPwd(id);
+			request.setUserPwd(oldPwd);
+		} else {
+			String userId = userRepository.findUserIdById(id);
+			String encodedPwd = encryptConfig.getEncrypt(request.getUserPwd(), userId);
+			request.setUserPwd(encodedPwd);
+		}
+		
 		Integer updateRow = userRepository.userInfoUpdate(request);
 		if(updateRow != 0) {
 			return new ResponseEntity<>("변경이 완료되었습니다.", HttpStatus.OK);

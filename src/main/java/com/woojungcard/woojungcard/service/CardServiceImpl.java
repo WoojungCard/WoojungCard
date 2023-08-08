@@ -68,7 +68,12 @@ public class CardServiceImpl implements CardService {
         request.setCardNumber(cardNumber.toString());
 		Integer updateRow = cardRepository.userCardAppAprove(request);
 		if(updateRow != 0) {
-			return new ResponseEntity<>("승인 완료", HttpStatus.OK);
+			Integer addRow = cardRepository.insertCardApplicationApproval(request.getId());
+			if (addRow != 0) {
+				return new ResponseEntity<>("승인 완료", HttpStatus.OK);
+			} else {
+				throw new UserCardApproveException();
+			}
 		} else {
 			throw new UserCardApproveException();
 		}

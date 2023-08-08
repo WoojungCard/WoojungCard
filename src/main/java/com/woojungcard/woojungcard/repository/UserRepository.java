@@ -31,6 +31,8 @@ public interface UserRepository {
 	UserDTO userLogin(UserLoginRequest request) throws LoginException;
 	// User Get Info
 	UserInfoResponse userGetInfo(Long id);
+	// User Find UserPwd By Id
+	String userOldPwd(Long id);
 	// User Find UserID By Id
 	String findUserIdById(Long id);
 	// User Info Update

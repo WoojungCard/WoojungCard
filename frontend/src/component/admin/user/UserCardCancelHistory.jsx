@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userCardCancelApprove, userCardCancelHistory } from "../../../store/card/cardSlice";
 import { Button, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function UserCardCancelHistory() {
 
-    const {cardCancelHistoryData} = useSelector((state) => state.card);
+    const {cardCancelHistoryData, canceledApproveStatus} = useSelector((state) => state.card);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(userCardCancelHistory());
@@ -15,9 +17,13 @@ function UserCardCancelHistory() {
 
     const onClickHandler = (e)=>{
         e.preventDefault();
-        console.log(e.target.value);
         dispatch(userCardCancelApprove(e.target.value));
     }
+
+    useEffect(()=>{
+        if      (canceledApproveStatus === "successed") navigate(0);
+        else if (canceledApproveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");
+    },[canceledApproveStatus])
 
     return (
         <div className="container mt-5 pt-4">
@@ -47,12 +53,17 @@ function UserCardCancelHistory() {
                         <td>{el.userName}</td>
                         <td>{el.userBirth}</td>
                         <td>{el.userTel}</td>
-                        <td>{!el.cancelDate ? <Button 
-                        value={el.id} 
-                        onClick={onClickHandler}
-                        className="px-3" 
-                        variant="outline-dark"
-                        >승인</Button> : "승인완료"}</td>
+                        <td>{!el.cancelDate 
+                            ? 
+                                <Button 
+                                value={el.id} 
+                                onClick={onClickHandler}
+                                className="px-3" 
+                                variant="outline-dark"
+                                >승인</Button> 
+                            : 
+                                "승인완료"
+                            }</td>
                     </tr>
                     )}
                 </tbody>
