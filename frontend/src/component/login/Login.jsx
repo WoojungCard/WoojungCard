@@ -56,10 +56,11 @@ function Login() {
 			navigate('/store/StoreInfoUpdate');
 			navigate(0);
 		}
+	}
 
 	useEffect(()=>{
 		if (loginStatus === "successed") {
-			navigate("/cardProduct", {replace : true});
+			navigate("/user", {replace : true});
 			navigate(0);
 		} else if (loginStatus === "failed") {
 			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import { logout, userGetInfo } from "../../store/user/userSlice";
+import { useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 
 const styles = {
     main: {
@@ -9,11 +11,23 @@ const styles = {
         fontSize: 25,
         fontWeight: 'bold',
         color: 'black'
+    },
+
+    sub: {
+        textDecoration: 'none',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'black',
     }
 };
 
 // 로그인 후 보여지는 메인 헤더
 function UserHeader(props) {
+
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
 
     const {userInfo} = useSelector((state)=>state.user);
 
@@ -30,27 +44,129 @@ function UserHeader(props) {
 	return (	
 		<div className={""} id={"div-header"}>
             <nav className={"navbar navbar-expand-sm navbar-white bg-white mt-3 fixed"} id={"header_nav"}>
-                <div className={"container justify-content-between"}>
-                    <Link to={"/"} style={styles.main}>우정카드</Link>
-                    
-                    <Link to={"/cardProduct"} style={styles.main}>카드상품</Link>
+                <div 
+                    className={"container align-items-start"}
+                    onMouseOver={handleShow}
+                    >
                     
                     {userInfo.userName ? (
-                        <div className="row">
-                            <div className="col">
-                                <b>{userInfo.userName}님</b>
+                        <div className="row justify-content-between w-100">
+                            
+                            <div className="col-2">
+                                <Link to={"/user"} style={styles.main}>우정카드</Link>
                             </div>
-                            <div className="col" style={styles.main}>
-                                <span onClick={onClickHandler} >
+                            
+
+                            <div className="col-2">
+                                <Link to={"/user/cardInfo"} style={styles.main}>카드상품</Link>
+                            </div>
+
+                            <div className="col-2">
+                                <Link to={"/admin/cardManage"} style={styles.main}>나의카드</Link>
+                            </div>
+
+                            <div className="col-2">
+                                <Link to={"/admin/cardManage"} style={styles.main}>내정보</Link>
+                            </div>
+                            
+                    
+                            <div className="col-2 d-flex align-items-center justify-content-end pe-0">
+                                <h5 className="fw-bold mb-0">{userInfo.userName}님</h5>
+                            </div>
+
+                            <div className="col-2" style={styles.main}>
+                                <span 
+                                    style={{cursor: "pointer"}}
+                                    onClick={onClickHandler}
+                                >
                                     로그아웃
                                 </span>
                             </div>
+                            
                         </div>
                     ) : (
-                        <div>
-                            <Link to={"/login"} style={styles.main}>로그인</Link>
+                        <div className="row justify-content-between w-100">
+                            <div className="col">
+                                <Link to={"/user"} style={styles.main}>우정카드</Link>
+                            </div>
+                            <div className="col-1">
+                                <Link to={"/login"} style={styles.main}>로그인</Link>
+                            </div>
                         </div>
                     )}
+
+                    <Offcanvas 
+                        show={show} 
+                        onClick={handleClose}
+                        onHide={handleClose} 
+                        placement="top" 
+                        backdrop={false} 
+                        scroll={true} 
+                        style={{height: "180px"}}
+                        >
+                        <Offcanvas.Body>
+                            <nav 
+                                className={"navbar navbar-expand-sm navbar-white bg-white mt-3 mb-0 fixed"} 
+                                id={"header_nav"}
+                                >
+                                <div 
+                                    className={"container justify-content-between align-items-start"}>
+                                    
+                                    <div className="col-2">
+                                        <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                    </div>
+
+                                    <div className="flex-column col-2">
+                                        <div>
+                                            <Link to={"/user"} style={styles.main}>카드상품</Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user"} style={styles.sub}>신용카드/체크카드</Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/cardAppStatus"} style={styles.sub}>카드신청현황조회</Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-column col-2">
+                                        <div>
+                                            <Link to={"/user/cardInfo"} style={styles.main}>나의카드</Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/cardInfo"} style={styles.sub}>카드정보</Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/cardUsageHistory"} style={styles.sub}>카드이용조회</Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-column col-2">
+                                        <div>
+                                            <Link to={"/user/infoChange"} style={styles.main}>내정보</Link>
+                                        </div>
+                                        <div>
+                                            <Link to={"/user/infoChange"} style={styles.sub}>회원정보수정</Link>
+                                        </div>
+                                    </div>
+                                    
+                            
+                                    <div className="col-2 d-flex align-items-center justify-content-end">
+                                        <h5 className="fw-bold mb-0 mt-2">{userInfo.userName}님</h5>
+                                    </div>
+
+                                    <div className="" style={styles.main}>
+                                        <span 
+                                            style={{cursor: "pointer"}}
+                                            onClick={onClickHandler}
+                                        >
+                                            로그아웃
+                                        </span>
+                                    </div>
+                                    
+                                </div>
+                            </nav>
+                        </Offcanvas.Body>
+                    </Offcanvas>
                 </div>
             </nav>
         </div>
