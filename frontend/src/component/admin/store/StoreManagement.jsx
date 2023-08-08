@@ -10,10 +10,19 @@ import { storeList } from "../../../store/store/storeSlice";
 function StoreManagement() {
 	const dispatch = useDispatch();
 	const {storeListData} = useSelector((state) => state.store);
+    const [rawData, setRawData] = useState();
 	
 	useEffect(() => {
         dispatch(storeList());
     }, []);
+
+    useEffect(() => {
+        setRawData(storeListData);
+    }, [storeListData]);
+
+    useEffect(() => {
+        
+    }, [rawData]);
 	
     // 상호명 검색
     const searchStore = (e) => {
@@ -24,7 +33,7 @@ function StoreManagement() {
 
     return (
         <div className="container mt-5 pt-4">
-            <h4 className="fw-bold text-center">가맹점정보조회</h4>
+            <h4 className="fw-bold text-center">가맹점정보 조회</h4>
             
             <div className="container w-75">
                 <div className="d-flex justify-content-end mb-1">

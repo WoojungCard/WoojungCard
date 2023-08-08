@@ -64,6 +64,7 @@ export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thu
         return thunkAPI.rejectWithValue(err.response);
     }
 })
+
 //store Application Status
 export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>{
     const response = await api("GET","/store/storeAppStatus");
@@ -74,7 +75,7 @@ export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>
 //store Application Status Change
 export const StoreAppStatusChange = createAsyncThunk("/store/storeAppStatusChange",async(id, thunkAPI)=>{
     const response = await api("PUT","/store/storeAppStatusChange", id);
-   	return response.data;
+    return response.data;
 })
 
 const storeSlice = createSlice({

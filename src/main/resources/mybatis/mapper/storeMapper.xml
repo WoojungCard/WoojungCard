@@ -134,12 +134,18 @@
 	<select id = "storeAppInfo" resultType="com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse">
 		<![CDATA[
     	SELECT
+    		id,
     		business_Number,
 			representative,
 			store_name,
 			business_type,
+			store_zip_code,
+			store_address1,
+			store_address2,
+			business_type,
 			business_start_date,
-			store_tel
+			store_tel,
+			store_join_date
     	FROM
     		store
     	WHERE

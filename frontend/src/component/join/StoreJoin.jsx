@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 function StoreJoin() {
 	const { storeIdCheckResult,signUpStatus } = useSelector((state) => state.store);
 	
-	const dispatch =useDispatch();
+	const dispatch = useDispatch();
 	
 	const [insertStoreId, setInsertStoreId] = useState('');
 	const [insertStorePwd, setInsertStorePwd] = useState('');
@@ -119,16 +119,16 @@ function StoreJoin() {
 	};
 	
 	const store = ({
-	"businessNumber" : insertStoreId,
-	"storePwd" : insertStorePwd,
-	"representative" : insertStoreRepresent, 
-	"storeName" : insertStoreName,
-	"storeZipCode" : zipCode,
-	"storeAddress1" :insertStoreAddr,
-	"storeAddress2" :insertStoreAddrDetail, 
-	"businessStartDate" : insertStoreDate,
-	"businessType" : storeType,
-	"storeTel" : insertStoreTel
+		"businessNumber" : insertStoreId,
+		"storePwd" : insertStorePwd,
+		"representative" : insertStoreRepresent, 
+		"storeName" : insertStoreName,
+		"storeZipCode" : zipCode,
+		"storeAddress1" :insertStoreAddr,
+		"storeAddress2" :insertStoreAddrDetail, 
+		"businessStartDate" : insertStoreDate,
+		"businessType" : storeType,
+		"storeTel" : insertStoreTel
 	})
 	
 	

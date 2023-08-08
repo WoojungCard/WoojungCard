@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import { Button, Popover, OverlayTrigger } from "react-bootstrap";
 import { StoreAppStatus, StoreAppStatusChange } from "../../../store/store/storeSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 function StoreAppManagement() {
 	const dispatch = useDispatch();
+    const navigate = useNavigate();
 	
 	const [insertStatus, setInsertStatus] = useState('');
 	
@@ -51,6 +53,8 @@ function StoreAppManagement() {
                                 const onClickStoreChange = (e) => {
                                     const id = e.target.value;
                                     dispatch(StoreAppStatusChange(id));
+                                    alert("승인되었습니다.");
+                                    navigate("/admin/storeManagement");
                                 };
                                 
                                 const id = item.id;
