@@ -61,9 +61,15 @@ function StoreAppManagement() {
 
                                 const popoverClickStoreAddr = (
                                     <Popover>
-                                        <span>{item.storeZipCode}</span><br/>
-                                        <span>{item.storeAddress1}</span><br/>
-                                        <span>{item.storeAddress2}</span>
+                                        <div style={{
+                                            border: '1px solid black',
+                                            padding: '10px',
+                                            margin: '12px'
+                                            }}>
+                                            <span>{item.storeZipCode}</span><br/>
+                                            <span>{item.storeAddress1}</span><br/>
+                                            <span>{item.storeAddress2}</span>
+                                        </div>
                                     </Popover>
                                 )
 
