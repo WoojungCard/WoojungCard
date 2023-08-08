@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import { logout, userGetInfo } from "../../store/user/userSlice";
+import { checkJwt } from "../../store/token/tokenSlice";
 
 const styles = {
     main: {
@@ -26,6 +27,11 @@ function UserHeader(props) {
     const onClickHandler = () => {
         dispatch(logout());
     }
+
+    useEffect(() => {
+        dispatch(checkJwt());
+        setInterval(dispatch(checkJwt()), 60000 * 25);
+      }, []);
 
 	return (	
 		<div className={""} id={"div-header"}>

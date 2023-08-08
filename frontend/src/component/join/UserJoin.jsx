@@ -6,13 +6,15 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { userIdCheck, userSignUp } from "../../store/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 // 개인고객 회원가입
 function UserJoin() {
 
-	const { idCheckResult } = useSelector((state) => state.user);
+	const { idCheckResult, signUpStatus } = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [insertUserId, setInsertUserId] = useState('');
 	const [insertUserPwd, setInsertUserPwd] = useState('');
@@ -40,7 +42,6 @@ function UserJoin() {
 
 	const handleIdBlur = (e) => {
 		dispatch(userIdCheck(insertUserId));
-		console.log(insertUserId);
 		if(idCheckResult === false){
 			setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용 
 		} else {
@@ -88,9 +89,17 @@ function UserJoin() {
 //	개인고객 회원가입 클릭
 	const onClickUserJoin = (e) => {
 		e.preventDefault();
-		console.log(user);
 		dispatch(userSignUp(user));
 	}
+
+	useEffect(()=>{
+		if (signUpStatus === "successed") {
+			navigate("/login");
+			navigate(0);
+		} else if (signUpStatus === "failed") {
+			alert("가입에 실패하였습니다. 다시 시도해주세요.");
+		}
+	},[signUpStatus])
 	
 	
 	return (

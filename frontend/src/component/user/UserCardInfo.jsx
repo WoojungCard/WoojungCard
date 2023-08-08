@@ -53,20 +53,15 @@ function UserCardInfo() {
                     <td>{el.cardType === "CREDIT" ? "신용카드" : "체크카드"}</td>
                     <td>{el.requestDate}</td>
                     <td>{el.expirationDate}</td>
-                    <td>{el.state === "USE" 
-                        ? 
-                            <Button 
-                            value={el.id} 
-                            onClick={onClickHandler}
-                            className="px-3" 
-                            variant="outline-dark">해지 신청</Button>
-                        : 
-                            el.state === "STOPPING"
-                        ?
-                            "처리중"
-                        :             
-                            "만료"
-                        }</td>
+                    {el.state === "USE" ? (
+                    <Button value={el.id} onClick={onClickHandler} className="px-3" variant="outline-dark">
+                        해지 신청
+                    </Button>
+                    ) : el.state === "STOPPING" ? (
+                    <td>처리중</td>
+                    ) : el.state === "CANCELED" ? (
+                    <td>만료</td>
+                    ) : null}
                 </tr>
 )}
             </tbody>
