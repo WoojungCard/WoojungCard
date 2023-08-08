@@ -11,6 +11,8 @@ import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
+import com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest;
+import com.woojungcard.woojungcard.domain.request.StorePaymentRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
@@ -123,5 +125,22 @@ public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginExce
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(id);
 		return storeRepository.storeSalesReceiptDetails(request);
+	}
+	
+	public ResponseEntity<String> insertStorePayment(StorePaymentRequest request) throws Exception {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(id);
+		Integer insertRow = storeRepository.insertStorePayment(request);
+		if (insertRow != 0) {
+			return new ResponseEntity<>("납부 완료", HttpStatus.OK);
+		} else {
+			throw new Exception();
+		}
+	}
+	
+	public Long getStorePaymentDeposit(StorePaymentDepositRequest request) {
+		Long stordId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(stordId);
+		return storeRepository.getStorePaymentDeposit(request);
 	}
 }

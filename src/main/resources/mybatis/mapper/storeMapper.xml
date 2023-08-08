@@ -200,7 +200,32 @@
 		year(payment_date) = #{targetYear} 
 	AND 
 		month(payment_date) = #{targetMonth}
-		
+	]]>
+	</select>
+	
+	<insert id="insertStorePayment" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentRequest">
+	<![CDATA[
+	INSERT INTO
+		payment(payer, target_id, target_year, target_month, payment, payment_date, payment_state)
+	VALUES
+		("STORE", #{storeId}, #{targetYear}, #{targetMonth}, #{payment}, now(), "FULL")
+	]]>
+	</insert>
+	
+	<select id="getStorePaymentDeposit" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest" resultType="Long">
+	<![CDATA[
+	SELECT 
+		SUM(payment)
+	FROM
+		payment 
+	WHERE 
+		payer = "STORE" 
+	AND 
+		target_id = #{storeId}
+	AND
+		target_year = #{targetYear}
+	AND
+		target_month = #{targetMonth}
 	]]>
 	</select>
 </mapper>
