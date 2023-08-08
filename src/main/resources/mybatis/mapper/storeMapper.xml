@@ -48,8 +48,8 @@
 				#{businessStartDate},
 				#{storeTel},
 				now(),
-				"waiting",
-				"store")
+				"WATING",
+				"STORE")
 		]]>
 	</insert>
 	<!-- 스토어 정보 변경 -->
@@ -68,6 +68,17 @@
 			id = #{id}
 	]]>
 	</update>
+	
+	<select id="findPwdById" parameterType="Long" resultType="String">
+	<![CDATA[
+	SELECT	
+		store_pwd
+	FROM
+		store
+	WHERE
+		id = #{id}
+	]]>
+	</select>
 	
 	<select id="findBNById" parameterType="com.woojungcard.woojungcard.domain.request.StoreFindBNByIdRequest">
 		<![CDATA[

@@ -9,6 +9,8 @@ const initialState = {
     StoreAppStatusData : [],
     status : "idle",
     storeLoginStatus : "idle",
+    signUpStatus: "idle",
+    updateStatus : "idle",
     error: null
 }
 
@@ -23,9 +25,7 @@ export const storeIdCheck = createAsyncThunk("/store/idcheck", async (storeId, t
 
 export const storeSignUp = createAsyncThunk("/store/signup", async (store, thunkAPI) => {
     try {
-       // console.log(store);
         const response = await api("POST", "/store/signup", store);
-       // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -58,9 +58,7 @@ export const storeGetInfo = createAsyncThunk("/store/info", async() => {
 // store Info Update
 export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thunkAPI) => {
     try {
-		console.log(info);
         const response = await api("PUT", "/store/update", info);
-        // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -95,14 +93,14 @@ const storeSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(storeSignUp.pending, (state, action) => {
-                state.status = "loading";
+                state.signUpStatus = "loading";
             })
             .addCase(storeSignUp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.signUpStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(storeSignUp.rejected, (state, action) => {
-                state.status = "failed";
+                state.signUpStatus = "failed";
                 state.error = action.payload.data;
             })
             .addCase(storeLogin.pending, (state, action) => {
@@ -130,14 +128,14 @@ const storeSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(storeInfoUpdate.pending, (state, action) => {  
-                state.status = "loading";
+                state.updateStatus = "loading";
             })
             .addCase(storeInfoUpdate.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.updateStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(storeInfoUpdate.rejected, (state, action) => {
-                state.status = "failed";
+                state.updateStatus = "failed";
                 state.error = action.payload;
             })
             .addCase(storeList.rejected, (state, action)=> {

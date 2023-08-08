@@ -32,4 +32,5 @@ public interface StoreRepository {
 	List<StoreAppStatusResponse> storeAppStatus();
 	StoreAppStatusResponse storeAppStatusChange(Long id); 
 	List<StoreDTO> storeList();
+	String findPwdById(Long id);
 }

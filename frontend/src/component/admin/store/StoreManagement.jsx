@@ -60,13 +60,7 @@ function StoreManagement() {
                                 return (
                                     <tr key={index}>
                                         <td>{index}</td>
-                                        <td>
-                                            <Link to={`/admin/userManagementDetail/${index}`} 
-                                                state={{index: `${(index - 1)}`}} 
-                                                style={{textDecoration: "none", color: "black"}}>
-                                                    {item.businessNumber}
-                                            </Link>
-                                        </td>
+                                        <td>{item.businessNumber}</td>
                                         <td>{item.storeName}</td>
                                         <td>{item.representative}</td>
                                         <td>{item.businessType}</td>
