@@ -98,7 +98,7 @@ function AdminHeader() {
                             
                             <div className=" flex-column">
                                 <div>
-                                    <Link to={"/"} style={styles.main}>가맹점관리</Link>
+                                    <Link to={"/admin/storeManagement"} style={styles.main}>가맹점관리</Link>
                                 </div>
                                 <div>
                                     <Link to={"/admin/userManagement"} style={styles.sub}>가맹점정보조회</Link>
