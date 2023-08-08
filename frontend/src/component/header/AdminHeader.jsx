@@ -1,8 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/user/userSlice";
 
 const styles = {
     main: {
@@ -28,6 +30,16 @@ function AdminHeader() {
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    function onClickLogOut() {
+        dispatch(logout());
+        navigate("/", {replace : true});
+        navigate(0);
+    }
 
 	return (	
 		<div id={"div-header"}>
@@ -120,7 +132,7 @@ function AdminHeader() {
                                 </div>
                             </div>
                             
-                            <Link to={"/"} style={styles.main}>로그아웃</Link>
+                            <Link to={"/"} style={styles.main} onClick={onClickLogOut}>로그아웃</Link>
 
                         </div>
                     </nav>
