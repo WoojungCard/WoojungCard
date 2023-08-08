@@ -137,11 +137,11 @@ function AdminHeader() {
                                         가맹점신청내역
                                     </Link>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <Link to={"/admin/userManagement"} style={styles.sub}>
                                         퇴점신청내역
                                     </Link>
-                                </div>
+                                </div> */}
                             </div>
                             
                             <div className="flex-column">
