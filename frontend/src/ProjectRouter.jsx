@@ -24,6 +24,7 @@ import UserLayout from "./component/layout/UserLayout";
 import UserCardUsageHistoryForm from "./component/user/UserCardUsageHistory/UserCardUsageHistoryForm";
 import StoreManagement from "./component/admin/store/StoreManagement";
 import StoreAppManagement from "./component/admin/store/StoreAppManagement";
+import StoreLayout from "./component/layout/StoreLayout";
 
 const ProjectRouter = () => {
 	return (
@@ -31,6 +32,7 @@ const ProjectRouter = () => {
 			<Routes>
 				{/* 회원가입 & 로그인 화면 레이아웃 */}
 				<Route path="/" element=<MainLayout/> >
+					<Route index element=<CardProductList/> />
 					<Route path="cardProduct" element=<CardProductList/> />
 					<Route path="cardProductDetail/:cardId" element=<CardProductDetail/> />
 					<Route path="login" element=<Login/> />
@@ -41,6 +43,7 @@ const ProjectRouter = () => {
 
 				{/* 개인 고객 */}
 				<Route path="/user" element=<UserLayout/> >
+					<Route index element=<CardProductList/> />
 					<Route path="infoChange" element=<UserInfoManagement/> /> 
 					<Route path="cardapplication/:cardId" element=<UserCardApplication/> /> 
 					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
@@ -49,13 +52,13 @@ const ProjectRouter = () => {
 				</Route>
 				
 				{/* 가맹점 */}
-				<Route path="/store" element=<MainLayout/> >
+				<Route path="/store" element=<StoreLayout/> >
 					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
-					
 				</Route>
 				
 				{/* 카드사 관리자 레이아웃 */}
 				<Route path="/admin" element=<AdminLayout/> >
+					<Route index element=<FinancialManage/> />
 					<Route path="userManagement" element=<UserManagement/> />
 					<Route path="userManagementDetail/:index" element=<UserManagementDetail/> />
 					<Route path="userCardAppHistory" element=<UserCardAppHistory/> />
@@ -63,7 +66,6 @@ const ProjectRouter = () => {
 					<Route path="cardManage" element=<CardManage/> />
 					<Route path="cardManageDetail/:index" element=<CardManageDetail/> />
 					<Route path="cardNew" element=<CardNew/> />
-					<Route path="financialManage" element=<FinancialManage/> />
 					<Route path="storeManagement" element=<StoreManagement/> />
 					<Route path="storeAppManagement" element=<StoreAppManagement/> />
 				</Route>

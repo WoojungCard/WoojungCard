@@ -183,7 +183,7 @@ function StoreInfoUpdate() {
                         <Form.Control
                             type="password" placeholder="변경할 비밀번호를 입력하세요"
                             onBlur={handlePwdBlur}
-                            Value={storeInfo.storePwd}
+                            value={storeInfo.storePwd}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -196,7 +196,7 @@ function StoreInfoUpdate() {
                             type="text" 
                             placeholder="대표자명을 입력하세요"
                             onChange={onChangeinputStoreRepresent}
-                            Value={storeInfo.representative}
+                            value={storeInfo.representative}
                  
                             className="mb-2"
                             
@@ -224,21 +224,21 @@ function StoreInfoUpdate() {
                         type="text" placeholder="검색"
                         style={{width: "75px"}}
                         onClick={handleShow}
-                        Value={storeInfo.storeZipCode}
+                        value={storeInfo.storeZipCode}
                         className="mb-1"
                     
                     />
                     <Form.Control
                         type="text" placeholder="사업장주소를 입력하세요"
                         onClick={handleShow}
-                        Value={storeInfo.storeAddress1}
+                        value={storeInfo.storeAddress1}
                         className="mb-1"
                   
                     />
                     <Form.Control
                         type="text" placeholder="상세주소를 입력하세요"
                         onChange={onChangeinputStoreAddrDetail}
-                        Value={storeInfo.storeAddress2}
+                        value={storeInfo.storeAddress2}
                         className="mb-2"
                     />
                     
@@ -296,7 +296,7 @@ function StoreInfoUpdate() {
                             type="text" placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
                             maxLength={13}
-                          	Value={storeInfo.storeTel}
+                          	value={storeInfo.storeTel}
                             className="mb-4"
                         />
                     </Form.Group>

@@ -1,8 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/user/userSlice";
 
 const styles = {
     main: {
@@ -28,6 +30,16 @@ function AdminHeader() {
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    function onClickLogOut() {
+        dispatch(logout());
+        navigate("/", {replace : true});
+        navigate(0);
+    }
 
 	return (	
 		<div id={"div-header"}>
@@ -70,9 +82,9 @@ function AdminHeader() {
                         <div 
                             className={"container justify-content-between align-items-start"}>
                             
-                            <Link to={"/admin/financialManage"} style={styles.main}>우정카드</Link>
+                            <Link to={"/admin"} style={styles.main}>우정카드</Link>
                             
-                            <div className=" flex-column">
+                            <div className="flex-column">
                                 <div>
                                     <Link to={"/admin/cardManage"} style={styles.main}>상품관리</Link>
                                 </div>
@@ -81,7 +93,7 @@ function AdminHeader() {
                                 </div>
                             </div>
                             
-                            <div className=" flex-column">
+                            <div className="flex-column">
                                 <div>
                                     <Link to={"/admin/userManagement"} style={styles.main}>고객관리</Link>
                                 </div>
@@ -89,38 +101,38 @@ function AdminHeader() {
                                     <Link to={"/admin/userManagement"} style={styles.sub}>고객정보조회</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>카드신청내역</Link>
+                                    <Link to={"/admin/userCardAppHistory"} style={styles.sub}>카드신청내역</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>정지신청내역</Link>
+                                    <Link to={"/admin/userCardCancelHistory"} style={styles.sub}>정지신청내역</Link>
                                 </div>
                             </div>
                             
-                            <div className=" flex-column">
+                            <div className="flex-column">
                                 <div>
                                     <Link to={"/admin/storeManagement"} style={styles.main}>가맹점관리</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>가맹점정보조회</Link>
+                                    <Link to={"/admin/storeManagement"} style={styles.sub}>가맹점정보조회</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>가맹점신청내역</Link>
+                                    <Link to={"/admin/storeAppManagement"} style={styles.sub}>가맹점신청내역</Link>
                                 </div>
                                 <div>
                                     <Link to={"/admin/userManagement"} style={styles.sub}>퇴점신청내역</Link>
                                 </div>
                             </div>
                             
-                            <div className=" flex-column">
+                            <div className="flex-column">
                                 <div>
-                                    <Link to={"/admin/financialManage"} style={styles.main}>정산관리</Link>
+                                    <Link to={"/admin"} style={styles.main}>정산관리</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/financialManage"} style={styles.sub}>통합매출관리</Link>
+                                    <Link to={"/admin"} style={styles.sub}>통합매출관리</Link>
                                 </div>
                             </div>
                             
-                            <Link to={"/"} style={styles.main}>로그아웃</Link>
+                            <Link to={"/"} style={styles.main} onClick={onClickLogOut}>로그아웃</Link>
 
                         </div>
                     </nav>

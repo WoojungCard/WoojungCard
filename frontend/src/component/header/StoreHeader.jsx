@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import { logout, userGetInfo } from "../../store/user/userSlice";
-import { checkJwt } from "../../store/token/tokenSlice";
 import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { storeGetInfo } from "../../store/store/storeSlice";
 
 const styles = {
     main: {
@@ -22,33 +22,28 @@ const styles = {
     }
 };
 
-// 로그인 후 개인고객용 헤더
-function UserHeader(props) {
+// 로그인 후 가맹점용 헤더
+function StoreHeader(props) {
 
     const [show, setShow] = useState(false);
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
-    const {userInfo} = useSelector((state)=>state.user);
+    const {storeInfo} = useSelector((state)=>state.store);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        dispatch(userGetInfo());
+        dispatch(storeGetInfo());
     },[])
 
-    function onClickLogOut() {
+    const onClickLogOut = () => {
         dispatch(logout());
         navigate("/", {replace : true});
         navigate(0);
     }
-
-    useEffect(() => {
-        dispatch(checkJwt());
-        setInterval(dispatch(checkJwt()), 60000 * 25);
-      }, []);
 
 	return (	
 		<div className={""} id={"div-header"}>
@@ -58,29 +53,25 @@ function UserHeader(props) {
                     onMouseOver={handleShow}
                     >
                     
-                    {userInfo.userName ? (
+                    {storeInfo.storeName ? (
                         <div className="row justify-content-between w-100">
                             
                             <div className="col-2">
-                                <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                <Link to={"/store"} style={styles.main}>우정카드</Link>
                             </div>
                             
 
                             <div className="col-2">
-                                <Link to={"/user/cardInfo"} style={styles.main}>카드상품</Link>
+                                <Link to={"/store"} style={styles.main}>가맹점</Link>
                             </div>
 
                             <div className="col-2">
-                                <Link to={"/admin/cardManage"} style={styles.main}>나의카드</Link>
-                            </div>
-
-                            <div className="col-2">
-                                <Link to={"/admin/cardManage"} style={styles.main}>내정보</Link>
-                            </div>
+                                <Link to={"/store/StoreInfoUpdate"} style={styles.main}>가맹점정보</Link>
+                            </div>                            
                             
                     
                             <div className="col-2 d-flex align-items-center justify-content-end pe-0">
-                                <h5 className="fw-bold mb-0">{userInfo.userName}님</h5>
+                                <h5 className="fw-bold mb-0">{storeInfo.storeName}님</h5>
                             </div>
 
                             <div className="col-2" style={styles.main}>
@@ -96,7 +87,7 @@ function UserHeader(props) {
                     ) : (
                         <div className="row justify-content-between w-100">
                             <div className="col">
-                                <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                <Link to={"/store"} style={styles.main}>우정카드</Link>
                             </div>
                             <div className="col-1">
                                 <Link to={"/login"} style={styles.main}>로그인</Link>
@@ -122,45 +113,32 @@ function UserHeader(props) {
                                     className={"container justify-content-between align-items-start"}>
                                     
                                     <div className="col-2">
-                                        <Link to={"/user"} style={styles.main}>우정카드</Link>
+                                        <Link to={"/store"} style={styles.main}>우정카드</Link>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/user"} style={styles.main}>카드상품</Link>
+                                            <Link to={"/store"} style={styles.main}>가맹점</Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user"} style={styles.sub}>신용카드/체크카드</Link>
+                                            <Link to={"/store"} style={styles.sub}>가맹점 매출관리</Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user/cardAppStatus"} style={styles.sub}>카드신청현황조회</Link>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-column col-2">
-                                        <div>
-                                            <Link to={"/user/cardInfo"} style={styles.main}>나의카드</Link>
-                                        </div>
-                                        <div>
-                                            <Link to={"/user/cardInfo"} style={styles.sub}>카드정보</Link>
-                                        </div>
-                                        <div>
-                                            <Link to={"/user/cardUsageHistory"} style={styles.sub}>카드이용조회</Link>
+                                            <Link to={"/store"} style={styles.sub}>매출입금내역</Link>
                                         </div>
                                     </div>
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/user/infoChange"} style={styles.main}>내정보</Link>
+                                            <Link to={"/store/StoreInfoUpdate"} style={styles.main}>가맹점정보</Link>
                                         </div>
                                         <div>
-                                            <Link to={"/user/infoChange"} style={styles.sub}>회원정보수정</Link>
+                                            <Link to={"/store/StoreInfoUpdate"} style={styles.sub}>가맹점정보관리</Link>
                                         </div>
                                     </div>
-                                    
                             
                                     <div className="col-2 d-flex align-items-center justify-content-end">
-                                        <h5 className="fw-bold mb-0 mt-2">{userInfo.userName}님</h5>
+                                        <h5 className="fw-bold mb-0 mt-2">{storeInfo.storeName}님</h5>
                                     </div>
 
                                     <div className="" style={styles.main}>
@@ -182,4 +160,4 @@ function UserHeader(props) {
 	);
 }
 
-export default UserHeader;
+export default StoreHeader;

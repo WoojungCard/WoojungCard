@@ -8,12 +8,14 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../store/user/userSlice";
-import { storeLogin } from "../../store/store/storeSlice";
+import { storeGetInfo, storeLogin } from "../../store/store/storeSlice";
 
 // 로그인
 function Login() {
 
 	const {loginStatus} = useSelector((state) => state.user);
+	const {storeLoginStatus} = useSelector((state) => state.store);
+	const {storeInfo} = useSelector((state)=>state.store);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -53,19 +55,37 @@ function Login() {
 		} else if (userType === 's') {
 			// console.log(loginInfo2);
 			dispatch(storeLogin(loginInfo2));
-			navigate('/store/StoreInfoUpdate');
-			navigate(0);
 		}
+	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		if (loginStatus === "successed") {
-			navigate("/cardProduct", {replace : true});
+			navigate("/user", {replace : true});
 			navigate(0);
 		} else if (loginStatus === "failed") {
 			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
 		}
-	},[loginStatus])
+	}, [loginStatus]);
 
+	useEffect(() => {
+		if (storeLoginStatus === "successed") {
+			dispatch(storeGetInfo());
+		} else if (storeLoginStatus === "failed") {
+			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
+		}
+	}, [storeLoginStatus]);
+
+	useEffect(() => {
+		if (storeInfo.auth === "ADMIN") {
+			// console.log("ADMIN");
+			navigate("/admin", {replace : true});
+			navigate(0);
+		}
+		else if (storeInfo.auth === "STORE") {
+			navigate("/store", {replace : true});
+			navigate(0);
+		}
+	}, [storeInfo]);
 	
 	return (
 		<div>
