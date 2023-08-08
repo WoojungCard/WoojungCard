@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import StoreInfoUpdate from "./component/store/StoreInfoUpdate";
 import MainLayout from "./component/layout/MainLayout";
 import Join from "./component/join/Join";
 import UserJoin from "./component/join/UserJoin";
@@ -21,6 +22,8 @@ import CardNew from "./component/admin/card/CardNew";
 import FinancialManage from "./component/admin/financial/FinancialManage";
 import UserLayout from "./component/layout/UserLayout";
 import UserCardUsageHistoryForm from "./component/user/UserCardUsageHistory/UserCardUsageHistoryForm";
+import StoreManagement from "./component/admin/store/StoreManagement";
+import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 
 const ProjectRouter = () => {
 	return (
@@ -45,6 +48,12 @@ const ProjectRouter = () => {
 					<Route path="cardUsageHistory" element=<UserCardUsageHistoryForm/> />
 				</Route>
 				
+				{/* 가맹점 */}
+				<Route path="/store" element=<MainLayout/> >
+					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
+					
+				</Route>
+				
 				{/* 카드사 관리자 레이아웃 */}
 				<Route path="/admin" element=<AdminLayout/> >
 					<Route path="userManagement" element=<UserManagement/> />
@@ -55,6 +64,8 @@ const ProjectRouter = () => {
 					<Route path="cardManageDetail/:index" element=<CardManageDetail/> />
 					<Route path="cardNew" element=<CardNew/> />
 					<Route path="financialManage" element=<FinancialManage/> />
+					<Route path="storeManagement" element=<StoreManagement/> />
+					<Route path="storeAppManagement" element=<StoreAppManagement/> />
 				</Route>
 			</Routes>
 		</BrowserRouter>

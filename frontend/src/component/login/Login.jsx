@@ -8,6 +8,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../store/user/userSlice";
+import { storeLogin } from "../../store/store/storeSlice";
 
 // 로그인
 function Login() {
@@ -40,15 +41,21 @@ function Login() {
 		"userId" : insertLoginId,
 		"userPwd" : insertLoginPwd
 	})
+	const loginInfo2 = ({
+		"businessNumber" : insertLoginId,
+		"storePwd" : insertLoginPwd
+	})
 	
 	const onClickLogin = (e) => {
 		e.preventDefault();
 		if (userType === 'u') {
 			dispatch(userLogin(loginInfo));		
 		} else if (userType === 's') {
-			console.log("store Login");
+			// console.log(loginInfo2);
+			dispatch(storeLogin(loginInfo2));
+			navigate('/store/StoreInfoUpdate');
+			navigate(0);
 		}
-	};
 
 	useEffect(()=>{
 		if (loginStatus === "successed") {

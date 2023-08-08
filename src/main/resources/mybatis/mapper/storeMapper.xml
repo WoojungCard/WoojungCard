@@ -23,9 +23,148 @@
 	<insert id ="storeSignUp" parameterType="com.woojungcard.woojungcard.domain.request.StoreSignUpRequest">
 		<![CDATA[
 			INSERT INTO
-				store(business_Number,store_Pwd,store_name,representative,store_address,store_tel,business_start_date,business_type)				
+				store(business_Number,
+				store_pwd,
+				representative,
+				store_name,
+				store_zip_code,
+				store_address1, 
+				store_address2,
+				business_type,
+				business_start_date,
+				store_tel,
+				store_join_date,
+				status,
+				auth)		
 			VALUES
-				(#{businessNumber}, #{storePwd}, #{storeName}, #{representative},#{storeAddress},#{storeTel},#{businessStartDate},#{businessType})
+				(#{businessNumber}, 
+				#{storePwd},
+				#{representative},
+				#{storeName},
+				#{storeZipCode},
+				#{storeAddress1},
+				#{storeAddress2},
+				#{businessType},
+				#{businessStartDate},
+				#{storeTel},
+				now(),
+				"waiting",
+				"store")
 		]]>
 	</insert>
+	<!-- 스토어 정보 변경 -->
+	<update id="storeInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.StoreUpdateRequest">
+	<![CDATA[
+		UPDATE 
+			store
+		SET
+			representative = #{representative},
+			store_pwd = #{storePwd},
+			store_zip_code = #{storeZipCode},
+			store_address1 = #{storeAddress1},
+			store_address2 = #{storeAddress2},
+			store_tel = #{storeTel}
+		WHERE 
+			id = #{id}
+	]]>
+	</update>
+	
+	<select id="findBNById" parameterType="com.woojungcard.woojungcard.domain.request.StoreFindBNByIdRequest">
+		<![CDATA[
+			SELECT
+				business_number
+			FROM
+				store
+			WHERE
+				id=#{id}
+		]]>
+	</select>
+	<!-- 스토어 로그인 -->
+	<select id = "storeLogin" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO" parameterType="com.woojungcard.woojungcard.domain.request.StoreLoginRequest">
+		<![CDATA[
+			SELECT
+				id
+			FROM
+				store
+			WHERE
+				business_number = #{businessNumber} AND store_pwd = #{storePwd}
+		]]>
+	</select>
+
+	
+	<!-- 스토어 정보 조회 -->
+	<!-- Get Store List -->
+	<select id= "storeGetInfo" resultType="com.woojungcard.woojungcard.domain.response.StoreInfoResponse" parameterType="long">
+		<![CDATA[
+		SELECT
+			business_Number,
+			representative,
+			store_name,
+			store_zip_code,
+			store_address1, 
+			store_address2,
+			business_type,
+			business_start_date,
+			store_tel,
+			store_join_date,
+			status,
+			auth
+		FROM
+			store
+		WHERE
+			id = #{id}	
+		]]>
+	</select>
+	
+	<!--  스토어 등록 정보 조회 -->
+	<select id = "storeAppInfo" resultType="com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse">
+		<![CDATA[
+    	SELECT
+    		business_Number,
+			representative,
+			store_name,
+			business_type,
+			business_start_date,
+			store_tel
+    	FROM
+    		store
+    	WHERE
+    		status = "USE"
+    	]]>
+	</select>
+
+	<!-- 스토어 승인상태 조회 -->
+	<select id = "storeAppStatus" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
+		<![CDATA[
+	    	SELECT
+	    		id,
+		   		business_number,
+				representative,
+				store_name,
+				business_type,
+				store_zip_code,
+				store_address1, 
+				store_address2,
+				business_start_date,
+				store_tel,
+				status
+	    	FROM
+	    		store
+	    	WHERE 
+	    		status = 'waiting'
+    	]]>
+	</select>
+
+	<!--  스토어 승인으로 변경 -->
+		<select id = "storeAppStatusChange" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
+		<![CDATA[
+    		UPDATE 
+				store
+			SET 
+				status = "USE"
+
+			WHERE id = #{id}
+    	]]>
+	</select>
+	
 </mapper>
