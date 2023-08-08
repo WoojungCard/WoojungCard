@@ -13,6 +13,9 @@ const initialState = {
     data: {},
     cardType: {},
     status : "idle",
+    approveStatus : "idle",
+    cancelAppStatus : "idle",
+    canceledApproveStatus : "idle",
     error: null
 }
 
@@ -124,24 +127,24 @@ const cardSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userCardAppApprove.pending, (state, action) => {
-                state.status = "loading";
+                state.approveStatus = "loading";
             })
             .addCase(userCardAppApprove.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.approveStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardAppApprove.rejected, (state, action) => {
-                state.status = "failed";
+                state.approveStatus = "failed";
             })
             .addCase(userCardCancelApp.pending, (state, action) => {
-                state.status = "loading";
+                state.cancelAppStatus = "loading";
             })
             .addCase(userCardCancelApp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.cancelAppStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardCancelApp.rejected, (state, action) => {
-                state.status = "failed";
+                state.cancelAppStatus = "failed";
             })
             .addCase(userCardCancelHistory.pending, (state, action) => {
                 state.status = "loading";
@@ -154,14 +157,14 @@ const cardSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userCardCancelApprove.pending, (state, action) => {
-                state.status = "loading";
+                state.canceledApproveStatus = "loading";
             })
             .addCase(userCardCancelApprove.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.canceledApproveStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardCancelApprove.rejected, (state, action) => {
-                state.status = "failed";
+                state.canceledApproveStatus = "failed";
             })
             .addCase(userCardPossessionHistory.pending, (state, action) => {
                 state.status = "loading";

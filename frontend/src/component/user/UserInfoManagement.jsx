@@ -3,10 +3,13 @@ import { Button, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 import { userGetInfo, userInfoUpdate } from "../../store/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function UserInfoManagement() {
 
-    const {userInfo} = useSelector((state) => state.user);
+    const navigate = useNavigate();
+
+    const {userInfo, updateStatus, error} = useSelector((state) => state.user);
 
     useEffect(()=> {
         dispatch(userGetInfo());
@@ -14,8 +17,14 @@ function UserInfoManagement() {
 
     const dispatch = useDispatch();
 
-	const [insertUserPwd, setInsertUserPwd] = useState('');
-	const [insertUserTel, setInsertUserTel] = useState('');
+    const [info, setInfo] = useState({
+        "userPwd" : "",
+        "userTel" : ""
+    })
+
+    useEffect(()=>{
+        setInfo({...info, "userTel" : userInfo.userTel})
+    },[userInfo])
 
     //	비밀번호 유효성 검증
 	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
@@ -27,25 +36,28 @@ function UserInfoManagement() {
 			setPwdAlertOpen(true);
 		} else {
 			setPwdAlertOpen(false);
-			setInsertUserPwd(passwordCurrent);
+			setInfo({...info, "userPwd" : passwordCurrent});
 		}
 	};
 
     const onChangeinputUserTel = (e) => {
 		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
-		setInsertUserTel(targetValue);
+		setInfo({...info, "userTel" : targetValue})
 	};
-
-    const info = ({
-        "userPwd" : insertUserPwd,
-        "userTel" : insertUserTel
-    })
 
     //	개인고객 정보 수정
 	const onClickUserInfoUpdate = (e) => {
         e.preventDefault();
+        console.log(info)
+        console.log(userInfo.userTel)
+        console.log(info.userTel)
         dispatch(userInfoUpdate(info));
 	}
+
+    useEffect(()=>{
+        if      (updateStatus === "successed")   navigate(0);
+        else if (updateStatus === "failed")      alert(error);
+    },[updateStatus])
 
     return (
         <div className="mt-5">
@@ -68,7 +80,7 @@ function UserInfoManagement() {
             <Form.Group className="mb-3" controlId="formPlaintextPassword">
                 <Form.Label className="mb-0">비밀번호</Form.Label>
                 <Form.Control
-                    type="password" placeholder="비밀번호를 입력하세요"
+                    type="password" placeholder="변경할 비밀번호를 입력하세요"
                     onBlur={handlePwdBlur}
                     className="mb-3"
                 />

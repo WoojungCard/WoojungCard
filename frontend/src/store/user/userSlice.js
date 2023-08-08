@@ -10,7 +10,9 @@ const initialState = {
     userAppInfo : {},
     userCardAppStatusData : [],
     status : "idle",
+    updateStatus : "idle",
     loginStatus : "idle",
+    appStatus : "idle",
     error: null
 }
 
@@ -122,7 +124,7 @@ const userSlice = createSlice({
             })
             .addCase(userSignUp.rejected, (state, action) => {
                 state.status = "failed";
-                state.error = action.err.message;
+                state.error = action.payload.data;
             })
             .addCase(userLogin.pending, (state, action) => {
                 state.loginStatus = "loading";
@@ -135,7 +137,7 @@ const userSlice = createSlice({
             })
             .addCase(userLogin.rejected, (state, action) => {
                 state.loginStatus = "failed";
-                state.error = action.payload;
+                state.error = action.payload.data;
             })
             .addCase(userGetInfo.pending, (state, action) => {  
                 state.status = "loading";
@@ -149,14 +151,14 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userInfoUpdate.pending, (state, action) => {  
-                state.status = "loading";
+                state.updateStatus = "loading";
             })
             .addCase(userInfoUpdate.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.updateStatus = "successed";
                 state.userInfo = action.payload;
             })
             .addCase(userInfoUpdate.rejected, (state, action) => {
-                state.status = "failed";
+                state.updateStatus = "failed";
                 state.error = action.payload;
             })
             .addCase(userCardAppInfo.pending, (state, action) => {  
@@ -186,14 +188,14 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userCardApp.pending, (state, action) => {  
-                state.status = "loading";
+                state.appStatus = "loading";
             })
             .addCase(userCardApp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.appStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardApp.rejected, (state, action) => {
-                state.status = "failed";
+                state.appStatus = "failed";
                 state.error = action.payload;
             })
     }

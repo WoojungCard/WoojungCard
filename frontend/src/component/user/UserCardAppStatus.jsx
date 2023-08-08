@@ -33,7 +33,7 @@ function UserCardAppStatus() {
                         <td>{el.cardName}</td>
                         <td>{el.cardType === "CHECK" ? "신용카드" : "체크카드"}</td>
                         <td>{el.requestDate}</td>
-                        <td>{el.expirationDate ? el.expirationDate : "발급심사중"}</td>
+                        <td>{el.approvalDate ? el.approvalDate : "발급심사중"}</td>
                     </tr>
                 </tbody>
                 )}

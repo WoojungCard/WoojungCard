@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { userCardApp, userCardAppInfo } from "../../store/user/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { cardGetInfo } from "../../store/card/cardSlice";
+import moment from "moment";
 
 
 function UserCardApplication() {
 
-const {userAppInfo} = useSelector((state) => state.user);
+const {userAppInfo, appStatus} = useSelector((state) => state.user);
 const {cardInfo} = useSelector((state) => state.card);
 
 const dispatch = useDispatch();
@@ -20,24 +21,23 @@ useEffect(() => {
     dispatch(userCardAppInfo());
 }, [])
 
-const [insertRequestDate, setInsertRequestDate] = useState('');
-
-const onChangeHandler = (e) => {
-    setInsertRequestDate(e.target.value);
-}
-
 const request = ({
     "cardId" : param.cardId,
-    "requestDate" : insertRequestDate
+    "requestDate" : new Date()
 })
 
 const onClickHandler = (e) => {
-    console.log(request);
-    console.log(insertRequestDate);
     e.preventDefault();
     dispatch(userCardApp(request));
-    navigate("/user/cardAppStatus");
 }
+
+useEffect(()=>{
+    if (appStatus === "successed") {
+        navigate("/user/cardAppStatus");
+    } else if (appStatus === "failed") {
+        alert("실패하였습니다. 다시 시도해주세요.");
+    }
+}, [appStatus])
 
 return (
     <div className="mt-5">
@@ -68,10 +68,10 @@ return (
             <Form.Group className="mb-3" controlId="formPlaintextUserTel">
                 <Form.Label className="mb-0 ">신청일</Form.Label>
                 <Form.Control
-                    type="date"
-                    className="mb-4"
-                    defaultValue={new Date()}
-                    onChange={onChangeHandler}
+                    type="text"
+                    readOnly
+                    className="mb-4 bg-light"
+                    defaultValue={moment(new Date()).format("yyyy-MM-DD")}
                 />
             </Form.Group>
 

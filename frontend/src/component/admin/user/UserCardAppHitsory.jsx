@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { cardAppHistory, userCardAppApprove } from "../../../store/card/cardSlice";
+import { useNavigate } from "react-router-dom";
 
 function UserCardAppHistory() {
 
-    const {cardAppHistoryData} = useSelector((state) => state.card);
+    const {cardAppHistoryData, approveStatus} = useSelector((state) => state.card);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         dispatch(cardAppHistory());
@@ -17,6 +19,11 @@ function UserCardAppHistory() {
         e.preventDefault();
         dispatch(userCardAppApprove(e.target.value));
     }
+
+    useEffect(()=>{
+        if      (approveStatus === "successed") navigate(0);
+        else if (approveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");
+    },[approveStatus])
 
     return(
         <div className="container mt-5 pt-4">
@@ -39,7 +46,7 @@ function UserCardAppHistory() {
                     {cardAppHistoryData?.map((el)=>
                     <tr>
                         <td>{el.cardName}</td>
-                        <td>{el.cardType}</td>
+                        <td>{el.cardType === "CHECK" ? "체크카드" : "신용카드"}</td>
                         <td>{el.requestDate}</td>
                         <td>{el.userName}</td>
                         <td>{el.userBirth}</td>

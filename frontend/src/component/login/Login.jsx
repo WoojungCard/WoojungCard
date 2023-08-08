@@ -44,18 +44,20 @@ function Login() {
 	const onClickLogin = (e) => {
 		e.preventDefault();
 		if (userType === 'u') {
-			dispatch(userLogin(loginInfo));
-			// if (loginStatus === "successed") {
-			
-			navigate("/cardProduct", {replace : true});
-			navigate(0);
-			// } else {
-			// 	console.log("로그인실패");
-			// }
+			dispatch(userLogin(loginInfo));		
 		} else if (userType === 's') {
 			console.log("store Login");
 		}
 	};
+
+	useEffect(()=>{
+		if (loginStatus === "successed") {
+			navigate("/cardProduct", {replace : true});
+			navigate(0);
+		} else if (loginStatus === "failed") {
+			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
+		}
+	},[loginStatus])
 
 	
 	return (

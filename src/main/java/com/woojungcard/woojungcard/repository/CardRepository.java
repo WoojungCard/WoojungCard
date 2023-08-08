@@ -30,6 +30,9 @@ public interface CardRepository {
 	// User Card Application Approve
 	Integer userCardAppAprove(UserCardApproveRequest request);
 	
+	// Add Card Application Approval Table
+	Integer insertCardApplicationApproval(Long id);
+	
 	// User Card Canceled Application
 	Integer userCardCancelApp(Long id);
 	
