@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Popover, OverlayTrigger } from "react-bootstrap";
 import { StoreAppStatus, StoreAppStatusChange } from "../../../store/store/storeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,13 +23,15 @@ function StoreAppManagement() {
     const statusChange = ({
 		"status" : insertStatus
 	})
+	
+	
 
     return (
         <div className="container mt-5 pt-4">
             <h4 className="fw-bold text-center">가맹점신청내역</h4>
             
-            <div className="container mt-4">
-
+			<div className="container mt-4">
+      		
                 <Table hover className="text-center">
                     <thead className="">
                         <tr>
@@ -57,6 +59,14 @@ function StoreAppManagement() {
                                 
                                 const id = item.id;
 
+                                const popoverClickStoreAddr = (
+                                    <Popover>
+                                        <span>{item.storeZipCode}</span><br/>
+                                        <span>{item.storeAddress1}</span><br/>
+                                        <span>{item.storeAddress2}</span>
+                                    </Popover>
+                                )
+
                                 return (
                                     <tr key={id}>
                                         <td>{id}</td>
@@ -64,7 +74,20 @@ function StoreAppManagement() {
                                         <td>{item.storeName}</td>
                                         <td>{item.representative}</td>
                                         <td>{item.businessType}</td>
-                                        <td></td>
+                                        <td>
+                                            <OverlayTrigger
+                                                trigger={"click"}
+                                                rootClose
+                                                placement="left"
+                                                overlay={popoverClickStoreAddr}
+                                            >
+                                                <span>
+                                                    {item.storeAddress1 && item.storeAddress1.length > 15
+                                                        ? item.storeAddress1.substring(0, 15) + "..."
+                                                        : item.storeAddress1}
+                                                </span>
+                                            </OverlayTrigger>
+                                        </td>
                                         <td>{item.businessStartDate}</td>
                                         <td>{item.storeTel}</td>
                                         <td>

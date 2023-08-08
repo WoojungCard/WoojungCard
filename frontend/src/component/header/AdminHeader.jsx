@@ -101,10 +101,10 @@ function AdminHeader() {
                                     <Link to={"/admin/storeManagement"} style={styles.main}>가맹점관리</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>가맹점정보조회</Link>
+                                    <Link to={"/admin/storeManagement"} style={styles.sub}>가맹점정보조회</Link>
                                 </div>
                                 <div>
-                                    <Link to={"/admin/userManagement"} style={styles.sub}>가맹점신청내역</Link>
+                                    <Link to={"/admin/storeAppManagement"} style={styles.sub}>가맹점신청내역</Link>
                                 </div>
                                 <div>
                                     <Link to={"/admin/userManagement"} style={styles.sub}>퇴점신청내역</Link>
