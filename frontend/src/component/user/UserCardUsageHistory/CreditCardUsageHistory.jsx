@@ -59,7 +59,7 @@ const CreditCardUsageHistory = (props)=>{
                     </tbody>
                 </Table>
 
-                <div>
+                <div className="border-top">
                     <div className="d-flex justify-content-end">
                         <div className="row">
                             <div className="col" style={{width: "100px"}}>

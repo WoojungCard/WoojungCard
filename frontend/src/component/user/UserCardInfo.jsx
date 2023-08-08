@@ -41,7 +41,7 @@ function UserCardInfo() {
                     </thead>    
                     <tbody>
                         {userCardAppStatusData?.map((el) => 
-                        el.cardState !== "WATING" &&
+                        el.state !== "WATING" &&
                             <tr>
                                 <td>{<Link 
                                 to={"/user/cardUsageHistory"}

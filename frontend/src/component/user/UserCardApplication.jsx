@@ -34,6 +34,7 @@ const onClickHandler = (e) => {
 useEffect(() => {
     if (appStatus === "successed") {
         navigate("/user/cardAppStatus");
+        navigate(0);
     } else if (appStatus === "failed") {
         alert("실패하였습니다. 다시 시도해주세요.");
     }
