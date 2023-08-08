@@ -70,7 +70,7 @@ function StoreHeader(props) {
                             </div>
 
                             <div className="col-2">
-                                <Link to={"/store/StoreInfoUpdate"} style={styles.main}>
+                                <Link to={"/store/storeInfoUpdate"} style={styles.main}>
                                     가맹점정보
                                 </Link>
                             </div>                            
@@ -142,7 +142,7 @@ function StoreHeader(props) {
                                             </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/store"} style={styles.sub}>
+                                            <Link to={"/store/storeSalesDeposit"} style={styles.sub}>
                                                 매출입금내역
                                             </Link>
                                         </div>
@@ -150,12 +150,12 @@ function StoreHeader(props) {
 
                                     <div className="flex-column col-2">
                                         <div>
-                                            <Link to={"/store/StoreInfoUpdate"} style={styles.main}>
+                                            <Link to={"/store/storeInfoUpdate"} style={styles.main}>
                                                 가맹점정보
                                             </Link>
                                         </div>
                                         <div>
-                                            <Link to={"/store/StoreInfoUpdate"} style={styles.sub}>
+                                            <Link to={"/store/storeInfoUpdate"} style={styles.sub}>
                                                 가맹점정보관리
                                             </Link>
                                         </div>

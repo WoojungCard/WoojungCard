@@ -25,6 +25,8 @@ import UserCardUsageHistoryForm from "./component/user/UserCardUsageHistory/User
 import StoreManagement from "./component/admin/store/StoreManagement";
 import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 import StoreLayout from "./component/layout/StoreLayout";
+import StoreSalesManage from "./component/store/StoreSalesManage";
+import StoreSalesDeposit from "./component/store/StoreSalesDeposit";
 
 const ProjectRouter = () => {
 	return (
@@ -53,7 +55,9 @@ const ProjectRouter = () => {
 				
 				{/* 가맹점 */}
 				<Route path="/store" element=<StoreLayout/> >
-					<Route path="StoreInfoUpdate" element=<StoreInfoUpdate/> />
+					<Route index element=<StoreSalesManage/> />
+					<Route path="storeSalesDeposit" element=<StoreSalesDeposit/> />
+					<Route path="storeInfoUpdate" element=<StoreInfoUpdate/> />
 				</Route>
 				
 				{/* 카드사 관리자 레이아웃 */}
