@@ -14,6 +14,7 @@ import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
+import com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
@@ -21,6 +22,7 @@ import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
+import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
@@ -80,5 +82,9 @@ public class StoreController {
 	@PostMapping("/storeSalesManagement")
 	public List<StoreSalesManagementResponse> storeSalesManagement(@RequestBody Long id)throws StoreSalesManagementException{
 		return storeService.storeSalesManagement(id);
+	}
+	@PostMapping("/storeSalesReceiptDetails")
+	public StoreSalesReceiptResponse storeSalesReceiptDetails(@RequestBody StoreSalesReceiptRequest request) {
+		return storeService.storeSalesReceiptDetails(request);
 	}
 }

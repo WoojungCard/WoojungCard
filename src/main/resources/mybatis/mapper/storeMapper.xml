@@ -184,7 +184,23 @@
 	    		store.id = transaction.store_id
 			WHERE 
 				store.id = #{id}
-	    	
     	]]>
+	</select>
+	
+	<select id="storeSalesReceiptDetails" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse" parameterType="com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest">
+	<![CDATA[
+	SELECT 
+		count(id) AS numberOfCases, 
+	    sum(card_charge) AS monthlySales 
+	FROM 
+		transaction 
+	WHERE 
+		store_id = #{storeId} 
+	AND 
+		year(payment_date) = #{targetYear} 
+	AND 
+		month(payment_date) = #{targetMonth}
+		
+	]]>
 	</select>
 </mapper>
