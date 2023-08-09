@@ -49,17 +49,14 @@ const CheckCardUsageHistory = (props) => {
                 </tbody>
             </Table>
                 
-            <div className="d-flex justify-content-end">
-                <div className="row">
-                    <div className="col" style={{width: "100px"}}>
-                        <p className="">건수 : {cardUsageHistory?.length}</p>
-                    </div>
-                    <div className="col" style={{width: "100px"}}>
-                        <p className="">총액 : {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}원</p>
-                    </div> 
+            <div className="row d-flex justify-content-end">
+                <div className="col-1 text-end">
+                    <p className="">건수 : {cardUsageHistory?.length}</p>
+                </div>
+                <div className="col-2 text-end">
+                    <p className="">총액 : {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}원</p>
                 </div> 
             </div>
-
         </div>
     )
 }

@@ -34,7 +34,6 @@ function StoreSalesManage() {
 
             <div className="d-flex justify-content-end mb-4 me-5 pe-5">
                 <DatePicker
-                    showIcon
                     dateFormat="MM/yyyy"
                     selected={selectedDate}
                     showMonthYearPicker
@@ -68,11 +67,11 @@ function StoreSalesManage() {
                     </tbody>
                 </Table>
 
-                <div className="row d-flex justify-content-end">
-                    <div className="col-1 text-end">
+                <div className="row d-flex justify-content-end me-3">
+                    <div className="col-2 text-end">
                         <b className="">건수: {storeSalesList?.length}</b>
                     </div>
-                    <div className="col-2 text-end pe-0">
+                    <div className="col-2 text-end me-5">
                         <b className="">총액 : {storeSalesList?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</b>
                     </div>
                 </div>
