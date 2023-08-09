@@ -21,9 +21,9 @@ function StoreAppManagement() {
     }, []);
     
     const statusChange = ({
-		"status" : insertStatus
+        "status" : insertStatus
 	})
-	
+
     return (
         <div className="container mt-5 pt-4">
             <h4 className="fw-bold text-center">가맹점신청내역</h4>
@@ -76,6 +76,7 @@ function StoreAppManagement() {
                                         <td>{item.storeName}</td>
                                         <td>{item.representative}</td>
                                         <td>{item.businessType}</td>
+                                        <td>{item.Store_zip_code}</td>
                                         <td>
                                             <OverlayTrigger
                                                 trigger={"click"}

@@ -77,6 +77,13 @@
 			store_pwd
 		FROM
 			store
+		SET
+			representative = #{representative},
+			store_pwd      = #{storePwd},
+			store_zip_code = #{storeZipCode},
+			store_address1 = #{storeAddress1},
+			store_address2 = #{storeAddress2},
+			store_tel = #{storeTel}
 		WHERE
 			id = #{id}
 		]]>
@@ -170,7 +177,7 @@
 	</select>
 
 	<!--  스토어 승인으로 변경 -->
-		<select id = "storeAppStatusChange" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse">
+		<select id = "storeAppStatusChange" parameterType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse" resultType="Integer">
 		<![CDATA[
     		UPDATE 
 				store
@@ -180,5 +187,66 @@
 			WHERE id = #{id}
     	]]>
 	</select>
+	<!--  스토어 매출관리 조회 -->
+	<select id = "storeSalesManagement" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
+			<![CDATA[
+	    	SELECT
+				card_issued_id,
+				store_id,
+				approval_number,
+				payment_date,
+				installment,
+				card_charge
+	    	FROM
+	    		store
+	    		INNER JOIN
+	    		transaction 
+	    	ON
+	    		store.id = transaction.store_id
+			WHERE 
+				store.id = #{id}
+    	]]>
+	</select>
 	
+	<select id="storeSalesReceiptDetails" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse" parameterType="com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest">
+	<![CDATA[
+	SELECT 
+		count(id) AS numberOfCases, 
+	    sum(card_charge) AS monthlySales 
+	FROM 
+		transaction 
+	WHERE 
+		store_id = #{storeId} 
+	AND 
+		year(payment_date) = #{targetYear} 
+	AND 
+		month(payment_date) = #{targetMonth}
+	]]>
+	</select>
+	
+	<insert id="insertStorePayment" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentRequest">
+	<![CDATA[
+	INSERT INTO
+		payment(payer, target_id, target_year, target_month, payment, payment_date, payment_state)
+	VALUES
+		("STORE", #{storeId}, #{targetYear}, #{targetMonth}, #{payment}, now(), "FULL")
+	]]>
+	</insert>
+	
+	<select id="getStorePaymentDeposit" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest" resultType="Long">
+	<![CDATA[
+	SELECT 
+		SUM(payment)
+	FROM
+		payment 
+	WHERE 
+		payer = "STORE" 
+	AND 
+		target_id = #{storeId}
+	AND
+		target_year = #{targetYear}
+	AND
+		target_month = #{targetMonth}
+	]]>
+	</select>
 </mapper>
