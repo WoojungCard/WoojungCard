@@ -9,10 +9,12 @@ import moment from "moment";
 function StoreSalesDeposit() {
     
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const selectedMonth = moment(selectedDate).format('YYYY-MM');
+    const selectedMonth = moment(selectedDate).format('M');
+    const selectedYear = moment(selectedDate).format('YYYY');
+    console.log(selectedYear, selectedMonth);
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
-        <button className="btn btn-outline-dark btn-sm ms-2" onClick={onClick} ref={ref}>
+        <button className="btn btn-outline-dark btn-sm" onClick={onClick} ref={ref}>
             {value}
         </button>
     ));
@@ -30,7 +32,16 @@ function StoreSalesDeposit() {
                     <tbody>
                         <tr style={customHeight}>
                             <th>기간</th>
-                            <td></td>
+                            <td>
+                                <DatePicker
+                                    dateFormat="MM/yyyy"
+                                    selected={selectedDate}
+                                    showMonthYearPicker
+                                    onChange={(date) => setSelectedDate(date)}
+                                    customInput={<CustomInput />}
+                                    maxDate={addDays(new Date(), 0)}
+                                />
+                            </td>
                         </tr>
                         <tr style={customHeight}>
                             <th>건수</th>

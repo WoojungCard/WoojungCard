@@ -24,7 +24,6 @@ function StoreSalesManage() {
 
             <div className="d-flex justify-content-end mb-4 me-5 pe-5">
                 <DatePicker
-                    showIcon
                     dateFormat="MM/yyyy"
                     selected={selectedDate}
                     showMonthYearPicker
@@ -58,25 +57,17 @@ function StoreSalesManage() {
                     </tbody>
                 </Table>
 
-                <div className="d-flex justify-content-end">
-                    <div className="row">
-                        <div className="col" style={{width: "100px"}}>
-                            <p className="">
-                                건수 : 
-                                {/* {cardUsageHistory?.length} */}
-                                </p>
-                        </div>
-                        <div className="col" style={{width: "100px"}}>
-                            <p className="">
-                                {/* {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)} */}
+                <div className="row d-flex justify-content-end me-3">
+                    <div className="col-2 text-end">
+                        <p>건수 : 
+                            {/* {cardUsageHistory?.length} */}
                             </p>
-                        </div>
-                        <div className="" style={{width: "130px"}}>
-                            <b>합계: 
-                                {/* {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)} */}
-                            </b>
-                        </div>
-                    </div> 
+                    </div>
+                    <div className="col-2 text-end">
+                        <b>합계: 
+                            {/* {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)} */}
+                        </b>
+                    </div>
                 </div>
             </div>
         </div>
