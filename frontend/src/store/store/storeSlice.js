@@ -8,10 +8,13 @@ const initialState = {
     storeListData : [],
     StoreAppStatusData : [],
     storeSalesList : [],
+    storeSalesData : {},
+    depositData : {},
     status : "idle",
     storeLoginStatus : "idle",
     signUpStatus: "idle",
     updateStatus : "idle",
+    insertStatus : "idle",
     error: null
 }
 
@@ -35,9 +38,7 @@ export const storeSignUp = createAsyncThunk("/store/signup", async (store, thunk
 
 export const storeLogin = createAsyncThunk("/store/login", async(loginInfo2, thunkAPI) => {
     try {
-		// console.log(loginInfo2);
         const response = await api("POST", "/store/login", loginInfo2);
-        // console.log(response.data);
         return response.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
@@ -69,7 +70,6 @@ export const storeInfoUpdate = createAsyncThunk("/store/update", async(info, thu
 //store Application Status
 export const StoreAppStatus = createAsyncThunk("/store/storeAppStatus",async()=>{
     const response = await api("GET","/store/storeAppStatus");
-    // console.log(response.data);
     return response.data;
 })
 
@@ -193,6 +193,39 @@ const storeSlice = createSlice({
                 state.storeSalesList = action.payload;
             })
             .addCase(storeSalesManagement.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(storeSalesReceiptDetails.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(storeSalesReceiptDetails.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.storeSalesData = action.payload;
+            })
+            .addCase(storeSalesReceiptDetails.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(insertStorePayment.pending, (state, action) => {  
+                state.insertStatus = "loading";
+            })
+            .addCase(insertStorePayment.fulfilled,(state, action) => {
+                state.insertStatus = "successed";
+                state.data = action.payload;
+            })
+            .addCase(insertStorePayment.rejected, (state, action) => {
+                state.insertStatus = "failed";
+                state.error = action.payload;
+            })
+            .addCase(getStorePaymentDeposit.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(getStorePaymentDeposit.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.depositData = action.payload;
+            })
+            .addCase(getStorePaymentDeposit.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })
