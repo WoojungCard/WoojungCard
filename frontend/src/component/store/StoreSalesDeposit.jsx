@@ -16,6 +16,7 @@ function StoreSalesDeposit() {
     const navigate = useNavigate();
     
     const [selectedDate, setSelectedDate] = useState(new Date());
+    
     const selectedMonth = moment(selectedDate).format('M');
     const selectedYear = moment(selectedDate).format('YYYY');
 
@@ -29,17 +30,32 @@ function StoreSalesDeposit() {
         height: "40px",
     };
 
-    useEffect(()=>{
-        dispatch(storeSalesReceiptDetails({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))
-    },[selectedYear, selectedMonth])
+    const [rawData, setRawData] = useState([]);
+    const [depositValue, setDepositValue] = useState(0);
 
-    useEffect(()=>{
+    useEffect(() => {
+        dispatch(storeSalesReceiptDetails({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))
+    }, [selectedYear, selectedMonth]);
+
+    useEffect(() => {
         dispatch(getStorePaymentDeposit({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))
-    }, [selectedYear, selectedMonth])
+    }, [selectedYear, selectedMonth]);
+
+    useEffect(() => {
+        setRawData(depositData);
+    }, [depositData]);
+
+    useEffect(() => {
+        setDepositValue(parseInt(document.getElementById("depositValueId").innerText));
+    }, [rawData]);
+
+    useEffect(() => {
+        console.log(depositValue);
+    }, [depositValue]);
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        console.log(depositData)
+        console.log(depositValue);
         dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : depositData}));
     }
 
@@ -86,11 +102,11 @@ function StoreSalesDeposit() {
                         </tr>
                         <tr className="border-bottom" style={customHeight}>
                             <th>실납부금액</th>
-                            <td>{!isNaN(depositData) ? depositData : 0}원</td>
+                            <td>{(typeof(depositData) !== "string") ? depositData : 0}원</td>
                         </tr>
                         <tr style={customHeight}>
                             <th>미납금</th>
-                            <td>{depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
+                            <td id="depositValueId">{depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -99,8 +115,8 @@ function StoreSalesDeposit() {
             {(depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02) > 0 ?
             <div className="d-flex justify-content-center mt-5">
                 <Link to="/">
-                    <Button type="button" className="px-3" variant="outline-dark" value={depositData}
-                    onClick={onClickHandler}
+                    <Button type="button" className="px-3" variant="outline-dark"
+                            onClick={onClickHandler}
                     >
                         입금하기
                     </Button>

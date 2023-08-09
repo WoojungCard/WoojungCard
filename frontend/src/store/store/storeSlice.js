@@ -9,7 +9,7 @@ const initialState = {
     StoreAppStatusData : [],
     storeSalesList : [],
     storeSalesData : {},
-    depositData : {},
+    depositData : 0,
     status : "idle",
     storeLoginStatus : "idle",
     signUpStatus: "idle",
