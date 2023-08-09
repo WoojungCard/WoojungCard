@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { storeGetInfo, storeIdCheck, storeInfoUpdate, storeSignUp } from "../../store/store/storeSlice";
+import { useNavigate } from "react-router-dom";
 
 // 가맹점 회원가입
 function StoreInfoUpdate() {
@@ -26,9 +27,10 @@ function StoreInfoUpdate() {
 	
 	const [storeType, setStoreType] = useState('');
 	
-	const { storeInfo } = useSelector((state) => state.store);
+	const { storeInfo, updateStatus } = useSelector((state) => state.store);
 	
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	
   	useEffect(()=> {
         dispatch(storeGetInfo());
@@ -87,14 +89,7 @@ function StoreInfoUpdate() {
 	const onChangeinputStoreName = (e) => {
 		setInsertStoreName(e.target.value);
 	};
-		
-//	const onChangeinputStoreStartDate = (e) => {
-//		setInsertStoreDate(e.target.value);
-//	};
-//	const onChangeinputStoreStartDate = (e) => {
-//		const targetValue = DateAutoFormat(e.target.value);
-//		setInsertStoreDate(targetValue);
-//	}
+
 	const onChangeinputUserBirth = (e) => {
 		const targetValue = birthAutoFormat(e.target.value);
 		setInsertStoreDate(targetValue);
@@ -120,14 +115,14 @@ function StoreInfoUpdate() {
     let fullAddress = data.address;
     let extraAddress = "";
     if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+		if (data.bname !== "") {
+			extraAddress += data.bname;
+		}
+		if (data.buildingName !== "") {
+			extraAddress +=
+			extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+		}
+		fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
     setShow(false);
@@ -138,9 +133,6 @@ function StoreInfoUpdate() {
     const onChangeinputStoreAddrDetail = (e) => {
 		setInsertStoreAddrDetail(e.target.value);
 	};
-
-	
-	
 	
 	const info = ({
 		"representative" : insertStoreRepresent, 
@@ -153,9 +145,16 @@ function StoreInfoUpdate() {
 	
 	const onClickStoreInfoUpdate = (e) => {
 	    e.preventDefault();
-	    console.log(info);
 	    dispatch(storeInfoUpdate(info));
 	}
+
+	useEffect(()=>{
+		if (updateStatus === "successed") {
+			navigate(0)
+		} else if (updateStatus === "failed") {
+			alert("변경에 실패하였습니다. 다시 시도해주세요.");
+		}
+	},[updateStatus])
 
 	return (
 		<div className="mt-5">
@@ -181,9 +180,10 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="변경할 비밀번호를 입력하세요"
+                            type="password" 
+							placeholder="변경할 비밀번호를 입력하세요"
                             onBlur={handlePwdBlur}
-                            Value={storeInfo.storePwd}
+                            value={storeInfo.storePwd}
                             className="mb-2"
                         />
                     </Form.Group>
@@ -196,49 +196,47 @@ function StoreInfoUpdate() {
                             type="text" 
                             placeholder="대표자명을 입력하세요"
                             onChange={onChangeinputStoreRepresent}
-                            Value={storeInfo.representative}
-                 
+                            value={storeInfo.representative}
                             className="mb-2"
-                            
-                          
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreName">
 						<Form.Label className="mb-0 ">사업장명</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업장명을 입력하세요"
+                            type="text" 
+							placeholder="사업장명을 입력하세요"
                             onChange={onChangeinputStoreName}
                             defaultValue={storeInfo.storeName}
                             className="mb-2"
                             disabled
                             style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
-                          
-                        
                         />
                     </Form.Group>
                     
                     
 					<Form.Label className="mb-0 ">사업장주소</Form.Label>
 					<Form.Control
-                        type="text" placeholder="검색"
+                        type="text" 
+						placeholder="검색"
                         style={{width: "75px"}}
                         onClick={handleShow}
-                        Value={storeInfo.storeZipCode}
+                        value={storeInfo.storeZipCode}
                         className="mb-1"
-                    
                     />
+
                     <Form.Control
-                        type="text" placeholder="사업장주소를 입력하세요"
+                        type="text" 
+						placeholder="사업장주소를 입력하세요"
                         onClick={handleShow}
-                        Value={storeInfo.storeAddress1}
+                        value={storeInfo.storeAddress1}
                         className="mb-1"
-                  
                     />
                     <Form.Control
-                        type="text" placeholder="상세주소를 입력하세요"
+                        type="text" 
+						placeholder="상세주소를 입력하세요"
                         onChange={onChangeinputStoreAddrDetail}
-                        Value={storeInfo.storeAddress2}
+                        value={storeInfo.storeAddress2}
                         className="mb-2"
                     />
                     
@@ -253,12 +251,12 @@ function StoreInfoUpdate() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
                         <Form.Select aria-label="Default select example" className="mb-2" onChange={handleStoreType} 
-                        	 defaultValue={storeInfo.businessType}
-                        	 disabled
-                         	 style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
+							defaultValue={storeInfo.businessType}
+							disabled
+							style={{ backgroundColor: '#B5B4B4', color: '#100F0F' }}
                         >
-                      
-                        	
+
+
                         	<option>업종을 선택하세요</option>
                         	<option value="1">가전/가구</option>
                         	<option value="2">가정생활/서비스</option>
@@ -274,13 +272,14 @@ function StoreInfoUpdate() {
                         	<option value="12">주유</option>
                         	<option value="13">패션/잡화</option>
 					    </Form.Select> 
-					   
+					
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업개시일 8자리를 입력하세요"
+                            type="text" 
+							placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputUserBirth}
                             defaultValue={storeInfo.businessStartDate}
                             maxLength={10}
@@ -293,10 +292,11 @@ function StoreInfoUpdate() {
 			        <Form.Group className="mb-3" controlId="formPlaintextStoreTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="연락처를 입력하세요"
+                            type="text" 
+							placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
                             maxLength={13}
-                          	Value={storeInfo.storeTel}
+                          	value={storeInfo.storeTel}
                             className="mb-4"
                         />
                     </Form.Group>
@@ -313,7 +313,7 @@ function StoreInfoUpdate() {
 }
 export function DateAutoFormat(date) {
 	const number = date.trim().replace(/[^0-9]/g, "");
-  
+	
 	if (number.length < 5) return number;
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");

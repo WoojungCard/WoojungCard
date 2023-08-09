@@ -66,6 +66,18 @@
     	]]>
     </select>
     
+    <!-- 유저 기존 비밀번호 조회 -->
+    <select id="userOldPwd" parameterType="Long" resultType="String">
+	    <![CDATA[
+	    SELECT
+	    	user_pwd
+	   	FROM	
+	   		user
+	  	WHERE
+	  		id = #{id}
+	    ]]>
+    </select>
+    
     <!-- 유저 정보 변경 -->
     <update id="userInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest">
     	<![CDATA[
@@ -96,21 +108,26 @@
     <select id="userCardAppStatus" resultType="com.woojungcard.woojungcard.domain.response.CardAppStatusResponse" parameterType="Long">
     	<![CDATA[
     	SELECT  
-    		i.id AS id,
-    		card_number, 
-    		card_name, 
-    		card_type, 
-    		request_date, 
-    		expiration_date,
-    		i.state as state
-   		FROM  
-   			card_issued AS i 
- 		INNER JOIN 
- 			card_product AS p 
- 		ON 
- 			i.card_id = p.id 
- 		WHERE 
- 			user_id = #{id}
+			i.id AS id,
+			card_number, 
+			card_name, 
+			card_type, 
+			request_date, 
+			a.approval_date,
+			i.state as state,
+			expiration_date
+		FROM  
+			card_issued AS i 
+		INNER JOIN 
+			card_product AS p 
+		ON 
+			i.card_id = p.id
+		LEFT JOiN
+			card_application_approval AS a
+		ON
+			i.id = a.card_issued_id
+		WHERE 
+			user_id = #{id}
 		]]>
     </select>
 
@@ -126,11 +143,11 @@
     
     <!-- 유저 카드 신청 -->
     <insert id="userCardApp" parameterType="com.woojungcard.woojungcard.domain.request.UserCardAppRequest">
-    <![CDATA[
-    INSERT INTO
-    	card_issued (user_id, card_id, request_date, state)
-   	VALUES
-   		(#{userId}, #{cardId}, #{requestDate}, "WATING")
-    ]]>
+	    <![CDATA[
+	    INSERT INTO
+	    	card_issued (user_id, card_id, request_date, state)
+	   	VALUES
+	   		(#{userId}, #{cardId}, #{requestDate}, "WATING")
+	    ]]>
     </insert>
 </mapper>

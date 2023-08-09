@@ -3,10 +3,11 @@
 
 <mapper namespace="com.woojungcard.woojungcard.repository.StoreRepository">
 	<select id="findById" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO">
-	<![CDATA[
-	select* from store
-	]]>
+		<![CDATA[
+		select* from store
+		]]>
 	</select>
+	
 	<!-- 아이디 중복 체크 -->
 	<select id="storeIdCheck" resultType="int" parameterType="com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest">
 		<![CDATA[
@@ -48,14 +49,33 @@
 				#{businessStartDate},
 				#{storeTel},
 				now(),
-				"waiting",
-				"store")
+				"WATING",
+				"STORE")
 		]]>
 	</insert>
+	
 	<!-- 스토어 정보 변경 -->
 	<update id="storeInfoUpdate" parameterType="com.woojungcard.woojungcard.domain.request.StoreUpdateRequest">
-	<![CDATA[
-		UPDATE 
+		<![CDATA[
+			UPDATE 
+				store
+			SET
+				representative = #{representative},
+				store_pwd = #{storePwd},
+				store_zip_code = #{storeZipCode},
+				store_address1 = #{storeAddress1},
+				store_address2 = #{storeAddress2},
+				store_tel = #{storeTel}
+			WHERE 
+				id = #{id}
+		]]>
+	</update>
+	
+	<select id="findPwdById" parameterType="Long" resultType="String">
+		<![CDATA[
+		SELECT	
+			store_pwd
+		FROM
 			store
 		SET
 			representative = #{representative},
@@ -64,10 +84,10 @@
 			store_address1 = #{storeAddress1},
 			store_address2 = #{storeAddress2},
 			store_tel = #{storeTel}
-		WHERE 
+		WHERE
 			id = #{id}
-	]]>
-	</update>
+		]]>
+	</select>
 	
 	<select id="findBNById" parameterType="com.woojungcard.woojungcard.domain.request.StoreFindBNByIdRequest">
 		<![CDATA[
@@ -79,6 +99,7 @@
 				id=#{id}
 		]]>
 	</select>
+	
 	<!-- 스토어 로그인 -->
 	<select id = "storeLogin" resultType="com.woojungcard.woojungcard.domain.dto.StoreDTO" parameterType="com.woojungcard.woojungcard.domain.request.StoreLoginRequest">
 		<![CDATA[

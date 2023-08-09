@@ -19,6 +19,7 @@ public class CardAppStatusResponse {
 	private String cardName;
 	private CardType cardType;
 	private LocalDate requestDate;
+	private LocalDate approvalDate;
 	private LocalDate expirationDate;
 	private StateType state;
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.woojungcard.woojungcard.exception.LoginException;
+import com.woojungcard.woojungcard.exception.PayBillException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.StoreFindBNByIdException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
@@ -68,6 +69,12 @@ public class ExceptionConfig {
 	// User Card Application Approve Exception
 	@ExceptionHandler(UserCardApproveException.class)
 	public ResponseEntity<String> userCardApproveException(UserCardApproveException e){
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	// Pay Bill Exception
+	@ExceptionHandler(PayBillException.class)
+	public ResponseEntity<String> payBillException(PayBillException e){
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 }

@@ -7,13 +7,20 @@ import Container from 'react-bootstrap/Container';
 function Join() {
 	return (
 		<div>
-			<Container className="container d-flex flex-row justify-content-center align-items-center" style={{height: "800px"}}>
+			<Container className="container d-flex flex-row justify-content-center align-items-center" 
+					   style={{height: "800px"}}>
 				<Link to="/userJoin">
-					<Button className="ms-1 me-4 p-3" variant="outline-dark">개인고객 회원가입</Button>
+					<Button className="ms-1 me-4 p-3" 
+					        variant="outline-dark">
+						개인고객 회원가입
+					</Button>
 				</Link>
 				
 				<Link to="/storeJoin">
-					<Button className="p-3" variant="outline-dark">가맹점 회원가입</Button>
+					<Button className="p-3" 
+					        variant="outline-dark">
+						가맹점 회원가입
+					</Button>
 				</Link>
 			</Container>
 			

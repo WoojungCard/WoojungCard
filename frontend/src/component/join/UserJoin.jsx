@@ -6,13 +6,15 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { userIdCheck, userSignUp } from "../../store/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 // 개인고객 회원가입
 function UserJoin() {
 
-	const { idCheckResult } = useSelector((state) => state.user);
+	const { idCheckResult, signUpStatus } = useSelector((state) => state.user);
 
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [insertUserId, setInsertUserId] = useState('');
 	const [insertUserPwd, setInsertUserPwd] = useState('');
@@ -28,8 +30,6 @@ function UserJoin() {
 	};
 	
 	const onChangeinputUserId = (e) => {
-		// 아이디 입력시 "" 같이 출력 수정해야함
-		// let userId = JSON.stringify();
 		setInsertUserId(e.target.value);
 	};
 	
@@ -42,7 +42,6 @@ function UserJoin() {
 
 	const handleIdBlur = (e) => {
 		dispatch(userIdCheck(insertUserId));
-		console.log(insertUserId);
 		if(idCheckResult === false){
 			setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용 
 		} else {
@@ -90,9 +89,17 @@ function UserJoin() {
 //	개인고객 회원가입 클릭
 	const onClickUserJoin = (e) => {
 		e.preventDefault();
-		console.log(user);
 		dispatch(userSignUp(user));
 	}
+
+	useEffect(()=>{
+		if (signUpStatus === "successed") {
+			navigate("/login");
+			navigate(0);
+		} else if (signUpStatus === "failed") {
+			alert("가입에 실패하였습니다. 다시 시도해주세요.");
+		}
+	},[signUpStatus])
 	
 	
 	return (
@@ -104,31 +111,42 @@ function UserJoin() {
 					<Form.Group controlId="formPlaintextUserId">
 						<Form.Label className="mb-0">아이디</Form.Label>
                         <Form.Control
-                            type="text" placeholder="아이디를 입력하세요"
+                            type="text" 
+							placeholder="아이디를 입력하세요"
                             onChange={onChangeinputUserId}
                             onBlur={handleIdBlur}
                             className="mb-3"
                         />
                     </Form.Group>
                     
-                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-12px", fontSize: "13px"}}>&#8226; 사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.</p>}
+                    {idAlertOpen && (
+						<p className="mb-1 text-danger" style={{marginTop: "-12px", fontSize: "13px"}}>
+							&#8226; 사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.
+						</p>
+					)}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="비밀번호를 입력하세요"
+                            type="password" 
+							placeholder="비밀번호를 입력하세요"
                             maxLength={25}
                             onBlur={handlePwdBlur}
                             className="mb-3"
                         />
                     </Form.Group>
                     
-                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-12px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
-                    
+                    {pwdAlertOpen && (
+                        <p className="mb-1 text-danger" style={{ marginTop: "-12px", fontSize: "13px" }}>
+                            &#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.
+                        </p>
+                    )}
+
                     <Form.Group className="mb-3" controlId="formPlaintextUserName">
 						<Form.Label className="mb-0 ">이름</Form.Label>
                         <Form.Control
-                            type="text" placeholder="홍길동"
+                            type="text" 
+							placeholder="홍길동"
                             onChange={onChangeinputUserName}
                             className="mb-3"
                         />
@@ -137,7 +155,8 @@ function UserJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextUserBirth">
 						<Form.Label className="mb-0 ">생년월일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="생년월일 8자리"
+                            type="text" 
+							placeholder="생년월일 8자리"
                             onChange={onChangeinputUserBirth}
                             maxLength={10}
 							value ={insertUserBirth}
@@ -148,10 +167,10 @@ function UserJoin() {
                     <Form.Group className="row mb-2" controlId="formRadiobuttonGender">
                         <ToggleButtonGroup type="radio" name="gender" value={gender} onChange={handleGender}>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-1" value="MAN">
-					          남자
+					          	남자
 					        </ToggleButton>
 					        <ToggleButton variant="outline-secondary" id="tbg-radio-2" value="WOMAN">
-					          여자
+					          	여자
 					        </ToggleButton>
 				        </ToggleButtonGroup>
                     </Form.Group>
@@ -159,7 +178,8 @@ function UserJoin() {
 			        <Form.Group className="mb-3" controlId="formPlaintextUserTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="연락처를 입력하세요"
+                            type="text" 
+							placeholder="연락처를 입력하세요"
                             onChange={onChangeinputUserTel}
                             maxLength={13}
                             value={insertUserTel}
@@ -180,18 +200,18 @@ function UserJoin() {
 
 // 연락처 입력시 하이픈 자동완성
 export function phoneNumberAutoFormat(phoneNumber) {
-  const number = phoneNumber.trim().replace(/[^0-9]/g, "");
+	const number = phoneNumber.trim().replace(/[^0-9]/g, "");
 
-  if (number.length < 4) return number;
-  if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
-  if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
-  return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+	if (number.length < 4) return number;
+	if (number.length < 7) return number.replace(/(\d{3})(\d{1})/, "$1-$2");
+	if (number.length < 11) return number.replace(/(\d{3})(\d{3})(\d{1})/, "$1-$2-$3");
+	return number.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
 }
 
 // 생년월일 입력시 하이픈 자동완성
 export function birthAutoFormat(birth) {
 	const number = birth.trim().replace(/[^0-9]/g, "");
-  
+	
 	if (number.length < 5) return number;
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");

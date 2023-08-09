@@ -11,10 +11,11 @@ import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { storeIdCheck, storeSignUp } from "../../store/store/storeSlice";
+import { useNavigate } from "react-router-dom";
 
 // 가맹점 회원가입
 function StoreJoin() {
-	const { storeIdCheckResult } = useSelector((state) => state.store);
+	const { storeIdCheckResult,signUpStatus } = useSelector((state) => state.store);
 	
 	const dispatch =useDispatch();
 	const navigate = useNavigate();
@@ -45,7 +46,6 @@ function StoreJoin() {
 	
 	const handleBlur = (e) => {
 		dispatch(storeIdCheck(insertStoreId));
-		console.log(insertStoreId);
 		if (storeIdCheckResult === false) {
 			setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
 		}else{
@@ -76,13 +76,6 @@ function StoreJoin() {
 		setInsertStoreName(e.target.value);
 	};
 		
-//	const onChangeinputStoreStartDate = (e) => {
-//		setInsertStoreDate(e.target.value);
-//	};
-//	const onChangeinputStoreStartDate = (e) => {
-//		const targetValue = DateAutoFormat(e.target.value);
-//		setInsertStoreDate(targetValue);
-//	}
 	const onChangeinputUserBirth = (e) => {
 		const targetValue = birthAutoFormat(e.target.value);
 		setInsertStoreDate(targetValue);
@@ -108,14 +101,14 @@ function StoreJoin() {
     let fullAddress = data.address;
     let extraAddress = "";
     if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+		if (data.bname !== "") {
+			extraAddress += data.bname;
+		}
+		if (data.buildingName !== "") {
+			extraAddress +=
+			extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+		}
+		fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
     setShow(false);
@@ -127,10 +120,7 @@ function StoreJoin() {
 		setInsertStoreAddrDetail(e.target.value);
 	};
 	
-	
-	
 	const store = ({
-	
 	"businessNumber" : insertStoreId,
 	"storePwd" : insertStorePwd,
 	"representative" : insertStoreRepresent, 
@@ -146,11 +136,20 @@ function StoreJoin() {
 	
 //	가맹점 신청하기 클릭
 	const onClickStoreJoin = (e) => {
-		// e.prventDefault();
-		console.log(store);
+		e.preventDefault();
 		dispatch(storeSignUp(store));
 		navigate('/login/login');
 	};
+
+	const navigate = useNavigate();
+
+	useEffect(()=>{
+		if (signUpStatus === "successed") {
+			navigate("/");
+		} else if (signUpStatus === "failed") {
+			alert("등록에 실패하였습니다. 다시 시도해주세요.");
+		}
+	},[signUpStatus])
 	
 	
 	return (
@@ -162,30 +161,41 @@ function StoreJoin() {
 					<Form.Group controlId="formPlaintextStoreId">
 						<Form.Label className="mb-0">사업자번호</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업자번호를 입력하세요"
+                            type="text" 
+							placeholder="사업자번호를 입력하세요"
                             onChange={onChangeinputStoreId}
                             onBlur={handleBlur}
                             className="mb-2"
                         />
                     </Form.Group>
                     
-                    {idAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.</p>}
+                    {idAlertOpen && (
+						<p className="mb-1 text-danger" style={{marginTop: "-8px", fontSize: "13px"}}>
+							&#8226; 사용할 수 없는 사업자번호입니다. 다른 사업자번호를 입력해 주세요.
+						</p>
+					)}
 
                     <Form.Group className="mb-3" controlId="formPlaintextPassword">
                     	<Form.Label className="mb-0">비밀번호</Form.Label>
                         <Form.Control
-                            type="password" placeholder="비밀번호를 입력하세요"
+                            type="password" 
+							placeholder="비밀번호를 입력하세요"
                             onBlur={handlePwdBlur}
                             className="mb-2"
                         />
                     </Form.Group>
                     
-                    {pwdAlertOpen && <p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.</p>}
+                    {pwdAlertOpen && (
+						<p className="mb-1 text-danger" style={{marginTop: "-16px", fontSize: "13px"}}>
+							&#8226; 10~25자의 영문 소문자, 숫자를 사용해 주세요.
+						</p>
+					)}
                     
                     <Form.Group className="mb-3" controlId="formPlaintextRepresent">
 						<Form.Label className="mb-0 ">대표자</Form.Label>
                         <Form.Control
-                            type="text" placeholder="대표자명을 입력하세요"
+                            type="text" 
+							placeholder="대표자명을 입력하세요"
                             onChange={onChangeinputStoreRepresent}
                             className="mb-2"
                         />
@@ -194,7 +204,8 @@ function StoreJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreName">
 						<Form.Label className="mb-0 ">사업장명</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업장명을 입력하세요"
+                            type="text" 
+							placeholder="사업장명을 입력하세요"
                             onChange={onChangeinputStoreName}
                             className="mb-2"
                         />
@@ -203,7 +214,8 @@ function StoreJoin() {
                     
 					<Form.Label className="mb-0 ">사업장주소</Form.Label>
 					<Form.Control
-                        type="text" placeholder="검색"
+                        type="text" 
+						placeholder="검색"
                         style={{width: "75px"}}
                         onClick={handleShow}
                         value={zipCode}
@@ -211,7 +223,8 @@ function StoreJoin() {
                         readOnly
                     />
                     <Form.Control
-                        type="text" placeholder="사업장주소를 입력하세요"
+                        type="text" 
+						placeholder="사업장주소를 입력하세요"
                         value={insertStoreAddr}
                         onClick={handleShow}
                         className="mb-1"
@@ -233,7 +246,9 @@ function StoreJoin() {
                     
                     <Form.Group className="mb-3" controlId="formPlaintextStoreType">
 						<Form.Label className="mb-0 ">업종</Form.Label>
-                        <Form.Select aria-label="Default select example" className="mb-2" onChange={handleStoreType}>
+                        <Form.Select aria-label="Default select example" 
+									 className="mb-2" 
+									 onChange={handleStoreType}>
                         	<option>업종을 선택하세요</option>
                         	<option value="1">가전/가구</option>
                         	<option value="2">가정생활/서비스</option>
@@ -254,7 +269,8 @@ function StoreJoin() {
                     <Form.Group className="mb-3" controlId="formPlaintextStoreStart">
 						<Form.Label className="mb-0 ">사업개시일</Form.Label>
                         <Form.Control
-                            type="text" placeholder="사업개시일 8자리를 입력하세요"
+                            type="text" 
+							placeholder="사업개시일 8자리를 입력하세요"
                             onChange={onChangeinputUserBirth}
                             maxLength={10}
                             value ={insertStoreDate}
@@ -265,7 +281,8 @@ function StoreJoin() {
 			        <Form.Group className="mb-3" controlId="formPlaintextStoreTel">
 						<Form.Label className="mb-0 ">연락처</Form.Label>
                         <Form.Control
-                            type="text" placeholder="연락처를 입력하세요"
+                            type="text" 
+							placeholder="연락처를 입력하세요"
                             onChange={onChangeinputStoreTel}
                             maxLength={13}
                             value={insertStoreTel}
@@ -274,7 +291,11 @@ function StoreJoin() {
                     </Form.Group>
 
                     <div className="d-grid gap-1">
-                        <Button className="px-3" variant="outline-dark" onClick={onClickStoreJoin}>신청하기</Button>
+                        <Button className="px-3" 
+								variant="outline-dark" 
+								onClick={onClickStoreJoin}>
+									신청하기
+						</Button>
                     </div>
                 </Form>
                         
@@ -284,7 +305,7 @@ function StoreJoin() {
 }
 export function DateAutoFormat(date) {
 	const number = date.trim().replace(/[^0-9]/g, "");
-  
+	
 	if (number.length < 5) return number;
 	if (number.length < 7) return number.replace(/(\d{4})(\d{1})/, "$1-$2");
 	if (number.length < 10) return number.replace(/(\d{4})(\d{2})(\d{1})/, "$1-$2-$3");

@@ -8,6 +8,6 @@ public class AppConfig {
 	
     @Bean
     public EncryptConfig encrypt() {
-	        return new EncryptConfig();
+        return new EncryptConfig();
     }
 }

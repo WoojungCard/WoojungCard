@@ -22,25 +22,39 @@ import com.woojungcard.woojungcard.exception.UpdateException;
 @Repository
 @Mapper
 public interface UserRepository {
+	
 	List<UserDTO> findById();
+	
 	// User Id Check
 	Integer userIdCheck(UserIdCheckRequest ruquest) throws UserIdCheckException;
+	
 	// User Sign Up
 	Integer userSignUp(UserSignUpRequest request) throws SignUpException;
+	
 	// User Login
 	UserDTO userLogin(UserLoginRequest request) throws LoginException;
+	
 	// User Get Info
 	UserInfoResponse userGetInfo(Long id);
+	
+	// User Find UserPwd By Id
+	String userOldPwd(Long id);
+	
 	// User Find UserID By Id
 	String findUserIdById(Long id);
+	
 	// User Info Update
 	Integer userInfoUpdate(UserInfoUpdateRequest reuqest) throws UpdateException;
+	
 	// User Card Application Info
 	UserCardAppInfoResponse userCardAppInfo(Long id);
+	
 	// User Card Application Status
 	List<CardAppStatusResponse> userCardAppStatus(Long id);
+	
 	// User List
 	List<UserDTO> userList();
+	
 	// User Card Application
 	Integer userCardApp(UserCardAppRequest request);
 }

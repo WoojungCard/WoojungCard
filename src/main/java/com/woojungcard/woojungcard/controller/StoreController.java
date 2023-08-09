@@ -52,11 +52,13 @@ public class StoreController {
 	public ResponseEntity<String> StoreSignUp(@RequestBody StoreSignUpRequest request)throws SignUpException{
 		return storeService.storeSignUp(request);
 	}
+	
 	@PutMapping("/update")
 	public ResponseEntity<String> storeUpdate(@RequestBody StoreUpdateRequest request)throws StoreUpdateException{
 		System.out.println(request);
 		return storeService.storeUpdate(request);
 	}
+	
 	@PostMapping("/login")
 	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest request)throws LoginException{
 		return storeService.storeLogin(request);
@@ -72,6 +74,7 @@ public class StoreController {
 	public List<StoreAppInfoResponse> storeAppInfo() {
 		return storeService.storeAppInfo();
 	}
+	
 	@GetMapping("/storeAppStatus")
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeService.storeAppStatus();

@@ -10,7 +10,10 @@ const initialState = {
     userAppInfo : {},
     userCardAppStatusData : [],
     status : "idle",
+    updateStatus : "idle",
     loginStatus : "idle",
+    appStatus : "idle",
+    signUpStatus : "idle",
     error: null
 }
 
@@ -69,14 +72,12 @@ export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
 // Get User List (ADMIN)
 export const userList = createAsyncThunk("/user/getUserList", async() => {
 	const response = await api("GET", "/user/getUserList");
-    // console.log(response.data);
 	return response.data;
 })
 
 // User Card Application Status
 export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
     const response = await api("GET", "/user/cardAppStatus");
-    console.log(response.data);
     return response.data;
 })
 
@@ -93,6 +94,16 @@ export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thun
 const userSlice = createSlice({
     name: "user",
     initialState,
+    reducers: {
+        logout: (state) => {
+            state.data = initialState.data;
+            state.status = initialState.status;
+            state.error = initialState.error;
+            state.userInfo = initialState.userInfo;
+            localStorage.clear();
+            alert("로그아웃 되었습니다.");
+        },
+    },
     extraReducers(builder) {
         builder 
             .addCase(userIdCheck.pending, (state, action) => {
@@ -106,15 +117,15 @@ const userSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userSignUp.pending, (state, action) => {
-                state.status = "loading";
+                state.signUpStatus = "loading";
             })
             .addCase(userSignUp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.signUpStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userSignUp.rejected, (state, action) => {
-                state.status = "failed";
-                state.error = action.err.message;
+                state.signUpStatus = "failed";
+                state.error = action.payload.data;
             })
             .addCase(userLogin.pending, (state, action) => {
                 state.loginStatus = "loading";
@@ -127,7 +138,7 @@ const userSlice = createSlice({
             })
             .addCase(userLogin.rejected, (state, action) => {
                 state.loginStatus = "failed";
-                state.error = action.payload;
+                state.error = action.payload.data;
             })
             .addCase(userGetInfo.pending, (state, action) => {  
                 state.status = "loading";
@@ -141,14 +152,14 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userInfoUpdate.pending, (state, action) => {  
-                state.status = "loading";
+                state.updateStatus = "loading";
             })
             .addCase(userInfoUpdate.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.updateStatus = "successed";
                 state.userInfo = action.payload;
             })
             .addCase(userInfoUpdate.rejected, (state, action) => {
-                state.status = "failed";
+                state.updateStatus = "failed";
                 state.error = action.payload;
             })
             .addCase(userCardAppInfo.pending, (state, action) => {  
@@ -178,16 +189,17 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userCardApp.pending, (state, action) => {  
-                state.status = "loading";
+                state.appStatus = "loading";
             })
             .addCase(userCardApp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.appStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardApp.rejected, (state, action) => {
-                state.status = "failed";
+                state.appStatus = "failed";
                 state.error = action.payload;
             })
     }
 });
 export default userSlice.reducer;
+export const {logout} = userSlice.actions;

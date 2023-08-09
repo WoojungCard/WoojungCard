@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Popover, OverlayTrigger } from "react-bootstrap";
 import { StoreAppStatus, StoreAppStatusChange } from "../../../store/store/storeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,13 +23,12 @@ function StoreAppManagement() {
     const statusChange = ({
         "status" : insertStatus
 	})
-    console.log(1234)
+
     return (
         <div className="container mt-5 pt-4">
             <h4 className="fw-bold text-center">가맹점신청내역</h4>
             
-            <div className="container mt-4">
-
+			<div className="container mt-4">
                 <Table hover className="text-center">
                     <thead className="">
                         <tr>
@@ -50,12 +49,25 @@ function StoreAppManagement() {
                                 index = index + 1;
                                 
                                 const onClickStoreChange = (e) => {
-                                    // console.log(e.target.value);
                                     const id = e.target.value;
                                     dispatch(StoreAppStatusChange(id));
                                 };
                                 
                                 const id = item.id;
+
+                                const popoverClickStoreAddr = (
+                                    <Popover>
+                                        <div style={{
+                                            border: '1px solid black',
+                                            padding: '10px',
+                                            margin: '12px'
+                                            }}>
+                                            <span>{item.storeZipCode}</span><br/>
+                                            <span>{item.storeAddress1}</span><br/>
+                                            <span>{item.storeAddress2}</span>
+                                        </div>
+                                    </Popover>
+                                )
 
                                 return (
                                     <tr key={id}>
@@ -65,6 +77,20 @@ function StoreAppManagement() {
                                         <td>{item.representative}</td>
                                         <td>{item.businessType}</td>
                                         <td>{item.Store_zip_code}</td>
+                                        <td>
+                                            <OverlayTrigger
+                                                trigger={"click"}
+                                                rootClose
+                                                placement="left"
+                                                overlay={popoverClickStoreAddr}
+                                            >
+                                                <span>
+                                                    {item.storeAddress1 && item.storeAddress1.length > 15
+                                                        ? item.storeAddress1.substring(0, 15) + "..."
+                                                        : item.storeAddress1}
+                                                </span>
+                                            </OverlayTrigger>
+                                        </td>
                                         <td>{item.businessStartDate}</td>
                                         <td>{item.storeTel}</td>
                                         <td>
