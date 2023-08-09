@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
 import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
@@ -30,27 +31,33 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CardServiceImpl implements CardService {
 	
 	private final CardRepository cardRepository;
 	private final JwtService jwtService;
 	
+	// Card Application
+	@Transactional
 	public CardApplicationResponse cardApplication(Long id) {
 		CardApplicationResponse response = cardRepository.cardApplication(id);
 		return response;
 	}
 	
 	// Card All List
+	@Transactional
 	public List<CardListResponse> cardList() {
 		return cardRepository.cardList();
 	}
 	
 	// User Card Application History
+	@Transactional
 	public List<UserCardAppHistoryResponse> cardAppHistory() {
 		return cardRepository.cardAppHistory();
 	}
 	
 	// User Card Application Approve
+	@Transactional
 	public ResponseEntity<String> userCardAppAprove(UserCardApproveRequest request) throws UserCardApproveException {
 		// 카드 번호 랜덤 생성
 		StringBuilder cardNumber = new StringBuilder();
@@ -81,6 +88,7 @@ public class CardServiceImpl implements CardService {
 	
 	
 	// User Card Canceled Application
+	@Transactional
 	public ResponseEntity<String> userCardCancelApp(Long id) throws ApplicationException {
 		Integer updateRow = cardRepository.userCardCancelApp(id);
 		if (updateRow != 0) {
@@ -96,11 +104,13 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	// User Card Cancel Application History
+	@Transactional
 	public List<CardCancelHistoryResponse> userCardCancelHistory() {
 		return cardRepository.userCardCancelHistory();
 	}
 	
 	// User Card Cancel Approve
+	@Transactional
 	public ResponseEntity<String> userCardCancelApprove(Long id) throws UpdateException {
 		Integer updateRow = cardRepository.userCardCancelApprove(id);
 		if (updateRow != 0) {
@@ -116,12 +126,14 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	// User Card Possession History
+	@Transactional
 	public List<UserCardPossessionResponse> userCardPossessionHistory() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		return cardRepository.userCardPossessionHistory(id);
 	}
 	
 	// User Card Usage History
+	@Transactional
 	public List<UserCardUsageHistoryResponse> userCardUsageHistory(UserCardUsageHistoryRequest request) {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setId(id);
@@ -129,6 +141,7 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	// User Pay Card Bill
+	@Transactional
 	public ResponseEntity<String> userPayCardBill(UserPayCardBillRequest request) throws PayBillException {
 		request.setPayer(PayerType.USER);
 		request.setPaymentState(PaymentState.FULL);
@@ -141,11 +154,13 @@ public class CardServiceImpl implements CardService {
 	}
 	
 	// User Pay Bill History
+	@Transactional
 	public Long userPayBillHistory(UserPayBillHistoryRequest request) {
 		return cardRepository.userPayBillHistory(request);
 	}
 	
 	// Find Card Type By Id
+	@Transactional
 	public String findCardTypeById(Long id) {
 		return cardRepository.findCardTypeById(id);
 	}

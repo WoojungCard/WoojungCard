@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
@@ -34,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StoreServiceImpl implements StoreService {
 
 	private final StoreRepository storeRepository;
@@ -41,6 +43,7 @@ public class StoreServiceImpl implements StoreService {
 	private final JwtService jwtService;
 
 	// store Id Check
+	@Transactional
 	public Boolean storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException{
 		Integer countId = storeRepository.storeIdCheck(request);
 		if (countId == 0) {
@@ -51,6 +54,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	// store Sign Up
+	@Transactional
 	public ResponseEntity<String> storeSignUp(StoreSignUpRequest request) throws SignUpException {
 		String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), request.getBusinessNumber());
 		request.setStorePwd(encodedPwd);
@@ -63,6 +67,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	 // store update
+	@Transactional
 	public ResponseEntity<String> storeUpdate(StoreUpdateRequest request) throws StoreUpdateException{
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setId(id);
@@ -83,6 +88,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	// Store Login
+	@Transactional
 	public StoreLoginResponse storeLogin(StoreLoginRequest request) throws LoginException {
 		String encodedPwd = encryptConfig.getEncrypt(request.getStorePwd(), request.getBusinessNumber()); 
 		request.setStorePwd(encodedPwd);
@@ -97,6 +103,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	// Store Get Info
+	@Transactional
 	public StoreInfoResponse storeGetInfo() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		StoreInfoResponse response = storeRepository.storeGetInfo(id);
@@ -104,33 +111,41 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	// store Application Info
+	@Transactional
 	public List<StoreAppInfoResponse> storeAppInfo(){
 		return storeRepository.storeAppInfo();
 	}
 	
 	// store Application Status
+	@Transactional
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeRepository.storeAppStatus();
 	}
 	
 	// store Application Status change
+	@Transactional
 	public StoreAppStatusResponse storeAppStatusChange(Long id){
 		return storeRepository.storeAppStatusChange(id);
 	}
 
-//store Application Management 
+	//store Application Management 
+	@Transactional
 	public List<StoreSalesManagementResponse> storeSalesManagement(StoreSalesManagementRequest request) {
 		Long storeId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(storeId);
 		return storeRepository.storeSalesManagement(request);
 	}
 	
+	// Store Sales Receipt Details
+	@Transactional
 	public StoreSalesReceiptResponse storeSalesReceiptDetails(StoreSalesReceiptRequest request) {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(id);
 		return storeRepository.storeSalesReceiptDetails(request);
 	}
 	
+	// Insert Store Payment
+	@Transactional
 	public ResponseEntity<String> insertStorePayment(StorePaymentRequest request) throws Exception {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(id);
@@ -142,6 +157,8 @@ public class StoreServiceImpl implements StoreService {
 		}
 	}
 	
+	// Get Store Payment Deposit
+	@Transactional
 	public Long getStorePaymentDeposit(StorePaymentDepositRequest request) {
 		Long stordId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(stordId);
