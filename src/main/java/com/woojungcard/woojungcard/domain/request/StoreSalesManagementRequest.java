@@ -11,11 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter @Setter
 public class StoreSalesManagementRequest {
-	private int id;
-	private int cardIssuedId;
-	private int storeId;
-	private int approvalNumber;
-	private Date paymentDate;
-	private int installment;
-	private int cardCharge;
+	private Long storeId;
+	private Integer targetYear;
+	private Integer targetMonth;
 }

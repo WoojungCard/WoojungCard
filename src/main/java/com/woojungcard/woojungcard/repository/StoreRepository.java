@@ -52,7 +52,7 @@ public interface StoreRepository {
 
 	String findPwdById(Long id);
 	
-	List<StoreSalesManagementResponse> storeSalesManagement(Long id);
+	List<StoreSalesManagementResponse> storeSalesManagement(StoreSalesManagementRequest request);
 	
 	StoreSalesReceiptResponse storeSalesReceiptDetails(StoreSalesReceiptRequest request);
 	

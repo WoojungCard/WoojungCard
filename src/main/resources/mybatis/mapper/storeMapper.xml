@@ -187,23 +187,26 @@
     	]]>
 	</select>
 	<!--  스토어 매출관리 조회 -->
-	<select id = "storeSalesManagement" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
+	<select id = "storeSalesManagement" parameterType="com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse" >
 			<![CDATA[
 	    	SELECT
-				card_issued_id,
-				store_id,
-				approval_number,
-				payment_date,
-				installment,
-				card_charge
+ 				t.payment_date 		AS payment_date,
+ 				t.approval_number 	AS approval_number,
+				i.card_number 		AS card_number,		
+				t.installment 		AS installment,
+				t.card_charge 		AS card_charge
 	    	FROM
-	    		store
-	    		INNER JOIN
-	    		transaction 
-	    	ON
-	    		store.id = transaction.store_id
+	    		transaction 		AS t
+	    	INNER JOIN
+	    		card_issued 		AS i
+    		ON
+    			t.card_issued_id = i.id
 			WHERE 
-				store.id = #{id}
+				t.store_id = #{storeId}
+			AND
+				YEAR(t.payment_date) = #{targetYear}
+			AND
+				MONTH(t.payment_date) = #{targetMonth}
     	]]>
 	</select>
 	

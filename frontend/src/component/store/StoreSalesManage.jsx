@@ -4,8 +4,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { addDays } from "date-fns";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { storeSalesManagement } from "../../store/store/storeSlice";
 
 function StoreSalesManage() {
+
+    const {storeSalesList} = useSelector((state) => state.store);
     
     const [selectedDate, setSelectedDate] = useState(new Date());
     const selectedMonth = moment(selectedDate).format('M');
@@ -17,6 +21,12 @@ function StoreSalesManage() {
             {value}
         </button>
     ));
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(storeSalesManagement({"targetYear" : selectedYear, "targetMonth" : selectedMonth}));
+    },[selectedYear, selectedMonth])
 
     return (
         <div className="container mt-5 pt-4">
@@ -46,37 +56,25 @@ function StoreSalesManage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {cardUsageHistory?.map((el) => 
+                        {storeSalesList?.map((el) => 
                         <tr>
                             <td>{el.paymentDate}</td>
                             <td>{el.approvalNumber}</td>
-                            <td>{el.businessNumber}</td> 
+                            <td>{el.cardNumber}</td> 
                             <td>{el.installment === 0 ? "일시불" : el.installment}</td>
                             <td>{el.cardCharge}</td>
                         </tr>
-                        )} */}
+                        )}
                     </tbody>
                 </Table>
 
-                <div className="d-flex justify-content-end">
-                    <div className="row">
-                        <div className="col" style={{width: "100px"}}>
-                            <p className="">
-                                건수 : 
-                                {/* {cardUsageHistory?.length} */}
-                                </p>
-                        </div>
-                        <div className="col" style={{width: "100px"}}>
-                            <p className="">
-                                {/* {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)} */}
-                            </p>
-                        </div>
-                        <div className="" style={{width: "130px"}}>
-                            <b>합계: 
-                                {/* {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)} */}
-                            </b>
-                        </div>
-                    </div> 
+                <div className="row d-flex justify-content-end">
+                    <div className="col-1 text-end">
+                        <b className="">건수: {storeSalesList?.length}</b>
+                    </div>
+                    <div className="col-2 text-end pe-0">
+                        <b className="">총액 : {storeSalesList?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}</b>
+                    </div>
                 </div>
             </div>
         </div>

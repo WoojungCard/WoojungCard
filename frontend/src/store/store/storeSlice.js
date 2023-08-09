@@ -7,6 +7,7 @@ const initialState = {
     storeInfo : {},
     storeListData : [],
     StoreAppStatusData : [],
+    storeSalesList : [],
     status : "idle",
     storeLoginStatus : "idle",
     signUpStatus: "idle",
@@ -77,6 +78,28 @@ export const StoreAppStatusChange = createAsyncThunk("/store/storeAppStatusChang
     const response = await api("PUT","/store/storeAppStatusChange", id);
     return response.data;
 })
+
+// Stroe Sales Management
+export const storeSalesManagement = createAsyncThunk("/store/storeSalesManagement", async(request) => {
+    const response = await api("POST", "/store/storeSalesManagement", request);
+    return response.data;
+})
+
+// Store Payment Deposit
+export const storeSalesReceiptDetails = createAsyncThunk("/store/storeSalesReceiptDetails", async(request) => {
+    const response = await api("POST", "/store/storeSalesReceiptDetails", request);
+    return response.data;
+});
+
+export const insertStorePayment = createAsyncThunk("/store/storePayment", async(request) => {
+    const response = await api("POST", "/store/storePayment", request);
+    return response.data;
+});
+
+export const getStorePaymentDeposit = createAsyncThunk("/store/storePaymentDeposit", async(request) => {
+    const response = await api("POST", "/store/storePaymentDeposit", request);
+    return response.data;
+});
 
 const storeSlice = createSlice({
     name: "store",
@@ -159,6 +182,17 @@ const storeSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(StoreAppStatusChange.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(storeSalesManagement.pending, (state, action) => {  
+                state.status = "loading";
+            })
+            .addCase(storeSalesManagement.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.storeSalesList = action.payload;
+            })
+            .addCase(storeSalesManagement.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })

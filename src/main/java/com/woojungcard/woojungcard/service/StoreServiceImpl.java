@@ -119,8 +119,10 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 //store Application Management 
-	public List<StoreSalesManagementResponse> storeSalesManagement(Long id) {
-		return storeRepository.storeSalesManagement(id);
+	public List<StoreSalesManagementResponse> storeSalesManagement(StoreSalesManagementRequest request) {
+		Long storeId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(storeId);
+		return storeRepository.storeSalesManagement(request);
 	}
 	
 	public StoreSalesReceiptResponse storeSalesReceiptDetails(StoreSalesReceiptRequest request) {

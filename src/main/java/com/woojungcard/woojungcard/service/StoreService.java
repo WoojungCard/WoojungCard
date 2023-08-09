@@ -46,7 +46,7 @@ public interface StoreService {
 	public StoreAppStatusResponse storeAppStatusChange(Long id);
 	
 	//Store salesManagement
-	public List<StoreSalesManagementResponse> storeSalesManagement(Long id);
+	public List<StoreSalesManagementResponse> storeSalesManagement(StoreSalesManagementRequest request);
 	
 	// Store Payment Service
 	

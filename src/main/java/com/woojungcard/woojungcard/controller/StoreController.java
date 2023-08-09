@@ -85,8 +85,8 @@ public class StoreController {
 		return storeService.storeAppStatusChange(id);
 	}
 	@PostMapping("/storeSalesManagement")
-	public List<StoreSalesManagementResponse> storeSalesManagement(@RequestBody Long id)throws StoreSalesManagementException{
-		return storeService.storeSalesManagement(id);
+	public List<StoreSalesManagementResponse> storeSalesManagement(@RequestBody StoreSalesManagementRequest request) throws StoreSalesManagementException{
+		return storeService.storeSalesManagement(request);
 	}
 	
 	// Store Payment Service
