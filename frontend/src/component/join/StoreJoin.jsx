@@ -247,19 +247,19 @@ function StoreJoin() {
 									 className="mb-2" 
 									 onChange={handleStoreType}>
                         	<option>업종을 선택하세요</option>
-                        	<option value="1">가전/가구</option>
-                        	<option value="2">가정생활/서비스</option>
-                        	<option value="3">교육/학원</option>
-                        	<option value="4">문화/레저</option>
-                        	<option value="5">미용</option>
-                        	<option value="6">여행/교통</option>
-                        	<option value="7">요식/유흥</option>
-                        	<option value="8">유통</option>
-                        	<option value="9">음/식료품</option>
-                        	<option value="10">의료</option>
-                        	<option value="11">자동차</option>
-                        	<option value="12">주유</option>
-                        	<option value="13">패션/잡화</option>
+                        	<option value="가전/가구">가전/가구</option>
+                        	<option value="가정생활/서비스">가정생활/서비스</option>
+                        	<option value="교육/학원">교육/학원</option>
+                        	<option value="문화/레저">문화/레저</option>
+                        	<option value="미용">미용</option>
+                        	<option value="여행/교통">여행/교통</option>
+                        	<option value="요식/유흥">요식/유흥</option>
+                        	<option value="유통">유통</option>
+                        	<option value="음/식료품">음/식료품</option>
+                        	<option value="의료">의료</option>
+                        	<option value="자동차">자동차</option>
+                        	<option value="주유">주유</option>
+                        	<option value="패션/잡화">패션/잡화</option>
 					    </Form.Select>
                     </Form.Group>
                     

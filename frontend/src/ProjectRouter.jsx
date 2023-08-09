@@ -27,6 +27,7 @@ import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 import StoreLayout from "./component/layout/StoreLayout";
 import StoreSalesManage from "./component/store/StoreSalesManage";
 import StoreSalesDeposit from "./component/store/StoreSalesDeposit";
+import StoreManagementDetail from "./component/admin/store/StoreManagementDetail";
 
 const ProjectRouter = () => {
 	return (
@@ -71,6 +72,7 @@ const ProjectRouter = () => {
 					<Route path="cardManageDetail/:index" element=<CardManageDetail/> />
 					<Route path="cardNew" element=<CardNew/> />
 					<Route path="storeManagement" element=<StoreManagement/> />
+					<Route path="storeManagementDetail/:index" element=<StoreManagementDetail/> />
 					<Route path="storeAppManagement" element=<StoreAppManagement/> />
 				</Route>
 			</Routes>

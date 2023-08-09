@@ -44,7 +44,7 @@ function UserManagementDetail() {
             <div className="container w-75">
                 <h5 className="fw-bold text-start mb-4">
                     <OverlayTrigger
-                        trigger={"click"}
+                        delay={{ hide: 400 }}
                         rootClose
                         placement="left"
                         overlay={popoverClickUserName}

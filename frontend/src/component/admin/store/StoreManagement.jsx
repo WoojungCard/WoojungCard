@@ -10,7 +10,8 @@ import { storeList } from "../../../store/store/storeSlice";
 function StoreManagement() {
 	const dispatch = useDispatch();
 	const {storeListData} = useSelector((state) => state.store);
-    const [rawData, setRawData] = useState();
+    const [rawData, setRawData] = useState([]);
+    const [sortedData, setSortedData] = useState([]);
 	
 	useEffect(() => {
         dispatch(storeList());
@@ -21,7 +22,16 @@ function StoreManagement() {
     }, [storeListData]);
 
     useEffect(() => {
+        // 가입날짜기준 최근순 정렬
+        const sortByStoreJoinDate = (data) => {
+            if (data) {
+                return data.slice().sort((a, b) => new Date(b.storeJoinDate) - new Date(a.storeJoinDate));
+            }            
+            return data;
+        };
         
+        const sorted = sortByStoreJoinDate(rawData);
+        setSortedData(sorted);
     }, [rawData]);
 	
     // 상호명 검색
@@ -64,13 +74,19 @@ function StoreManagement() {
                     </thead>
                     <tbody>
                         {
-                            storeListData.map((item, index) => {
+                            sortedData.map((item, index) => {
                                 index = index + 1;
                                 return (
                                     <tr key={index}>
                                         <td>{index}</td>
                                         <td>{item.businessNumber}</td>
-                                        <td>{item.storeName}</td>
+                                        <td>
+                                            {/* <Link to={`/admin/storeManagementDetail/${index}`} 
+                                                state={{index: `${(index - 1)}`}} 
+                                                style={{textDecoration: "none", color: "black"}}> */}
+                                            {item.storeName}
+                                            {/* </Link> */}
+                                        </td>
                                         <td>{item.representative}</td>
                                         <td>{item.businessType}</td>
                                         <td>{item.businessStartDate}</td>

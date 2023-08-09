@@ -54,20 +54,16 @@ function StoreAppManagement() {
                                     const id = e.target.value;
                                     dispatch(StoreAppStatusChange(id));
                                     alert("승인되었습니다.");
-                                    navigate("/admin/storeManagement");
+                                    navigate(0);
                                 };
                                 
                                 const id = item.id;
 
                                 const popoverClickStoreAddr = (
                                     <Popover>
-                                        <div style={{
-                                            border: '1px solid black',
-                                            padding: '10px',
-                                            margin: '12px'
-                                            }}>
+                                        <div className="m-2 px-1">
                                             <span>{item.storeZipCode}</span><br/>
-                                            <span>{item.storeAddress1}</span><br/>
+                                            <span>{item.storeAddress1},</span><br/>
                                             <span>{item.storeAddress2}</span>
                                         </div>
                                     </Popover>
@@ -82,9 +78,9 @@ function StoreAppManagement() {
                                         <td>{item.businessType}</td>
                                         <td>
                                             <OverlayTrigger
-                                                trigger={"click"}
+                                                
                                                 rootClose
-                                                placement="left"
+                                                placement="bottom"
                                                 overlay={popoverClickStoreAddr}
                                             >
                                                 <span>
