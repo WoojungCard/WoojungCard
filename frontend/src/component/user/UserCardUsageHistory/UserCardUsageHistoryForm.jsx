@@ -59,10 +59,10 @@ function UserCardUsageHistoryForm() {
                     </Form>
                 </div>
 
-                <div className=" mb-1">
+                <div className="me-3 mb-1">
                     <Form>
                         <Form.Group className="mb-2 pe-0" controlId="choiceYear">
-                            <Form.Label column sm="3" className="px-0 text-end w-40" style={{fontSize: "13px"}}>년도</Form.Label>
+                            <Form.Label column className="px-0 text-end" style={{fontSize: "13px"}}>년도</Form.Label>
                             <Col>
                                 <Form.Select column sm="3" className="px-0 text-center" onChange={onChangeHandler} name="yearChoice" style={{fontSize: "13px", width: "100px"}}>
                                     <option disabled selected>{new Date().getFullYear()}</option>
@@ -80,7 +80,7 @@ function UserCardUsageHistoryForm() {
                 <div>
                     <Form>  
                         <Form.Group className="mb-2 pe-0" controlId="choice">
-                            <Form.Label column sm="3" className="px-0 text-end" style={{fontSize: "13px"}}>월</Form.Label>
+                            <Form.Label column className="px-0 text-end" style={{fontSize: "13px"}}>월</Form.Label>
                             <Col>
                                 <Form.Select column sm="3" className="px-0 text-center" onChange={onChangeHandler} name="monthChoice" style={{fontSize: "13px", width: "100px"}}>
                                     <option disabled selected>{new Date().getMonth()+1}</option>
