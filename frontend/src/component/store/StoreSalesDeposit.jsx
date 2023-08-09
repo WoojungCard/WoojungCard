@@ -18,7 +18,7 @@ function StoreSalesDeposit() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     
     const selectedMonth = moment(selectedDate).format('M');
-    const selectedYear = moment(selectedDate).format('YYYY');
+    const selectedYear  = moment(selectedDate).format('YYYY');
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <button className="btn btn-outline-dark btn-sm" onClick={onClick} ref={ref}>
@@ -30,38 +30,22 @@ function StoreSalesDeposit() {
         height: "40px",
     };
 
-    const [rawData, setRawData] = useState([]);
-    const [depositValue, setDepositValue] = useState(0);
+    const paymentResult = storeSalesData.monthlySales * 0.02 - depositData;
 
-    useEffect(() => {
-        dispatch(storeSalesReceiptDetails({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))
-    }, [selectedYear, selectedMonth]);
-
-    useEffect(() => {
-        dispatch(getStorePaymentDeposit({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))
-    }, [selectedYear, selectedMonth]);
-
-    useEffect(() => {
-        setRawData(depositData);
-    }, [depositData]);
-
-    useEffect(() => {
-        setDepositValue(parseInt(document.getElementById("depositValueId").innerText));
-    }, [rawData]);
-
-    useEffect(() => {
-        console.log(depositValue);
-    }, [depositValue]);
+    useEffect(() => {dispatch(storeSalesReceiptDetails({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))}, [selectedYear, selectedMonth]);
+    useEffect(() => {dispatch(getStorePaymentDeposit  ({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))}, [selectedYear, selectedMonth]);
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : depositValue}));
+        dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : paymentResult}));
     }
 
-    // useEffect(()=>{
-    //     if      (insertStatus === "successed")  navigate(0);
-    //     else if (insertStatus === "failed")     alert("입금 실패하였습니다. 다시 시도해주세요.");
-    // },[insertStatus])
+    
+
+    useEffect(()=>{
+        if      (insertStatus === "successed")  navigate(0);
+        else if (insertStatus === "failed")     alert("입금 실패하였습니다. 다시 시도해주세요.");
+    },[insertStatus])
 
     return (
         <div className="container mt-5 pt-5">
@@ -105,13 +89,13 @@ function StoreSalesDeposit() {
                         </tr>
                         <tr style={customHeight}>
                             <th>미납금</th>
-                            <td id="depositValueId">{(typeof(depositData) !== "string") ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
+                            <td id="depositValueId">{depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
 
-            {((typeof(depositData) !== "string") ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02) > 0 ?
+            {(depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02) > 0 ?
             <div className="d-flex justify-content-center mt-5">
                 <Link to="/">
                     <Button type="button" className="px-3" variant="outline-dark"
