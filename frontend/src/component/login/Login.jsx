@@ -13,79 +13,39 @@ import { storeGetInfo, storeLogin } from "../../store/store/storeSlice";
 // 로그인
 function Login() {
 
-	const {loginStatus} = useSelector((state) => state.user);
+	const {loginStatus}      = useSelector((state) => state.user);
 	const {storeLoginStatus} = useSelector((state) => state.store);
-	const {storeInfo} = useSelector((state)=>state.store);
+	const {storeInfo}        = useSelector((state)=>state.store);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const [insertLoginId, setInsertLoginId] = useState('');
+	const [insertLoginId , setInsertLoginId]  = useState('');
 	const [insertLoginPwd, setInsertLoginPwd] = useState('');
-	const [userType, setUserType] = useState('u');
+	const [userType      , setUserType]       = useState('u');
 
+	const handleUserType = (e) => {setUserType(e)};
+	const onChangeLoginId = (e) => {setInsertLoginId(e.target.value)};
+	const onChangeLoginPwd = (e) => {setInsertLoginPwd(e.target.value)};
+
+	const loginInfo  = ({"userId"  : insertLoginId,
+					 	 "userPwd" : insertLoginPwd})
+	const loginInfo2 = ({"businessNumber" : insertLoginId,
+						 "storePwd"       : insertLoginPwd})
 	
-//	개인고객, 가맹점 선택하여 로그인
-	const handleUserType = (e) => {
-		setUserType(e);
-		// console.log(e);  // u(개인고객) or s(가맹점) 로 출력됨
-	};
-	
-	const onChangeLoginId = (e) => {
-		setInsertLoginId(e.target.value);
-	};
-	
-	const onChangeLoginPwd = (e) => {
-		setInsertLoginPwd(e.target.value);
-	};
+	const onClickLogin = (e) => {e.preventDefault();
+								 if      (userType === 'u') {dispatch(userLogin(loginInfo))} 
+								 else if (userType === 's') {dispatch(storeLogin(loginInfo2))}}
 
-	const loginInfo = ({
-		"userId" : insertLoginId,
-		"userPwd" : insertLoginPwd
-	})
-	const loginInfo2 = ({
-		"businessNumber" : insertLoginId,
-		"storePwd" : insertLoginPwd
-	})
-	
-	const onClickLogin = (e) => {
-		e.preventDefault();
-		if (userType === 'u') {
-			dispatch(userLogin(loginInfo));		
-		} else if (userType === 's') {
-			// console.log(loginInfo2);
-			dispatch(storeLogin(loginInfo2));
-		}
-	}
-
-	useEffect(() => {
-		if (loginStatus === "successed") {
-			navigate("/user", {replace : true});
-			navigate(0);
-		} else if (loginStatus === "failed") {
-			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
-		}
-	}, [loginStatus]);
-
-	useEffect(() => {
-		if (storeLoginStatus === "successed") {
-			dispatch(storeGetInfo());
-		} else if (storeLoginStatus === "failed") {
-			alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.");
-		}
-	}, [storeLoginStatus]);
-
-	useEffect(() => {
-		if (storeInfo.auth === "ADMIN") {
-			// console.log("ADMIN");
-			navigate("/admin", {replace : true});
-			navigate(0);
-		}
-		else if (storeInfo.auth === "STORE") {
-			navigate("/store", {replace : true});
-			navigate(0);
-		}
-	}, [storeInfo]);
+	useEffect(() => {if      (loginStatus === "successed")      {navigate("/user", {replace : true});
+							   						             navigate(0);}
+					 else if (loginStatus === "failed")         {alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.")}}, [loginStatus]);
+	useEffect(() => {if      (storeLoginStatus === "successed") {dispatch(storeGetInfo())} 
+		             else if (storeLoginStatus === "failed")    {alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.")}}, [storeLoginStatus]);
+	useEffect(() => {if      (storeInfo.auth === "ADMIN")       {navigate("/admin", {replace : true});
+			  										             navigate(0);}
+					 else if (storeInfo.auth === "STORE")       {navigate("/store", {replace : true});
+														         navigate(0);}}                                           , [storeInfo]);
 	
 	return (
 		<div>

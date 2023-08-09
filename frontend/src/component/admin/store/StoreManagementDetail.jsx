@@ -9,14 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 function StoreManagementDetail() {
 
-    const location = useLocation();
-    const index = location.state.index;
-    console.log(index);
-    
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    const index = location.state.index;
 
     const {storeList} = useSelector((state) => state.user);
-    const storeData = storeList[index];
+    const storeData   = storeList[index];
 
     return (
         <div className="container mt-5 pt-4">

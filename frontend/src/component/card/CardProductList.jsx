@@ -11,16 +11,11 @@ function CardProductList() {
 
 	const dispatch = useDispatch();
 
-	useEffect(()=>{
-		dispatch(cardList());
-	},[])
+	useEffect(() => {dispatch(cardList());}, []);
 
 	const [cardType, setCardType] = useState("CREDIT");
 
-	const handleCardType = (e) => {
-		setCardType(e);
-	}
-
+	const handleCardType = (e) => {setCardType(e);}
 
 	return (
 		<div className="container mt-5 pt-3">

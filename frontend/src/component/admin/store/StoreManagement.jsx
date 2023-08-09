@@ -9,37 +9,21 @@ import { storeList } from "../../../store/store/storeSlice";
 
 function StoreManagement() {
 	const dispatch = useDispatch();
+
 	const {storeListData} = useSelector((state) => state.store);
-    const [rawData, setRawData] = useState([]);
+
+    const [rawData, setRawData]       = useState([]);
     const [sortedData, setSortedData] = useState([]);
 	
-	useEffect(() => {
-        dispatch(storeList());
-    }, []);
-
-    useEffect(() => {
-        setRawData(storeListData);
-    }, [storeListData]);
-
-    useEffect(() => {
-        // 가입날짜기준 최근순 정렬
-        const sortByStoreJoinDate = (data) => {
-            if (data) {
-                return data.slice().sort((a, b) => new Date(b.storeJoinDate) - new Date(a.storeJoinDate));
-            }            
-            return data;
-        };
-        
-        const sorted = sortByStoreJoinDate(rawData);
-        setSortedData(sorted);
-    }, [rawData]);
+	useEffect(() => {dispatch(storeList());}    , []);
+    useEffect(() => {setRawData(storeListData);}, [storeListData]);
+    useEffect(() => {const sortByStoreJoinDate = (data) => {if (data) {return data.slice().sort((a, b) => new Date(b.storeJoinDate) - new Date(a.storeJoinDate));}            
+                                                            return data;};
+                     const sorted = sortByStoreJoinDate(rawData);
+                     setSortedData(sorted);}    , [rawData]);
 	
     // 상호명 검색
-    const searchStore = (e) => {
-        if (e.key === "Enter") {
-            
-        }
-    }
+    const searchStore = (e) => {if (e.key === "Enter") {}}
 
     return (
         <div className="container mt-5 pt-4">

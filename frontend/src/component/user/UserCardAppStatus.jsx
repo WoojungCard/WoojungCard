@@ -10,9 +10,7 @@ function UserCardAppStatus() {
 
     const {userCardAppStatusData} = useSelector((state) => state.user);
 
-    useEffect(() => {
-        dispatch(userCardAppStatus());
-    }, [])
+    useEffect(() => {dispatch(userCardAppStatus())}, [])
 
     return (
         <div className="mt-5">

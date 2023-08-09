@@ -13,16 +13,10 @@ function CardManage() {
     const dispatch = useDispatch();
     const { cardListData } = useSelector((state) => state.card);
 
-    useEffect(() => {
-        dispatch(cardList());
-    }, []);
+    useEffect(() => {dispatch(cardList())}, []);
 
     // 카드명 검색
-    const searchCard = (e) => {
-        if (e.key === "Enter") {
-            // 검색 기능 추가
-        }
-    };
+    const searchCard = (e) => {if (e.key === "Enter") {}};
 
     return (
         <div className="container mt-5 pt-4">

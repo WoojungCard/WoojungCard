@@ -11,21 +11,15 @@ function UserCardInfo() {
     const navigate = useNavigate();
 
     const {userCardAppStatusData} = useSelector((state) => state.user);
-    const {cancelAppStatus} = useSelector((state) => state.card);
+    const {cancelAppStatus}       = useSelector((state) => state.card);
 
-    useEffect(() => {
-        dispatch(userCardAppStatus());
-    }, [])
+    useEffect(() => {dispatch(userCardAppStatus())}, [])
 
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        dispatch(userCardCancelApp(e.target.value));
-    }
+    const onClickHandler = (e) => {e.preventDefault();
+                                   dispatch(userCardCancelApp(e.target.value));}
 
-    useEffect(() => {
-        if      (cancelAppStatus === "successed") navigate(0);
-        else if (cancelAppStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");
-    }, [cancelAppStatus])
+    useEffect(() => {if      (cancelAppStatus === "successed") navigate(0);
+                     else if (cancelAppStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");}, [cancelAppStatus])
     
     return (
         <div className="mt-5">

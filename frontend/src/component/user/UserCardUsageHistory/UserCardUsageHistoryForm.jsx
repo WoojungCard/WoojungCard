@@ -8,31 +8,22 @@ import CheckCardUsageHistory from "./CheckCardUsageHistory";
 
 function UserCardUsageHistoryForm() {
 
+    const dispatch = useDispatch();
     const location = useLocation();
+
     const stateData = location.state;
 
     const {cardPossessionList, cardType} = useSelector((state) => state.card);
 
-    const dispatch = useDispatch();
+    const [request, setRequest] = useState({"cardIssuedId" : "",
+                                            "yearChoice" : new Date().getFullYear(),
+                                            "monthChoice" : new Date().getMonth()+1,})
 
-    const [request, setRequest] = useState({
-        "cardIssuedId" : "",
-        "yearChoice" : new Date().getFullYear(),
-        "monthChoice" : new Date().getMonth()+1,
-    })
+    const onChangeHandler = (e) => {const {name, value} = e.target;
+                                    setRequest({...request, [name] : value});}
 
-    useEffect(() => {
-        dispatch(userCardPossessionHistory());
-    }, [])
-
-    const onChangeHandler = (e) => {
-        const {name, value} = e.target;
-        setRequest({...request, [name] : value});    
-    }
-
-    useEffect(() => {
-        dispatch(findCardTypeById(request.cardIssuedId));
-    },[request])
+    useEffect(() => {dispatch(userCardPossessionHistory())}           , [])
+    useEffect(() => {dispatch(findCardTypeById(request.cardIssuedId))}, [request])
 
     return (
         <div className="container mt-5 pt-4">

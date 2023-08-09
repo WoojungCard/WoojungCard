@@ -15,146 +15,88 @@ import { useNavigate } from "react-router-dom";
 // 가맹점 회원가입
 function StoreInfoUpdate() {
 	
-	const [insertStoreId, setInsertStoreId] = useState('');
-	const [insertStorePwd, setInsertStorePwd] = useState('');
-	const [insertStoreRepresent, setInsertStoreRepresent] = useState('');
-	const [insertStoreName, setInsertStoreName] = useState('');
-	const [zipCode, setZipCode] = useState('');
-	const [insertStoreAddr, setInsertStoreAddr] = useState('');
+	const [insertStoreId        , setInsertStoreId]         = useState('');
+	const [insertStorePwd       , setInsertStorePwd]        = useState('');
+	const [insertStoreRepresent , setInsertStoreRepresent]  = useState('');
+	const [insertStoreName      , setInsertStoreName]       = useState('');
+	const [zipCode              , setZipCode]               = useState('');
+	const [insertStoreAddr      , setInsertStoreAddr]       = useState('');
 	const [insertStoreAddrDetail, setInsertStoreAddrDetail] = useState('');
-	const [insertStoreDate, setInsertStoreDate] = useState('');
-	const [insertStoreTel, setInsertStoreTel] = useState('');
-	
-	const [storeType, setStoreType] = useState('');
+	const [insertStoreDate      , setInsertStoreDate]       = useState('');
+	const [insertStoreTel       , setInsertStoreTel]        = useState('');
+	const [storeType            , setStoreType]             = useState('');
 	
 	const { storeInfo, updateStatus } = useSelector((state) => state.store);
 	
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	
-  	useEffect(()=> {
-        dispatch(storeGetInfo());
-    },[]);
-    
-    useEffect(() => {
-		setInsertStoreRepresent(storeInfo.representative);
-		setZipCode(storeInfo.storeZipCode);
-		setInsertStoreAddr(storeInfo.storeAddress1);
-		setInsertStoreAddrDetail(storeInfo.storeAddress2);
-		setInsertStoreTel(storeInfo.storeTel);
-	}, [storeInfo]);
+	useEffect(() => {dispatch(storeGetInfo())}              , []);
+    useEffect(() => {setInsertStoreRepresent(storeInfo.representative);
+					 setZipCode(storeInfo.storeZipCode);
+					 setInsertStoreAddr(storeInfo.storeAddress1);
+					 setInsertStoreAddrDetail(storeInfo.storeAddress2);
+					 setInsertStoreTel(storeInfo.storeTel);}, [storeInfo]);
 	
-	
-	const onChangeinputStoreId = (e) => {
-		setInsertStoreId(e.target.value);
-	};
-
+	const onChangeinputStoreId = (e) => {setInsertStoreId(e.target.value)};
 			
 //	사업자번호 입력 input에서 포커스 전환 시 사업자번호 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
 	
-	useEffect(() => {
-		handleBlur();
-	},[insertStoreId]);
+	useEffect(() => {handleBlur()}, [insertStoreId]);
 	
-	const handleBlur = (e) => {
-		dispatch(storeIdCheck(insertStoreId));
-		console.log(insertStoreId);
-		if (storeInfo === false) {
-			setIdAlertOpen(true);  // 중복일 경우, 알림 메시지 보이게 적용
-		}else{
-			setIdAlertOpen(false);
-		}
-		
-	};
+	const handleBlur = (e) => {dispatch(storeIdCheck(insertStoreId));
+		if   (storeInfo === false) {setIdAlertOpen(true)}
+		else {setIdAlertOpen(false)}};
 		
 //	비밀번호 유효성 검증
 	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
-	const handlePwdBlur = (e) => {
-		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
-        const passwordCurrent = e.target.value;
-        
-        if (!passwordRegex.test(passwordCurrent)) {
-			setPwdAlertOpen(true);
-		} else {
-			setPwdAlertOpen(false);
-			setInsertStorePwd(passwordCurrent);
-		}
-	};
+	const handlePwdBlur = (e) => {const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+        						  const passwordCurrent = e.target.value;
+								  if   (!passwordRegex.test(passwordCurrent)) {setPwdAlertOpen(true)} 
+								  else {setPwdAlertOpen(false);
+									    setInsertStorePwd(passwordCurrent);}};
 	
-	const onChangeinputStoreRepresent = (e) => {
-		setInsertStoreRepresent(e.target.value);
-	};
+	const onChangeinputStoreRepresent = (e) => {setInsertStoreRepresent(e.target.value)};
+	const onChangeinputStoreName      = (e) => {setInsertStoreName(e.target.value)};
+	const onChangeinputUserBirth      = (e) => {const targetValue = birthAutoFormat(e.target.value);
+										        setInsertStoreDate(targetValue);}
+	const onChangeinputStoreTel       = (e) => {const targetValue = phoneNumberAutoFormat(e.target.value);
+										        setInsertStoreTel(targetValue);};
 	
-	const onChangeinputStoreName = (e) => {
-		setInsertStoreName(e.target.value);
-	};
-
-	const onChangeinputUserBirth = (e) => {
-		const targetValue = birthAutoFormat(e.target.value);
-		setInsertStoreDate(targetValue);
-	}
-
-	
-	const onChangeinputStoreTel = (e) => {
-		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
-		setInsertStoreTel(targetValue);
-	};
-	
-	const handleStoreType = (e) => {
-		setStoreType(e.target.value);
-	};
+	const handleStoreType = (e) => {setStoreType(e.target.value)};
 	
 //	다음 주소 api 사용하는 모달창
 	const [show, setShow] = useState(false);
 	
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow  = () => setShow(true);
 	
-	const handleStoreAddrComplete = (data) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
-    if (data.addressType === "R") {
-		if (data.bname !== "") {
-			extraAddress += data.bname;
-		}
-		if (data.buildingName !== "") {
-			extraAddress +=
-			extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-		}
-		fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
+	const handleStoreAddrComplete = (data) => {let fullAddress = data.address;
+    										   let extraAddress = "";
+    										   if (data.addressType === "R") {if (data.bname !== "") {extraAddress += data.bname}
+		                                                                      if (data.buildingName !== "") {extraAddress +=
+									                                                                         extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;}
+		                                                                      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";}
 
-    setShow(false);
-    setZipCode(data.zonecode);  // 우편번호
-    setInsertStoreAddr(fullAddress);  // 검색 후 클릭한 기본 주소
-    }
+											   setShow(false);
+											   setZipCode(data.zonecode);  // 우편번호
+											   setInsertStoreAddr(fullAddress); }
     
-    const onChangeinputStoreAddrDetail = (e) => {
-		setInsertStoreAddrDetail(e.target.value);
-	};
+    const onChangeinputStoreAddrDetail = (e) => {setInsertStoreAddrDetail(e.target.value)};
 	
-	const info = ({
-		"representative" : insertStoreRepresent, 
-		"storePwd" : insertStorePwd,
-		"storeZipCode" : zipCode,
-		"storeAddress1" :insertStoreAddr,
-		"storeAddress2" :insertStoreAddrDetail, 
-		"storeTel" : insertStoreTel
-	})
+	const info = ({"representative" : insertStoreRepresent, 
+		  		   "storePwd"       : insertStorePwd,
+		           "storeZipCode"   : zipCode,
+		           "storeAddress1"  : insertStoreAddr,
+		           "storeAddress2"  : insertStoreAddrDetail, 
+		           "storeTel"       : insertStoreTel})
 	
-	const onClickStoreInfoUpdate = (e) => {
-	    e.preventDefault();
-	    dispatch(storeInfoUpdate(info));
-	}
+	const onClickStoreInfoUpdate = (e) => {e.preventDefault();
+	    								   dispatch(storeInfoUpdate(info));}
 
-	useEffect(()=>{
-		if (updateStatus === "successed") {
-			navigate(0)
-		} else if (updateStatus === "failed") {
-			alert("변경에 실패하였습니다. 다시 시도해주세요.");
-		}
-	},[updateStatus])
+	useEffect(() => {if      (updateStatus === "successed") {navigate(0)} 
+					 else if (updateStatus === "failed")    {alert("변경에 실패하였습니다. 다시 시도해주세요.")}}, [updateStatus])
 
 	return (
 		<div className="mt-5">

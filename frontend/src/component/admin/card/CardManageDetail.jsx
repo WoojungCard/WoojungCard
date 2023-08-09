@@ -4,16 +4,17 @@ import { useLocation, Link } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 
 function CardManageDetail() {
-    const location = useLocation();
-    const index = location.state.index;
 
+    const location = useLocation();
     const dispatch = useDispatch();
+
     const { cardListData } = useSelector((state) => state.card);
+
+    const index = location.state.index;
+    
     const cardData = cardListData[index];
 
-    const customHeight = {
-        height: "40px",
-    };
+    const customHeight = {height: "40px"};
 
     return (
         <div className="container mt-5 pt-5">

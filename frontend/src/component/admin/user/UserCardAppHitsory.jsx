@@ -11,21 +11,13 @@ function UserCardAppHistory() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        dispatch(cardAppHistory());
-    },[])
+    useEffect(()=>{dispatch(cardAppHistory());}                                                        , [])
+    useEffect(() => {if      (approveStatus === "successed") navigate(0);
+                     else if (approveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");}, [approveStatus])
 
-    const onClickHandler = (e)=>{
-        e.preventDefault();
-        dispatch(userCardAppApprove(e.target.value));
-    }
-
-    useEffect(()=>{
-        if      (approveStatus === "successed") navigate(0);
-        else if (approveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");
-    },[approveStatus])
-
-    return(
+    const onClickHandler = (e)=>{e.preventDefault();
+                                 dispatch(userCardAppApprove(e.target.value));}
+    return (
         <div className="container mt-5 pt-4">
         <div className="container w-75">
         <h4 className="fw-bold text-center mb-5">카드신청 내역</h4>

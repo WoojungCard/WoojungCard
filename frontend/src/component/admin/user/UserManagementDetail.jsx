@@ -10,33 +10,29 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 
 function UserManagementDetail() {
 
-    const location = useLocation();
-    const index = location.state.index;
-    
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    const index = location.state.index;
 
     const {userListData} = useSelector((state) => state.user);
-    const userData = userListData[index];
-
     const {userCardData} = useSelector((state) => state.admin);
 
-    useEffect(() => {
-        dispatch(adminManageUserCard(userData.id));
-    }, []);
+    const userData = userListData[index];
 
-    const popoverClickUserName = (
-        <Popover id="popover-click-user-name">
-            <div className="container my-2">
-                <span>{userData.userName}/</span>
-                <span>{userData.userId}/</span>
-                <span>{userData.userGender === "MAN" ? "남" : "여"}</span>
-                <br />
-                <span>{userData.userBirth}/</span>
-                <br />
-                <span>{userData.userTel}</span>
-            </div>
-        </Popover>
-    )
+    useEffect(() => {dispatch(adminManageUserCard(userData.id));}, []);
+
+    const popoverClickUserName = (<Popover id="popover-click-user-name">
+                                       <div className="container my-2">
+                                           <span>{userData.userName}/</span>
+                                           <span>{userData.userId}/</span>
+                                           <span>{userData.userGender === "MAN" ? "남" : "여"}</span>
+                                           <br />
+                                           <span>{userData.userBirth}/</span>
+                                           <br />
+                                           <span>{userData.userTel}</span>
+                                       </div>
+                                 </Popover>)
 
 
     return (

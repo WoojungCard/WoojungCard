@@ -6,27 +6,17 @@ import { adminTotalSalesData } from "../../../store/admin/adminSlice";
 function TotalSales() {
 
     const dispatch = useDispatch();
+    
     const {totalSalesData} = useSelector((state) => state.admin);
+
     const [thisYearTotal, setThisYearTotal] = useState(null);
     const [lastYearTotal, setLastYearTotal] = useState(null);
-    const [diff, setDiff] = useState(null);
+    const [diff, setDiff]                   = useState(null);
 
-    useEffect(() => {
-        dispatch(adminTotalSalesData());
-    }, []);
-
-    useEffect(() => {
-        if (totalSalesData) {
-            setThisYearTotal(totalSalesData.thisYearTotal);
-            setLastYearTotal(totalSalesData.lastYearTotal);
-        }
-    }, [totalSalesData]);
-
-    useEffect(() => {
-        if (thisYearTotal !== null && lastYearTotal !== null) {
-            setDiff(thisYearTotal - lastYearTotal);
-        }
-    }, [thisYearTotal, lastYearTotal]);
+    useEffect(() => {dispatch(adminTotalSalesData());}                                                               , []);
+    useEffect(() => {if (totalSalesData) {setThisYearTotal(totalSalesData.thisYearTotal);
+                                          setLastYearTotal(totalSalesData.lastYearTotal);}}                          , [totalSalesData]);
+    useEffect(() => {if (thisYearTotal !== null && lastYearTotal !== null) {setDiff(thisYearTotal - lastYearTotal);}}, [thisYearTotal, lastYearTotal]);
 
     return (
         <div className="text-center mt-5 pt-5">

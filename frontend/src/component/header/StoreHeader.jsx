@@ -27,7 +27,7 @@ function StoreHeader(props) {
 
     const [show, setShow] = useState(false);
 
-    const handleShow = () => setShow(true);
+    const handleShow  = () => setShow(true);
     const handleClose = () => setShow(false);
 
     const {storeInfo} = useSelector((state)=>state.store);
@@ -35,15 +35,11 @@ function StoreHeader(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        dispatch(storeGetInfo());
-    },[])
+    useEffect(()=>{dispatch(storeGetInfo())}, [])
 
-    const onClickLogOut = () => {
-        dispatch(logout());
-        navigate("/", {replace : true});
-        navigate(0);
-    }
+    const onClickLogOut = () => {dispatch(logout());
+                                 navigate("/", {replace : true});
+                                 navigate(0);}
 
 	return (	
 		<div className={""} id={"div-header"}>

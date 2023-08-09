@@ -12,7 +12,8 @@ import moment from "moment";
 function FinancialManage() {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const selectedMonth = moment(selectedDate).format('YYYY-MM');
+
+    const selectedMonth = moment(selectedDate)                    .format('YYYY-MM');
     const lastYearMonth = moment(selectedDate).subtract(1, 'year').format('YYYY-MM');
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (

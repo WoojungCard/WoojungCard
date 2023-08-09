@@ -16,91 +16,53 @@ function UserJoin() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const [insertUserId, setInsertUserId] = useState('');
-	const [insertUserPwd, setInsertUserPwd] = useState('');
-	const [insertUserName, setInsertUserName] = useState('');
+	const [insertUserId   , setInsertUserId]    = useState('');
+	const [insertUserPwd  , setInsertUserPwd]   = useState('');
+	const [insertUserName , setInsertUserName]  = useState('');
 	const [insertUserBirth, setInsertUserBirth] = useState('');
-	const [insertUserTel, setInsertUserTel] = useState('');
+	const [insertUserTel  , setInsertUserTel]   = useState('');
+	const [gender         , setGender]          = useState('');
 	
-	const [gender, setGender] = useState('');
-	
-//	성별 선택
-	const handleGender = (e) => {
-		setGender(e);
-	};
-	
-	const onChangeinputUserId = (e) => {
-		setInsertUserId(e.target.value);
-	};
+	const handleGender        = (e) => {setGender(e)};
+	const onChangeinputUserId = (e) => {setInsertUserId(e.target.value)};
 	
 //	아이디 입력 input에서 포커스 전환 시 아이디 중복체크
 	const [idAlertOpen, setIdAlertOpen] = useState(false);
 
-	useEffect(() => {
-		handleIdBlur();
-	}, [insertUserId]);
+	useEffect(() => {handleIdBlur()}, [insertUserId]);
 
-	const handleIdBlur = (e) => {
-		dispatch(userIdCheck(insertUserId));
-		if(idCheckResult === false){
-			setIdAlertOpen(true);  // 중복 아이디일 경우, 알림 메시지 보이게 적용 
-		} else {
-			setIdAlertOpen(false);
-		}
-	};
+	const handleIdBlur = (e) => {dispatch(userIdCheck(insertUserId));
+								 if   (idCheckResult === false){setIdAlertOpen(true)}
+								 else {setIdAlertOpen(false)}};
 	
 //	비밀번호 유효성 검증
 	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
-	const handlePwdBlur = (e) => {
-		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
-        const passwordCurrent = e.target.value;
-        
-        if (!passwordRegex.test(passwordCurrent)) {
-			setPwdAlertOpen(true);
-		} else {
-			setPwdAlertOpen(false);
-			setInsertUserPwd(passwordCurrent);
-		}
-	};
+	const handlePwdBlur = (e) => {const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+        						  const passwordCurrent = e.target.value;
+								  if   (!passwordRegex.test(passwordCurrent)) {setPwdAlertOpen(true)} 
+								  else {setPwdAlertOpen(false);
+									    setInsertUserPwd(passwordCurrent);}};
 		
-	const onChangeinputUserName = (e) => {
-		setInsertUserName(e.target.value);
-	};
-	
-	const onChangeinputUserTel = (e) => {
-		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
-		setInsertUserTel(targetValue);
-	};
+	const onChangeinputUserName  = (e) => {setInsertUserName(e.target.value)};
+	const onChangeinputUserTel   = (e) => {const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
+										   setInsertUserTel(targetValue);};
+	const onChangeinputUserBirth = (e) => {const targetValue = birthAutoFormat(e.target.value);
+										   setInsertUserBirth(targetValue);}
 
-	const onChangeinputUserBirth = (e) => {
-		const targetValue = birthAutoFormat(e.target.value);
-		setInsertUserBirth(targetValue);
-	}
-
-	const user = ({
-		"userId" : insertUserId,
-		"userPwd" : insertUserPwd,
-		"userName" : insertUserName,
-		"userBirth" : insertUserBirth,
-		"userGender" : gender,
-		"userTel" : insertUserTel
-	})
+	const user = ({"userId"     : insertUserId,
+				   "userPwd"    : insertUserPwd,
+				   "userName"   : insertUserName,
+				   "userBirth"  : insertUserBirth,
+				   "userGender" : gender,
+				   "userTel"    : insertUserTel})
 	
 //	개인고객 회원가입 클릭
-	const onClickUserJoin = (e) => {
-		e.preventDefault();
-		dispatch(userSignUp(user));
-	}
+	const onClickUserJoin = (e) => {e.preventDefault();
+									dispatch(userSignUp(user));}
 
-	useEffect(()=>{
-		if (signUpStatus === "successed") {
-			navigate("/login");
-			navigate(0);
-		} else if (signUpStatus === "failed") {
-			alert("가입에 실패하였습니다. 다시 시도해주세요.");
-		}
-	},[signUpStatus])
-	
+	useEffect(() => {if      (signUpStatus === "successed") {navigate("/login");
+											                 navigate(0);}
+					 else if (signUpStatus === "failed") {alert("가입에 실패하였습니다. 다시 시도해주세요.")}}, [signUpStatus])
 	
 	return (
 		<div className="mt-5 pt-5">

@@ -10,16 +10,11 @@ const CheckCardUsageHistory = (props) => {
     const dispatch = useDispatch();
 
     const cardIssuedId = props.cardIssuedId;
-    const yearChoice = props.yearChoice;
-    const monthChoice = props.monthChoice;
+    const yearChoice   = props.yearChoice;
+    const monthChoice  = props.monthChoice;
 
-    useEffect(() => {
-        dispatch(userCardUsageHistory({"cardIssuedId" : cardIssuedId, "yearChoice" : yearChoice, "monthChoice" : monthChoice}));
-    },[cardIssuedId, yearChoice, monthChoice]);
-
-    useEffect(() => {
-        dispatch(userPayBillHistory({"cardIssuedId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice}));
-    }, [cardIssuedId, yearChoice, monthChoice])
+    useEffect(() => {dispatch(userCardUsageHistory({"cardIssuedId" : cardIssuedId, "yearChoice" : yearChoice, "monthChoice" : monthChoice}))}, [cardIssuedId, yearChoice, monthChoice]);
+    useEffect(() => {dispatch(userPayBillHistory({"cardIssuedId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice}))}  , [cardIssuedId, yearChoice, monthChoice])
 
     return (    
         <div>

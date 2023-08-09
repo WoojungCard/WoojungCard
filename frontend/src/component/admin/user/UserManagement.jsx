@@ -13,16 +13,10 @@ function UserManagement() {
     const dispatch = useDispatch();
     const {userListData} = useSelector((state) => state.user);
 
-    useEffect(() => {
-        dispatch(userList());
-    }, []);
+    useEffect(() => {dispatch(userList());}, []);
 
     // 고객명 검색
-    const searchUser = (e) => {
-        if (e.key === "Enter") {
-            
-        }
-    }
+    const searchUser = (e) => {if (e.key === "Enter") {}}
 
     return (
         <div className="container mt-5 pt-4">

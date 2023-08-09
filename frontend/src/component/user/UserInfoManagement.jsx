@@ -8,57 +8,36 @@ import { phoneNumberAutoFormat } from "../join/UserJoin";
 
 function UserInfoManagement() {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const {userInfo, updateStatus, error} = useSelector((state) => state.user);
 
-    useEffect(()=> {
-        dispatch(userGetInfo());
-    },[])
+    useEffect(() => {dispatch(userGetInfo())}, [])
 
-    const dispatch = useDispatch();
+    const [info, setInfo] = useState({"userPwd" : "",
+                                      "userTel" : ""})
 
-    const [info, setInfo] = useState({
-        "userPwd" : "",
-        "userTel" : ""
-    })
-
-    useEffect(()=>{
-        setInfo({...info, "userTel" : userInfo.userTel})
-    },[userInfo])
+    useEffect(() => {setInfo({...info, "userTel" : userInfo.userTel})}, [userInfo])
 
     //	비밀번호 유효성 검증
 	const [pwdAlertOpen, setPwdAlertOpen] = useState(false);
-	const handlePwdBlur = (e) => {
-		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
-        const passwordCurrent = e.target.value;
-        
-        if (!passwordRegex.test(passwordCurrent)) {
-			setPwdAlertOpen(true);
-		} else {
-			setPwdAlertOpen(false);
-			setInfo({...info, "userPwd" : passwordCurrent});
-		}
-	};
+	const handlePwdBlur = (e) => {const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,25}$/
+                                  const passwordCurrent = e.target.value;
+                                  if   (!passwordRegex.test(passwordCurrent)) {setPwdAlertOpen(true)} 
+                                  else {setPwdAlertOpen(false);
+                                        setInfo({...info, "userPwd" : passwordCurrent});}};
 
-    const onChangeinputUserTel = (e) => {
-		const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
-		setInfo({...info, "userTel" : targetValue})
-	};
+    const onChangeinputUserTel = (e) => {const targetValue = phoneNumberAutoFormat(e.target.value);  // 하이픈 자동완성
+		                                 setInfo({...info, "userTel" : targetValue})};
 
     //	개인고객 정보 수정
-	const onClickUserInfoUpdate = (e) => {
-        e.preventDefault();
-        // console.log(info)
-        // console.log(userInfo.userTel)
-        // console.log(info.userTel)
-        dispatch(userInfoUpdate(info));
-	}
+	const onClickUserInfoUpdate = (e) => {e.preventDefault();
+                                          dispatch(userInfoUpdate(info));}
 
-    useEffect(() => {
-        if      (updateStatus === "successed")   navigate(0);
-        else if (updateStatus === "failed")      alert(error);
-    },[updateStatus])
+    useEffect(() => {if      (updateStatus === "successed")   navigate(0);
+                     else if (updateStatus === "failed")      alert(error);
+    }, [updateStatus])
 
     return (
         <div className="mt-5">

@@ -10,21 +10,14 @@ const CreditCardUsageHistory = (props)=>{
     const dispatch = useDispatch();
 
     const cardIssuedId = props.cardIssuedId;
-    const yearChoice = props.yearChoice;
-    const monthChoice = props.monthChoice;
+    const yearChoice   = props.yearChoice;
+    const monthChoice  = props.monthChoice;
 
-    useEffect(() => {
-        dispatch(userCardUsageHistory({"cardIssuedId" : cardIssuedId, "yearChoice" : yearChoice, "monthChoice" : monthChoice}));
-    },[cardIssuedId, yearChoice, monthChoice]);
+    useEffect(() => {dispatch(userCardUsageHistory({"cardIssuedId" : cardIssuedId, "yearChoice" : yearChoice, "monthChoice" : monthChoice}))}, [cardIssuedId, yearChoice, monthChoice]);
+    useEffect(() => {dispatch(userPayBillHistory({"cardIssuedId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice}))}  , [cardIssuedId, yearChoice, monthChoice])
 
-    useEffect(() => {
-        dispatch(userPayBillHistory({"cardIssuedId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice}));
-    }, [cardIssuedId, yearChoice, monthChoice])
-
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        dispatch(userPayCardBill({"targetId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice, "payment" : cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}));        
-    }
+    const onClickHandler = (e) => {e.preventDefault();
+                                   dispatch(userPayCardBill({"targetId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice, "payment" : cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}));}
 
     return (    
         <div>

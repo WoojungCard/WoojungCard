@@ -26,26 +26,18 @@ function StoreSalesDeposit() {
         </button>
     ));
 
-    const customHeight = {
-        height: "40px",
-    };
+    const customHeight = {height: "40px",};
 
     const paymentResult = storeSalesData.monthlySales * 0.02 - depositData;
 
     useEffect(() => {dispatch(storeSalesReceiptDetails({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))}, [selectedYear, selectedMonth]);
     useEffect(() => {dispatch(getStorePaymentDeposit  ({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))}, [selectedYear, selectedMonth]);
 
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : paymentResult}));
-    }
+    const onClickHandler = (e) => {e.preventDefault();
+                                   dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : paymentResult}));}
 
-    
-
-    useEffect(()=>{
-        if      (insertStatus === "successed")  navigate(0);
-        else if (insertStatus === "failed")     alert("입금 실패하였습니다. 다시 시도해주세요.");
-    },[insertStatus])
+    useEffect(() => {if      (insertStatus === "successed")  navigate(0);
+                     else if (insertStatus === "failed")     alert("입금 실패하였습니다. 다시 시도해주세요.");}          , [insertStatus])
 
     return (
         <div className="container mt-5 pt-5">

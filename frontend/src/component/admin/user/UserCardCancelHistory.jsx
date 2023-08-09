@@ -11,19 +11,12 @@ function UserCardCancelHistory() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(userCardCancelHistory());
-    }, []);
+    const onClickHandler = (e) => {e.preventDefault();
+                                   dispatch(userCardCancelApprove(e.target.value));}
 
-    const onClickHandler = (e) => {
-        e.preventDefault();
-        dispatch(userCardCancelApprove(e.target.value));
-    }
-
-    useEffect(() => {
-        if      (canceledApproveStatus === "successed") navigate(0);
-        else if (canceledApproveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");
-    }, [canceledApproveStatus])
+    useEffect(() => {dispatch(userCardCancelHistory());}                                                       , []);
+    useEffect(() => {if      (canceledApproveStatus === "successed") navigate(0);
+                     else if (canceledApproveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");}, [canceledApproveStatus])
 
     return (
         <div className="container mt-5 pt-4">

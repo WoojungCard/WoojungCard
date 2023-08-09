@@ -8,11 +8,13 @@ import moment from "moment";
 function BusinessTypeChart(props) {
 
     const dispatch = useDispatch();
+
     const {businessTypeData} = useSelector((state) => state.admin);
-    const [rawData, setRawData] = useState([]);
+
+    const [rawData, setRawData]     = useState([]);
     const [chartData, setChartData] = useState([]);
 
-    const now = moment(new Date()).format('yyyy');
+    const now      = moment(new Date()).format('yyyy');
     const lastYear = `${now-1}`;
     const thisYear = `${now}`;
 
@@ -24,48 +26,18 @@ function BusinessTypeChart(props) {
         "paymentMonthLastYear" : lastYearMonth
     });
 
-    useEffect(() => {
-        dispatch(adminBusinessTypeData(paymentData));
-    }, [selectedMonth]);
-
-    useEffect(() => {
-        setRawData(businessTypeData);
-    }, [businessTypeData]);
-
-    useEffect(() => {
-
-        const transformData = (rawData) => {
-            const transformedData = {};
-
-            for (const data of rawData) {
-                const { businessType, totalCharge, paymentMonth } = data;
-            
-                if (!transformedData[businessType]) {
-                    transformedData[businessType] = {
-                        [lastYear]: null,
-                        [thisYear]: null,
-                    };
-                }
-            
-                if (paymentMonth.includes(now)) {
-                    transformedData[businessType].thisYear = totalCharge;
-                } else {
-                    transformedData[businessType].lastYear = totalCharge;
-                }
-            }
-        
-            return Object.keys(transformedData).map((businessType) => ({
-                businessType,
-                [lastYear]: transformedData[businessType].lastYear,
-                [thisYear]: transformedData[businessType].thisYear,
-            }));
-        };
-        
-        const transformedData = transformData(rawData);
-
-        setChartData(transformedData);
-
-    }, [rawData]);
+    useEffect(() => {dispatch(adminBusinessTypeData(paymentData))}, [selectedMonth]);
+    useEffect(() => {setRawData(businessTypeData)}                , [businessTypeData]);
+    useEffect(() => {const transformData = (rawData) => {const transformedData = {};
+                                                         for (const data of rawData) {const {businessType, totalCharge, paymentMonth} = data;
+                                                                                      if (!transformedData[businessType]) {transformedData[businessType] = {[lastYear]: null,[thisYear]: null};}
+                                                                                      if (paymentMonth.includes(now))     {transformedData[businessType].thisYear = totalCharge;} 
+                                                                                      else                                {transformedData[businessType].lastYear = totalCharge;}}
+                                                         return Object.keys(transformedData).map((businessType) => ({businessType, 
+                                                                                                                    [lastYear]: transformedData[businessType].lastYear,
+                                                                                                                    [thisYear]: transformedData[businessType].thisYear,}));};
+                     const transformedData = transformData(rawData);
+                     setChartData(transformedData);}              , [rawData]);
 
     return (
         <div style={{ width: '1000px', height: '350px', margin: '0 auto' }}>

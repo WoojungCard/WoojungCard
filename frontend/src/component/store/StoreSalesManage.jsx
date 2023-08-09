@@ -12,9 +12,9 @@ function StoreSalesManage() {
     const {storeSalesList} = useSelector((state) => state.store);
     
     const [selectedDate, setSelectedDate] = useState(new Date());
+
     const selectedMonth = moment(selectedDate).format('M');
-    const selectedYear = moment(selectedDate).format('YYYY');
-    console.log(selectedYear, selectedMonth);
+    const selectedYear  = moment(selectedDate).format('YYYY');
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <button className="btn btn-outline-dark btn-sm ms-2" onClick={onClick} ref={ref}>
@@ -24,9 +24,7 @@ function StoreSalesManage() {
 
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(storeSalesManagement({"targetYear" : selectedYear, "targetMonth" : selectedMonth}));
-    },[selectedYear, selectedMonth])
+    useEffect(() => {dispatch(storeSalesManagement({"targetYear" : selectedYear, "targetMonth" : selectedMonth}))}, [selectedYear, selectedMonth])
 
     return (
         <div className="container mt-5 pt-4">

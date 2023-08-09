@@ -27,18 +27,15 @@ function AdminHeader() {
 
     const [show, setShow] = useState(false);
 
-    const handleShow = () => setShow(true);
+    const handleShow  = () => setShow(true);
     const handleClose = () => setShow(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-    function onClickLogOut() {
-        dispatch(logout());
-        navigate("/", {replace : true});
-        navigate(0);
-    }
+    function onClickLogOut() {dispatch(logout());
+                              navigate("/", {replace : true});
+                              navigate(0);}
 
 	return (	
 		<div id={"div-header"}>

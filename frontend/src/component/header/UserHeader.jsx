@@ -27,7 +27,7 @@ function UserHeader(props) {
 
     const [show, setShow] = useState(false);
 
-    const handleShow = () => setShow(true);
+    const handleShow  = () => setShow(true);
     const handleClose = () => setShow(false);
 
     const {userInfo} = useSelector((state)=>state.user);
@@ -35,20 +35,13 @@ function UserHeader(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        dispatch(userGetInfo());
-    },[])
+    function onClickLogOut() {dispatch(logout());
+                              navigate("/", {replace : true});
+                              navigate(0);}
 
-    function onClickLogOut() {
-        dispatch(logout());
-        navigate("/", {replace : true});
-        navigate(0);
-    }
-
-    useEffect(() => {
-        dispatch(checkJwt());
-        setInterval(dispatch(checkJwt()), 60000 * 25);
-      }, []);
+    useEffect(() => {dispatch(userGetInfo())}, [])
+    useEffect(() => {dispatch(checkJwt());
+                     setInterval(dispatch(checkJwt()), 60000 * 25);}, []);
 
 	return (	
 		<div className={""} id={"div-header"}>

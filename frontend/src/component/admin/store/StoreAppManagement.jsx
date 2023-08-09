@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function StoreAppManagement() {
+    
 	const dispatch = useDispatch();
     const navigate = useNavigate();
 	
@@ -18,13 +19,9 @@ function StoreAppManagement() {
 	
 	const {StoreAppStatusData} = useSelector((state) => state.store);
     
-    useEffect(() => {
-        dispatch(StoreAppStatus());
-    }, []);
+    useEffect(() => {dispatch(StoreAppStatus());}, []);
     
-    const statusChange = ({
-        "status" : insertStatus
-	})
+    const statusChange = ({"status" : insertStatus});
 
     return (
         <div className="container mt-5 pt-4">

@@ -19,13 +19,9 @@ function MainHeader(props) {
 
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(userGetInfo());
-    },[])
+    useEffect(() => {dispatch(userGetInfo())}, [])
 
-    const onClickHandler = () => {
-        dispatch(logout());
-    }
+    const onClickHandler = () => {dispatch(logout())}
 
 	return (	
 		<div className={""} id={"div-header"}>

@@ -9,36 +9,26 @@ import moment from "moment";
 
 function UserCardApplication() {
 
-const {userAppInfo, appStatus} = useSelector((state) => state.user);
-const {cardInfo} = useSelector((state) => state.card);
+    const {userAppInfo, appStatus} = useSelector((state) => state.user);
+    const {cardInfo}               = useSelector((state) => state.card);
 
-const dispatch = useDispatch();
-const param = useParams();
-const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const param    = useParams();
 
-useEffect(() => {
-    dispatch(cardGetInfo(param.cardId));
-    dispatch(userCardAppInfo());
-}, [])
 
-const request = ({
-    "cardId" : param.cardId,
-    "requestDate" : new Date()
-})
+    useEffect(() => {dispatch(cardGetInfo(param.cardId));
+                    dispatch(userCardAppInfo());}, [])
 
-const onClickHandler = (e) => {
-    e.preventDefault();
-    dispatch(userCardApp(request));
-}
+    const request = ({"cardId"      : param.cardId,
+                    "requestDate" : new Date()})
 
-useEffect(() => {
-    if (appStatus === "successed") {
-        navigate("/user/cardAppStatus");
-        navigate(0);
-    } else if (appStatus === "failed") {
-        alert("실패하였습니다. 다시 시도해주세요.");
-    }
-}, [appStatus])
+    const onClickHandler = (e) => {e.preventDefault();
+                                dispatch(userCardApp(request));}
+
+    useEffect(() => {if      (appStatus === "successed") {navigate("/user/cardAppStatus");
+                                                          navigate(0);} 
+                     else if (appStatus === "failed") {alert("실패하였습니다. 다시 시도해주세요.")}}, [appStatus])
 
 return (
     <div className="mt-5">
