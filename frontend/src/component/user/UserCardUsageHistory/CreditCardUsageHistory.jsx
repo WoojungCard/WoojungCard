@@ -59,54 +59,60 @@ const CreditCardUsageHistory = (props)=>{
                     </tbody>
                 </Table>
 
-                <div className="border-top">
-                    <div className="d-flex justify-content-end">
-                        <div className="row">
-                            <div className="col" style={{width: "100px"}}>
-                                <p className="">건수 : {cardUsageHistory?.length}</p>
-                            </div>
-                            <div className="col" style={{width: "100px"}}>
-                                <p className="">총액 : {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}원</p>
-                            </div>
-                            
-                            <div className="col" style={{width: "100px"}}>
-                                {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) !== null &&
-                                    !isNaN(cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)) ?
-                                        <span>할부이자 : ({cardUsageHistory.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)})</span>
-                                            : (<span className="">할부이자 : 0원</span>)}
-                            </div>
-                            
-                        </div> 
+                <div>
+                    <div className="row d-flex justify-content-end">
+                        <div className="col-1 text-end">
+                            <p>건수 : {cardUsageHistory?.length}</p>
+                        </div>
+                        <div className="col-2 text-end pe-0">
+                            <p>총액 : {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.cardCharge), 0)}원</p>
+                        </div>
+                        
+                        <div className="col-2 text-end pe-4">
+                            {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) !== null &&
+                                !isNaN(cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)) ?
+                                    <span>할부이자 : ({cardUsageHistory.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)})</span>
+                                        : (<span>할부이자 : 0원</span>)}
+                        </div>
                     </div>
+
                     {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) !== null &&
                                     !isNaN(cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)) 
                                     
                         ?
 
-                        <div className="d-flex justify-content-end">
-                            <div className="" style={{width: "130px"}}>
+                        <div className="d-flex flex-column align-items-end">
+                            <div className="mb-4 me-3">
                                 <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}</b>
                             </div>
-                            <div className="" style={{width: "130px"}}>
-                                <b>납부금: {payBillHistory !== null && !isNaN(payBillHistory) ? payBillHistory : 0}원</b>
+                            
+                            <div className="text-end border-top border-bottom border-2 px-2 me-1 py-1">
+                                <div>
+                                    <b>납부금: {payBillHistory !== null && !isNaN(payBillHistory) ? payBillHistory : 0}원</b>
+                                </div>
+                                <div>
+                                    <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}원</b>
+                                </div>
                             </div>
-                            <div className="" style={{width: "130px"}}>
-                                <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0) - payBillHistory}원</b>
-                            </div>
+                            
                         </div> 
 
                         :
 
-                        <div className="d-flex justify-content-end">
-                            <div className="" style={{width: "130px"}}>
+                        <div className="d-flex flex-column align-items-end">
+                            <div className="mb-4 me-3">
                                 <b>합계: {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}</b>
                             </div>
-                            <div className="" style={{width: "130px"}}>
-                                <b>납부금: {payBillHistory !== null && !isNaN(payBillHistory) ? payBillHistory : 0}원</b>
+
+                            <div className="text-end border-top border-bottom border-2 px-2 me-1 py-1">
+                                <div>
+                                    <b>납부금: {payBillHistory !== null && !isNaN(payBillHistory) ? payBillHistory : 0}원</b>
+                                </div>
+                                <div>
+                                    <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) - payBillHistory}원</b>
+                                </div>
                             </div>
-                            <div className="" style={{width: "130px"}}>
-                                <b>미납금 :{cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) - payBillHistory}원</b>
-                            </div>
+                            
                         </div> 
                     }
 
@@ -117,7 +123,7 @@ const CreditCardUsageHistory = (props)=>{
                 </div>
             </div>
         </div>
-  
+    
     )
 }
 export default CreditCardUsageHistory;

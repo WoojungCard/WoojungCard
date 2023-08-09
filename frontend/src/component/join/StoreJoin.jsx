@@ -120,16 +120,16 @@ function StoreJoin() {
 	};
 	
 	const store = ({
-	"businessNumber" : insertStoreId,
-	"storePwd" : insertStorePwd,
-	"representative" : insertStoreRepresent, 
-	"storeName" : insertStoreName,
-	"storeZipCode" : zipCode,
-	"storeAddress1" :insertStoreAddr,
-	"storeAddress2" :insertStoreAddrDetail, 
-	"businessStartDate" : insertStoreDate,
-	"businessType" : storeType,
-	"storeTel" : insertStoreTel
+		"businessNumber" : insertStoreId,
+		"storePwd" : insertStorePwd,
+		"representative" : insertStoreRepresent, 
+		"storeName" : insertStoreName,
+		"storeZipCode" : zipCode,
+		"storeAddress1" :insertStoreAddr,
+		"storeAddress2" :insertStoreAddrDetail, 
+		"businessStartDate" : insertStoreDate,
+		"businessType" : storeType,
+		"storeTel" : insertStoreTel
 	})
 	
 	

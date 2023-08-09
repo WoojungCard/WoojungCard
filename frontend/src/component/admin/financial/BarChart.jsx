@@ -53,7 +53,7 @@ const BarChart = (props) => {
                 Females: femaleCharges[age] || 0
             }));
         
-            transformedData.sort((a, b) => parseInt(b.age, 10) - parseInt(a.age, 10));
+            transformedData.sort((a, b) => parseInt(b.age, 10) - parseInt(a.age, 10));  // 연령대 기준 내림차순
 
             return transformedData;            
         };
