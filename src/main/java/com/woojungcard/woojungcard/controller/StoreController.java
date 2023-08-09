@@ -42,65 +42,64 @@ import lombok.RequiredArgsConstructor;
 public class StoreController {
 	
 	private final StoreService storeService;
-	
+	//business number check
 	@PostMapping("/idcheck")
 	public Boolean idCheck(@RequestBody StoreIdCheckRequest request)throws StoreIdCheckException{
 		return storeService.storeIdCheck(request);
 	}
-	
+	//store sign up
 	@PostMapping("/signup")
 	public ResponseEntity<String> StoreSignUp(@RequestBody StoreSignUpRequest request)throws SignUpException{
 		return storeService.storeSignUp(request);
 	}
-	
+	//store update
 	@PutMapping("/update")
 	public ResponseEntity<String> storeUpdate(@RequestBody StoreUpdateRequest request)throws StoreUpdateException{
 		System.out.println(request);
 		return storeService.storeUpdate(request);
 	}
-	
+	//store login
 	@PostMapping("/login")
 	public StoreLoginResponse storeLogin(@RequestBody StoreLoginRequest request)throws LoginException{
 		return storeService.storeLogin(request);
 	}
-	
+	//store get info
 	@GetMapping("/info")
 	public StoreInfoResponse storeGetInfo() {
 		return storeService.storeGetInfo();
 	} 
 	
-	// Store Application Info
+	//store Application Info
 	@GetMapping("/storeAppInfo")
 	public List<StoreAppInfoResponse> storeAppInfo() {
 		return storeService.storeAppInfo();
 	}
-	
+	//store application status 
 	@GetMapping("/storeAppStatus")
 	public List<StoreAppStatusResponse> storeAppStatus(){
 		return storeService.storeAppStatus();
 	}
-	
+	//store application Status change
 	@PutMapping("/storeAppStatusChange")
 	public StoreAppStatusResponse storeAppStatusChange(@RequestBody Long id)throws StoreAppStatusChangeException{
 		return storeService.storeAppStatusChange(id);
 	}
+	//store Sales Management
 	@PostMapping("/storeSalesManagement")
 	public List<StoreSalesManagementResponse> storeSalesManagement(@RequestBody StoreSalesManagementRequest request) throws StoreSalesManagementException{
 		return storeService.storeSalesManagement(request);
 	}
-	
-	// Store Payment Service
-	
+	//Store SalesRecip
 	@PostMapping("/storeSalesReceiptDetails")
 	public StoreSalesReceiptResponse storeSalesReceiptDetails(@RequestBody StoreSalesReceiptRequest request) {
 		return storeService.storeSalesReceiptDetails(request);
 	}
-	
+	//store payment 
 	@PostMapping("/storePayment")
 	public ResponseEntity<String> insertStorePayment(@RequestBody StorePaymentRequest request) throws Exception {
 		return storeService.insertStorePayment(request);
 	}
-	
+	//store payment Deposit
 	@PostMapping("/storePaymentDeposit")
 	public Long getStorePaymentDeposit(@RequestBody StorePaymentDepositRequest request) {
 		return storeService.getStorePaymentDeposit(request);

@@ -63,7 +63,7 @@
 		WHERE 		id      	   = #{id}
 	]]>
 	</update>
-	
+	<!-- 스토어 비밀번호 찾기 -->
 	<select id="findPwdById" parameterType="Long" resultType="String">
 		<![CDATA[
 			SELECT	store_pwd
@@ -71,7 +71,7 @@
 			WHERE	id = #{id}
 		]]>
 	</select>
-	
+	<!-- 스토어 사업자 번호 찾기 -->
 	<select id="findBNById" parameterType="com.woojungcard.woojungcard.domain.request.StoreFindBNByIdRequest">
 		<![CDATA[
 			SELECT	business_number
@@ -174,7 +174,7 @@
 			AND			MONTH(t.payment_date) = #{targetMonth}
     	]]>
 	</select>
-	
+	<!--스토어 판매 영수증 세부 정보 -->
 	<select id="storeSalesReceiptDetails" resultType="com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse" parameterType="com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest">
 		<![CDATA[
 			SELECT 	count(id)        AS numberOfCases, 
@@ -185,14 +185,14 @@
 			AND 	month(payment_date) = #{targetMonth}
 		]]>	
 	</select>
-	
+	<!--스토어 결제 삽입 -->
 	<insert id="insertStorePayment" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentRequest">
 		<![CDATA[
 			INSERT INTO 	payment(payer, target_id, target_year, target_month, payment, payment_date, payment_state)
 			VALUES 	 		("STORE", #{storeId}, #{targetYear}, #{targetMonth}, #{payment}, now(), "FULL")
 		]]>
 	</insert>
-	
+	<!--스토어 결제 보증금 가져오기  -->
 	<select id="getStorePaymentDeposit" parameterType="com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest" resultType="Long">
 		<![CDATA[
 			SELECT	SUM(payment)

@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storeList } from "../../../store/store/storeSlice";
-
+//가맹점 정보조회
 function StoreManagement() {
 	const dispatch = useDispatch();
 

@@ -28,35 +28,34 @@ import com.woojungcard.woojungcard.exception.StoreUpdateException;
 @Repository
 @Mapper
 public interface StoreRepository {
-	
+	//store Sign up
 	Integer storeSignUp(StoreSignUpRequest request) throws SignUpException;
-	
+	// store IdCheck
 	Integer storeIdCheck(StoreIdCheckRequest request) throws StoreIdCheckException;
-	
+	//store Info Update
 	Integer storeInfoUpdate(StoreUpdateRequest request) throws StoreUpdateException;
-	
+	//business Number Id find
 	String findBNById(Long id);
-	
+	// store Login
 	StoreDTO storeLogin(StoreLoginRequest request) throws LoginException;
-	
+	//Store get Info
 	StoreInfoResponse storeGetInfo(Long id);
-	
-	//Store Application Status
+	//Store Application Info
 	List<StoreAppInfoResponse> storeAppInfo();
-	
+	//Store Application Status
 	List<StoreAppStatusResponse> storeAppStatus();
-	
+	//Store Application status change
 	StoreAppStatusResponse storeAppStatusChange(Long id); 
-	
+	//store List
 	List<StoreDTO> storeList();
-
+	//store id find
 	String findPwdById(Long id);
-	
+	//Store salesManagement
 	List<StoreSalesManagementResponse> storeSalesManagement(StoreSalesManagementRequest request);
-	
+	//store salesReceipDetails
 	StoreSalesReceiptResponse storeSalesReceiptDetails(StoreSalesReceiptRequest request);
-	
+	//store payment
 	Integer insertStorePayment(StorePaymentRequest request) throws Exception;
-	
+	//store payment Deposit
 	Long getStorePaymentDeposit(StorePaymentDepositRequest request);
 }

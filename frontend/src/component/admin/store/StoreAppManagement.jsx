@@ -9,7 +9,7 @@ import { StoreAppStatus, StoreAppStatusChange } from "../../../store/store/store
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
+//가맹점 신청내역
 function StoreAppManagement() {
     
 	const dispatch = useDispatch();
