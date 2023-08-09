@@ -55,8 +55,7 @@ function StoreSalesDeposit() {
 
     const onClickHandler = (e) => {
         e.preventDefault();
-        console.log(depositValue);
-        dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : depositData}));
+        dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : depositValue}));
     }
 
     // useEffect(()=>{
@@ -106,13 +105,13 @@ function StoreSalesDeposit() {
                         </tr>
                         <tr style={customHeight}>
                             <th>미납금</th>
-                            <td id="depositValueId">{depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
+                            <td id="depositValueId">{(typeof(depositData) !== "string") ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02} 원</td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
 
-            {(depositData ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02) > 0 ?
+            {((typeof(depositData) !== "string") ? storeSalesData.monthlySales * 0.02 - depositData : storeSalesData.monthlySales * 0.02) > 0 ?
             <div className="d-flex justify-content-center mt-5">
                 <Link to="/">
                     <Button type="button" className="px-3" variant="outline-dark"

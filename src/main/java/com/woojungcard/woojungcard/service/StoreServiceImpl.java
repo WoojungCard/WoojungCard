@@ -162,6 +162,12 @@ public class StoreServiceImpl implements StoreService {
 	public Long getStorePaymentDeposit(StorePaymentDepositRequest request) {
 		Long stordId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setStoreId(stordId);
-		return storeRepository.getStorePaymentDeposit(request);
+		Long result = storeRepository.getStorePaymentDeposit(request);
+		if (result != null) {
+			return storeRepository.getStorePaymentDeposit(request);
+		} else {
+			Long zeroResult = 0L;
+			return zeroResult;
+		}
 	}
 }

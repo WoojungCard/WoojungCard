@@ -97,7 +97,9 @@ export const insertStorePayment = createAsyncThunk("/store/storePayment", async(
 });
 
 export const getStorePaymentDeposit = createAsyncThunk("/store/storePaymentDeposit", async(request) => {
+    console.log(request);
     const response = await api("POST", "/store/storePaymentDeposit", request);
+    console.log(response.data)
     return response.data;
 });
 
