@@ -150,6 +150,7 @@
     		store
     	WHERE
     		status = "USE"
+   		AND auth = "STORE"
     	]]>
 	</select>
 

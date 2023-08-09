@@ -63,7 +63,7 @@ function UserManagement() {
                                             <Link to={`/admin/userManagementDetail/${index}`} 
                                                 state={{index: `${(index - 1)}`}} 
                                                 style={{textDecoration: "none", color: "black"}}>
-                                                    {item.userName}
+                                            {item.userName}
                                             </Link>
                                         </td>
                                         <td>{item.userBirth}</td>
