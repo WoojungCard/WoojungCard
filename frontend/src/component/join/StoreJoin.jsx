@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Form from "react-bootstrap/Form";
@@ -10,13 +11,13 @@ import Modal from 'react-bootstrap/Modal';
 import { userIdCheck } from "../../store/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { storeIdCheck, storeSignUp } from "../../store/store/storeSlice";
-import { useNavigate } from "react-router-dom";
 
 // 가맹점 회원가입
 function StoreJoin() {
 	const { storeIdCheckResult,signUpStatus } = useSelector((state) => state.store);
 	
-	const dispatch =useDispatch();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	
 	const [insertStoreId, setInsertStoreId] = useState('');
 	const [insertStorePwd, setInsertStorePwd] = useState('');
@@ -136,9 +137,8 @@ function StoreJoin() {
 	const onClickStoreJoin = (e) => {
 		e.preventDefault();
 		dispatch(storeSignUp(store));
+		navigate('/login/login');
 	};
-
-	const navigate = useNavigate();
 
 	useEffect(()=>{
 		if (signUpStatus === "successed") {

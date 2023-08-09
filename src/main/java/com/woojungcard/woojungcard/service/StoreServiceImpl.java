@@ -9,18 +9,22 @@ import org.springframework.stereotype.Service;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
-import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
+import com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest;
+import com.woojungcard.woojungcard.domain.request.StorePaymentRequest;
+import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
+import com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
+import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
-import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 import com.woojungcard.woojungcard.jwt.JwtService;
@@ -112,5 +116,33 @@ public class StoreServiceImpl implements StoreService {
 	// store Application Status change
 	public StoreAppStatusResponse storeAppStatusChange(Long id){
 		return storeRepository.storeAppStatusChange(id);
+	}
+
+//store Application Management 
+	public List<StoreSalesManagementResponse> storeSalesManagement(Long id) {
+		return storeRepository.storeSalesManagement(id);
+	}
+	
+	public StoreSalesReceiptResponse storeSalesReceiptDetails(StoreSalesReceiptRequest request) {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(id);
+		return storeRepository.storeSalesReceiptDetails(request);
+	}
+	
+	public ResponseEntity<String> insertStorePayment(StorePaymentRequest request) throws Exception {
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(id);
+		Integer insertRow = storeRepository.insertStorePayment(request);
+		if (insertRow != 0) {
+			return new ResponseEntity<>("납부 완료", HttpStatus.OK);
+		} else {
+			throw new Exception();
+		}
+	}
+	
+	public Long getStorePaymentDeposit(StorePaymentDepositRequest request) {
+		Long stordId = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		request.setStoreId(stordId);
+		return storeRepository.getStorePaymentDeposit(request);
 	}
 }
