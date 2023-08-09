@@ -6,9 +6,11 @@ import { addDays } from "date-fns";
 import moment from "moment";
 
 function StoreSalesManage() {
-     
+    
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const selectedMonth = moment(selectedDate).format('YYYY-MM');
+    const selectedMonth = moment(selectedDate).format('M');
+    const selectedYear = moment(selectedDate).format('YYYY');
+    console.log(selectedYear, selectedMonth);
 
     const CustomInput = forwardRef(({ value, onClick }, ref) => (
         <button className="btn btn-outline-dark btn-sm ms-2" onClick={onClick} ref={ref}>

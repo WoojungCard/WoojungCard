@@ -7,7 +7,7 @@ import { addDays } from "date-fns";
 import moment from "moment";
 
 function StoreSalesDeposit() {
-     
+    
     const [selectedDate, setSelectedDate] = useState(new Date());
     const selectedMonth = moment(selectedDate).format('YYYY-MM');
 
@@ -23,10 +23,10 @@ function StoreSalesDeposit() {
 
     return (
         <div className="container mt-5 pt-5">
-            <h2 className="fw-bold text-center">매출 입금 내역</h2>
+            <h4 className="fw-bold text-center">매출 입금 내역</h4>
 
             <div className="row justify-content-center mt-5">
-                <Table className="text-center w-50 fs-5">
+                <Table className="text-center w-50 fs-5" borderless={true}>
                     <tbody>
                         <tr style={customHeight}>
                             <th>기간</th>
@@ -34,27 +34,27 @@ function StoreSalesDeposit() {
                         </tr>
                         <tr style={customHeight}>
                             <th>건수</th>
-                            <td></td>
+                            <td>0 건</td>
                         </tr>
                         <tr style={customHeight}>
                             <th>매출</th>
-                            <td></td>
+                            <td>0 원</td>
                         </tr>
-                        <tr style={customHeight}>
+                        <tr className="border-bottom" style={customHeight}>
                             <th>수수료</th>
-                            <td></td>
+                            <td>0 원</td>
                         </tr>
                         <tr style={customHeight}>
                             <th>납부금액</th>
-                            <td></td>
+                            <td>0 원</td>
                         </tr>
-                        <tr style={customHeight}>
+                        <tr className="border-bottom" style={customHeight}>
                             <th>실납부금액</th>
-                            <td></td>
+                            <td>0 원</td>
                         </tr>
                         <tr style={customHeight}>
                             <th>미납금</th>
-                            <td></td>
+                            <td>0 원</td>
                         </tr>
                     </tbody>
                 </Table>
