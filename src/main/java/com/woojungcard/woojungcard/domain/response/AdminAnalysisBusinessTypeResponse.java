@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class AdminAnalysisBusinessTypeResponse {
-	private String businessType;
-	private Long totalCharge;
-	private String paymentMonth;
+	private String  businessType;
+	private Long 	totalCharge;
+	private String  paymentMonth;
 }

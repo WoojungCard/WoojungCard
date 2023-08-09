@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class UserInfoUpdateRequest {
-	private Long id;
+	private Long   id;
 	private String userPwd;
 	private String userTel;
 }

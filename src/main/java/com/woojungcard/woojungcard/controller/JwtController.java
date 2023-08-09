@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 public class JwtController {
 	private final JwtService jwtService;
 	
+	// Jwt Token Valid
 	@GetMapping
 	public ResponseEntity<String> jwtCheck(){
 		String check = jwtService.isValidTokens();
 		if (check != null) return new ResponseEntity<>(check, HttpStatus.OK);
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
-
 }

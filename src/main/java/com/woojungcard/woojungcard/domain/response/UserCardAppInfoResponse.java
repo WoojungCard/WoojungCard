@@ -9,9 +9,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserCardAppInfoResponse {
-	private String userName;
+	private String 	  userName;
 	private LocalDate userBirth;
-	private String userTel;
+	private String 	  userTel;
 }

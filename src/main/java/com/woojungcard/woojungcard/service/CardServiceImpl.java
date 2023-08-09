@@ -1,6 +1,5 @@
 package com.woojungcard.woojungcard.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class CardServiceImpl implements CardService {
 	
 	private final CardRepository cardRepository;
-	private final JwtService jwtService;
+	private final JwtService 	 jwtService;
 	
 	// Card Application
 	@Transactional
@@ -59,15 +58,10 @@ public class CardServiceImpl implements CardService {
 	// User Card Application Approve
 	@Transactional
 	public ResponseEntity<String> userCardAppAprove(UserCardApproveRequest request) throws UserCardApproveException {
-		// 카드 번호 랜덤 생성
 		StringBuilder cardNumber = new StringBuilder();
-
-        // Generate 16 digits for the card number
         for (int i = 0; i < 16; i++) {
-            int randomDigit = (int) (Math.random() * 10); // Generate a random digit (0-9)
+            int randomDigit = (int) (Math.random() * 10);
             cardNumber.append(randomDigit);
-
-            // Insert hyphen after every 4 digits except for the last group
             if ((i + 1) % 4 == 0 && i < 15) {
             	cardNumber.append("-");
             }

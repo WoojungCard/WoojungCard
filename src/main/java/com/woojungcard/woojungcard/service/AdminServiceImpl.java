@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminServiceImpl implements AdminService {
 	
 	private final AdminRepository adminRepository;
-	private final UserRepository userRepository;
+	private final UserRepository  userRepository;
 
 	// 성/연령별 월별 소비현황
 	@Override

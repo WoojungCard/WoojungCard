@@ -9,21 +9,21 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class StoreInfoResponse {
-	private Long id;
-	private String businessNumber;
-//	private String storePwd;
-	private String storeName;
-	private String representative;
-	private String storeZipCode;
-	private String storeAddress1;
-	private String storeAddress2;
-	private String storeTel;
+	private Long 	  id;
+	private String 	  businessNumber;
+	private String 	  storeName;
+	private String 	  representative;
+	private String 	  storeZipCode;
+	private String 	  storeAddress1;
+	private String 	  storeAddress2;
+	private String 	  storeTel;
 	private LocalDate businessStartDate;
-	private String businessType;
+	private String 	  businessType;
 	private LocalDate storeJoinDate;
-	private String status;
-	private String auth;
+	private String 	  status;
+	private String 	  auth;
 
 } 

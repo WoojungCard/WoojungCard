@@ -7,7 +7,8 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class StoreFindBNByIdRequest {
 	private long id;
 }

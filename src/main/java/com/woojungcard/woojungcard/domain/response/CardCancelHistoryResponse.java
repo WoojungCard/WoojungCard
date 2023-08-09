@@ -11,15 +11,16 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class CardCancelHistoryResponse {
-	private Long id;
-	private String cardNumber;
-	private String cardName;
-	private CardType cardType;
+	private Long 	  id;
+	private String    cardNumber;
+	private String    cardName;
+	private CardType  cardType;
 	private LocalDate requestDate;
-	private String userName;
+	private String 	  userName;
 	private LocalDate userBirth;
-	private String userTel;
+	private String    userTel;
 	private LocalDate cancelDate;
 }

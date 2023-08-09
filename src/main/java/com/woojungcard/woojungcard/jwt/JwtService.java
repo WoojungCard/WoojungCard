@@ -31,6 +31,7 @@ public class JwtService {
 	@Value("${jwt.REFRESH_SECRET_KEY}")
 	private String REFRESH_SECRET_KEY;
 	
+	// Create Access Token
 	public String createAccessToken(Long id){
 		byte[] keyBytes = Decoders.BASE64.decode(ACCESS_SECRET_KEY);
         Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -50,6 +51,7 @@ public class JwtService {
         return accessToken;
     }
 	
+	// Create Refresh Token
 	public String createRefreshToken(Long id) {
         byte[] keyBytes = Decoders.BASE64.decode(REFRESH_SECRET_KEY);
         Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -66,16 +68,19 @@ public class JwtService {
         return refreshToken;
     }
 	
+	// Get Access Token
 	public String getAccessToken() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         return request.getHeader("AccessToken");
     }
 	
+	// Get Refresh Token
 	public String getRefreshToken(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         return request.getHeader("RefreshToken");
     }
 	
+	// Token Info
 	public TokenInfo tokenToDTO(String accessToken){
         try{      	
             Claims claims = Jwts
@@ -92,8 +97,8 @@ public class JwtService {
         }
     }
 	
-	 public String isValidTokens(){ //엑세스 토큰과 리프레쉬 토큰의 유효성을 둘다 검사한다
-        //check both refresh AND access token
+	// Check Both Refresh AND Access token
+	 public String isValidTokens(){ 
         String accessToken = getAccessToken();
         String refreshToken = getRefreshToken();
         if(!isValidAccessToken(accessToken)){
@@ -102,19 +107,17 @@ public class JwtService {
         return "OK";
     }
 
+	 // Check Access Token
     public boolean isValidAccessToken(String accessToken){
-        if(accessToken == null) return false;
-        // Access Token이 유효하지 않으면
-        // is access token is not valid
+        if(accessToken == null) 		    return false;
         if(tokenToDTO(accessToken) == null) return false;
         return true;
     }
 
+    // Check Refresh Token
     private String isValidRefreshToken(String refreshToken) {
         try {
             HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-
-            // MyBatis를 사용하여 Redis에서 RefreshToken을 조회
             Long id = Long.parseLong(redisTemplate.opsForValue().get(refreshToken));
             
             if (id != null) {
@@ -129,11 +132,9 @@ public class JwtService {
         }
     }
 
+    // New Create Access Token
     private String refreshAccessToken(HttpServletResponse response, RefreshToken redisToken) {
-        //새로운 엑세스 토큰 생성
-    	// create new access token
         String newAccessToken = createAccessToken(redisToken.getId());
-//	        response.addHeader("accessToken", newAccessToken);
         return newAccessToken;
     }
 

@@ -9,10 +9,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserInfoResponse {
-	private String userId;
-	private String userName;
+	private String    userId;
+	private String    userName;
 	private LocalDate userBirth;
-	private String userTel;
+	private String    userTel;
 }

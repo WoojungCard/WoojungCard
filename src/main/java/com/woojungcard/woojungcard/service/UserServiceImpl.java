@@ -35,8 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
-	private final EncryptConfig encryptConfig;
-	private final JwtService jwtService;
+	private final EncryptConfig  encryptConfig;
+	private final JwtService 	 jwtService;
 
 	// User Id Check
 	@Transactional

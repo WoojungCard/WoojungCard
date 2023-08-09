@@ -9,8 +9,9 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class CardApplicationResponse {
-	private String cardName;
+	private String   cardName;
 	private CardType cardType;
 }

@@ -12,11 +12,11 @@ import lombok.Setter;
 @Getter @Setter
 public class UserCardUsageHistoryResponse {
 	private LocalDate paymentDate;
-	private Long approvalNumber;
-	private String businessNumber;
-	private String storeName;
-	private String businessType;
-	private Long installment;
-	private String cardCharge;
-	private Long interestBee;
+	private Long 	  approvalNumber;
+	private String    businessNumber;
+	private String    storeName;
+	private String    businessType;
+	private Long      installment;
+	private String    cardCharge;
+	private Long      interestBee;
 }

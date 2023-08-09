@@ -39,8 +39,8 @@ import lombok.RequiredArgsConstructor;
 public class StoreServiceImpl implements StoreService {
 
 	private final StoreRepository storeRepository;
-	private final EncryptConfig encryptConfig;
-	private final JwtService jwtService;
+	private final EncryptConfig   encryptConfig;
+	private final JwtService      jwtService;
 
 	// store Id Check
 	@Transactional

@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserPayBillHistoryRequest {
-	private Long cardIssuedId;
+	private Long    cardIssuedId;
 	private Integer targetYear;
 	private Integer targetMonth;
 }

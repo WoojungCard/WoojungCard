@@ -7,10 +7,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class StorePaymentRequest {
-	private Long storeId;
+	private Long 	storeId;
 	private Integer targetYear;
 	private Integer targetMonth;
-	private Long payment;
+	private Long 	payment;
 }

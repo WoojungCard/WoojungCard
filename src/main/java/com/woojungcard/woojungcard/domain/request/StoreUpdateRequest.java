@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class StoreUpdateRequest {
-	private Long id;
+	private Long   id;
 	private String representative;
 	private String storePwd;
 	private String storeZipCode;

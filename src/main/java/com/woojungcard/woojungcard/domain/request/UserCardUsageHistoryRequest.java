@@ -7,10 +7,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserCardUsageHistoryRequest {
-	private Long id;
-	private Long cardIssuedId;
+	private Long   id;
+	private Long   cardIssuedId;
 	private String yearChoice;
 	private String monthChoice;
 }

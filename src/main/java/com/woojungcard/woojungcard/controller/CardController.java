@@ -62,7 +62,6 @@ public class CardController {
 		return cardService.userCardAppAprove(request);
 	}
 	
-	 
 	// User Card Cancel Application
 	@PutMapping("/cancelApp")
 	public ResponseEntity<String> userCardCancelApp(@RequestBody Long id) throws ApplicationException {
@@ -110,5 +109,4 @@ public class CardController {
 	public String findCardTypeById(@RequestBody Long id) {
 		return cardService.findCardTypeById(id);
 	}
-	
 }

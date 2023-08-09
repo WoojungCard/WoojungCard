@@ -1,7 +1,5 @@
 package com.woojungcard.woojungcard.domain.response;
 
-import java.util.Date;
-
 import com.woojungcard.woojungcard.domain.enums.UserGender;
 
 import lombok.AllArgsConstructor;
@@ -11,10 +9,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class AdminAnalysisGenderAgeResponse {
-	private Long totalCharge;
+	private Long 	   totalCharge;
 	private UserGender userGender;
-	private String paymentMonth;
-	private String ageGroup;
+	private String 	   paymentMonth;
+	private String 	   ageGroup;
 }

@@ -11,15 +11,15 @@ import lombok.Setter;
 
 @AllArgsConstructor 
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class CardProductDTO {
-	private long id;
-	private String cardName;
-	private CardType cardType;
-	private String cardImage;
-	private String cardInfo;
+	private long 	  id;
+	private String    cardName;
+	private CardType  cardType;
+	private String 	  cardImage;
+	private String 	  cardInfo;
 	private LocalDate registerDate;
-	private String state;
-	
-	private long count;
+	private String    state;	
+	private long      count;
 }

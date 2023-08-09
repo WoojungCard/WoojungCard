@@ -11,12 +11,13 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserSignUpRequest {
-	private String userId;
-	private String userPwd;
-	private String userName;
-	private LocalDate userBirth;
+	private String 	   userId;
+	private String 	   userPwd;
+	private String 	   userName;
+	private LocalDate  userBirth;
 	private UserGender userGender;
-	private String userTel;
+	private String 	   userTel;
 }

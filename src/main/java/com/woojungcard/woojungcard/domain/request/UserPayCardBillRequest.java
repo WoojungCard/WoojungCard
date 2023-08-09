@@ -12,12 +12,13 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter 
+@Setter
 public class UserPayCardBillRequest {
-	private PayerType payer;
-	private Long targetId;
-	private Integer targetYear;
-	private Integer targetMonth;
-	private Long payment;
+	private PayerType 	 payer;
+	private Long 		 targetId;
+	private Integer 	 targetYear;
+	private Integer 	 targetMonth;
+	private Long 		 payment;
 	private PaymentState paymentState;
 }
