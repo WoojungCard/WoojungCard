@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService {
 	private final JwtService jwtService;
 
 	// User Id Check
+	@Transactional
 	public Boolean userIdCheck(UserIdCheckRequest request) throws UserIdCheckException{
 		Integer countId = userRepository.userIdCheck(request);
 		if (countId == 0) {
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// User Sign Up
+	@Transactional
 	public ResponseEntity<String> userSignUp(UserSignUpRequest request) throws SignUpException {
 		String encodedPwd = encryptConfig.getEncrypt(request.getUserPwd(), request.getUserId());
 		request.setUserPwd(encodedPwd);
@@ -59,6 +63,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// User Login
+	@Transactional
 	public UserLoginResponse userLogin(UserLoginRequest request) throws LoginException {
 		String encodedPwd = encryptConfig.getEncrypt(request.getUserPwd(), request.getUserId()); 
 		request.setUserPwd(encodedPwd);
@@ -73,6 +78,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// User Get Info
+	@Transactional
 	public UserInfoResponse userGetInfo() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		UserInfoResponse response = userRepository.userGetInfo(id);
@@ -80,6 +86,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// User Info Update
+	@Transactional
 	public ResponseEntity<String> userInfoUpdate(UserInfoUpdateRequest request) throws UpdateException {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setId(id);
@@ -102,23 +109,27 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// User Card Application Info
+	@Transactional
 	public UserCardAppInfoResponse userCardAppInfo() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		return userRepository.userCardAppInfo(id);
 	}
 	
 	// User Card Application Status
+	@Transactional
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		return userRepository.userCardAppStatus(id);
 	}
 
 	// User List
+	@Transactional
 	public List<UserDTO> userList() throws Exception {
 		return userRepository.userList();
 	}
 	
 	// User Card Application
+	@Transactional
 	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException {
 		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
 		request.setUserId(id);
@@ -127,7 +138,6 @@ public class UserServiceImpl implements UserService {
 			return new ResponseEntity<>("신청이 완료되었습니다.", HttpStatus.OK);
 		} else {
 			throw new ApplicationException();
-		}
-		
+		}	
 	}
 }
