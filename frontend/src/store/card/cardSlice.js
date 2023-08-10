@@ -65,6 +65,7 @@ export const userCardCancelApprove = createAsyncThunk("/card/cancelApprove", asy
 // User Card Possession History
 export const userCardPossessionHistory = createAsyncThunk("/card/userCardPossession", async() => {
     const response = await api("GET", "/card/userCardPossession");
+    console.log(response.data);
     return response.data;
 })
 

@@ -8,10 +8,9 @@ import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 function CardProductList() {
 
 	const {cardListData} = useSelector((state) => state.card);
-
 	const dispatch = useDispatch();
 
-	useEffect(() => {dispatch(cardList());}, []);
+	useEffect(() => {dispatch(cardList());},   []);
 
 	const [cardType, setCardType] = useState("CREDIT");
 

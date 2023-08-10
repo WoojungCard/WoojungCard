@@ -42,6 +42,7 @@ function UserCardUsageHistoryForm() {
                                         <option disabled selected>{stateData.cardNumber}</option>
                                     }
                                     {cardPossessionList?.map((el) => 
+                                    	el.cardNumber !== null &&
                                         <option value={el.id}>{el.cardNumber}</option>
                                     )} 
                                 </Form.Select>  

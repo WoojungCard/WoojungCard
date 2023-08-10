@@ -64,8 +64,8 @@ const CreditCardUsageHistory = (props)=>{
                         <div className="col-2 text-end pe-4">
                             {cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0) !== null &&
                                 !isNaN(cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)) ?
-                                    <span>할부이자 : ({cardUsageHistory.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)})</span>
-                                        : (<span>할부이자 : 0원</span>)}
+                                    <span>할부이자 : {cardUsageHistory.reduce((sum, currValue) => sum + parseInt(currValue.interestBee), 0)}</span>
+                                        : <span>할부이자 : 0원</span>}
                         </div>
                     </div>
 

@@ -187,12 +187,12 @@
 	<!-- 유저 카드 납부 금액 조회 -->
 	<select id="userPayBillHistory" parameterType="com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest" resultType="Long">
 		<![CDATA[
-		SELECT 		sum(payment) 
-		FROM		payment 
-		WHERE		payer        = "USER" 
-		AND 		target_id    = #{cardIssuedId} 
-		AND 		target_year  = #{targetYear} 
-		AND 		target_month = #{targetMonth}
+			SELECT 		sum(payment) 
+			FROM		payment 
+			WHERE		payer        = "USER" 
+			AND 		target_id    = #{cardIssuedId} 
+			AND 		target_year  = #{targetYear} 
+			AND 		target_month = #{targetMonth}
 		]]>
 	</select>
 	
