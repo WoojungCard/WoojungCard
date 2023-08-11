@@ -203,4 +203,25 @@
 			AND		target_month = #{targetMonth}
 		]]>
 	</select>
+	
+	
+	<!-- 스토어 결제금액 생성하기 -->
+	<select id = "getStorePrice" parameterType="com.woojungcard.woojungcard.domain.request.StorePriceListRequest">
+		<![CDATA[
+			SELECT 
+				store.id,
+                store_name 
+				,(FLOOR(RAND()*10)+1)*10000 AS price
+			FROM 
+				store
+			INNER JOIN 
+				transaction
+            ON
+            	store.id = transaction.store_id;
+                
+;	
+				
+		]]>
+	</select>
+	
 </mapper>

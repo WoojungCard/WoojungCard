@@ -1,6 +1,8 @@
 package com.woojungcard.woojungcard.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,11 @@ import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -89,5 +91,21 @@ public class UserController {
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		return userService.userCardAppStatus();
 	}
+
+
+//store payment Deposit
+	@PostMapping("/cardpayment")
+	public Map<String, Object> getCardpayment(@RequestBody getCardPaymentRequest request) {
+		Map<String, Object>  resultMap= new HashMap<String, Object>();
+		
+		Long id = userService.getCardPaymentRequest(request);
+		List<Object> cardList = userService.getCardList(request);
+		
+		resultMap.put("userId", id);
+		resultMap.put("cardList", cardList);
+		
+		return resultMap; 
+	}
 }
+
     

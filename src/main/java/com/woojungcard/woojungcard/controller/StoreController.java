@@ -104,4 +104,5 @@ public class StoreController {
 	public Long getStorePaymentDeposit(@RequestBody StorePaymentDepositRequest request) {
 		return storeService.getStorePaymentDeposit(request);
 	}
+	
 }
