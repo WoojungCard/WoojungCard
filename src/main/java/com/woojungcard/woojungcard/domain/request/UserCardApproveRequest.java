@@ -12,4 +12,5 @@ import lombok.Setter;
 public class UserCardApproveRequest {
 	private Long   id;
 	private String cardNumber;
+	private int randum;
 }
