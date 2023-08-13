@@ -25,6 +25,7 @@ import UserCardUsageHistoryForm from "./component/user/UserCardUsageHistory/User
 import StoreManagement from "./component/admin/store/StoreManagement";
 import StoreAppManagement from "./component/admin/store/StoreAppManagement";
 import StoreLayout from "./component/layout/StoreLayout";
+import UserPurchase from "./component/user/UserPurchase";
 
 const ProjectRouter = () => {
 	return (
@@ -49,6 +50,7 @@ const ProjectRouter = () => {
 					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
 					<Route path="cardUsageHistory" element=<UserCardUsageHistoryForm/> />
+					<Route path="purchase" element=<UserPurchase/> />
 				</Route>
 				
 				{/* 가맹점 */}
