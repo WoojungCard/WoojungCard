@@ -9,8 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter 
 @Setter
-public class UserCardListDTO {
-	  private int id;
-	  private String card_name;
-      private String card_number;
+public class UserCardPaymentRequest {
+	private Long id;
+
 }

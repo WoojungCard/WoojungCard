@@ -58,4 +58,6 @@ public interface StoreRepository {
 	Integer insertStorePayment(StorePaymentRequest request) throws Exception;
 	//store payment Deposit
 	Long getStorePaymentDeposit(StorePaymentDepositRequest request);
+	
+	
 }

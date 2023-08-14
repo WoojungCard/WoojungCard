@@ -1,8 +1,6 @@
 package com.woojungcard.woojungcard.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +15,11 @@ import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.request.UserPaymentRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
 import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
 import com.woojungcard.woojungcard.exception.ApplicationException;
@@ -93,19 +93,25 @@ public class UserController {
 	}
 
 
-//store payment Deposit
+	// User Card payment
 	@PostMapping("/cardpayment")
-	public Map<String, Object> getCardpayment(@RequestBody getCardPaymentRequest request) {
-		Map<String, Object>  resultMap= new HashMap<String, Object>();
+	public ResponseEntity<String> getCardpayment(@RequestBody UserPaymentRequest request) {
 		
-		Long id = userService.getCardPaymentRequest(request);
-		List<Object> cardList = userService.getCardList(request);
 		
-		resultMap.put("userId", id);
-		resultMap.put("cardList", cardList);
+		ResponseEntity<String> cardPay = userService.userCardPay(request);
+		//List<Object> cardList = userService.getCardList(request);
+			
+		//resultMap.put("cardList", cardList);
 		
-		return resultMap; 
+		return cardPay; 
 	}
+	// User Card List
+	@GetMapping("/userCardList")
+	public List<UserCardListResponse> userCardListSearch(){
+		return userService.userCardListSearch();
+	}
+	
+	
 }
 
     

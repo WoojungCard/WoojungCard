@@ -18,6 +18,7 @@ import com.woojungcard.woojungcard.domain.request.StoreSalesManagementRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSalesReceiptRequest;
 import com.woojungcard.woojungcard.domain.request.StoreSignUpRequest;
 import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardPaymentRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
@@ -170,4 +171,5 @@ public class StoreServiceImpl implements StoreService {
 			return zeroResult;
 		}
 	}
+
 }

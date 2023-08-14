@@ -71,7 +71,8 @@ public class JwtService {
 	// Get Access Token
 	public String getAccessToken() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return request.getHeader("AccessToken");
+        return request.getParameter("AccessToken");
+        //return request.getHeader("AccessToken");
     }
 	
 	// Get Refresh Token

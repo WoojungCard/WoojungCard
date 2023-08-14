@@ -7,17 +7,20 @@ import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardListSearchRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.request.UserPaymentRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
 import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 
 @Repository
 @Mapper
@@ -57,4 +60,10 @@ public interface UserRepository {
 	
 	// User Card Application
 	Integer userCardApp(UserCardAppRequest request);
+	
+	// User Card Pay
+	Integer userCardPay(UserPaymentRequest request); 
+	
+	// User Card List Search
+	List<UserCardListResponse> userCardListSearch(String id);
 }

@@ -10,5 +10,7 @@ import lombok.Setter;
 @Getter 
 @Setter
 public class UserCardListSearchRequest {
-	private String id;
+	private Long id;
+	private String cardNumber;
 }
+//The method setCardNumber(String) is undefined for the type UserCardListSearchRequest
