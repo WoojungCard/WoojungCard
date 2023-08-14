@@ -23,7 +23,7 @@ public class StoreInfoResponse {
 	private LocalDate businessStartDate;
 	private String 	  businessType;
 	private LocalDate storeJoinDate;
-	private String 	  status;
+	private String 	  state;
 	private String 	  auth;
 
 } 

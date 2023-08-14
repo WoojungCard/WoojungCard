@@ -22,13 +22,22 @@ function UserCardApplication() {
 
     const request = ({"cardId"      : param.cardId,
                     "requestDate" : new Date()})
-
+    
     const onClickHandler = (e) => {e.preventDefault();
                                 dispatch(userCardApp(request));}
 
     useEffect(() => {if      (appStatus === "successed") {navigate("/user/cardAppStatus");
                                                           navigate(0);} 
                      else if (appStatus === "failed") {alert("실패하였습니다. 다시 시도해주세요.")}}, [appStatus])
+
+    const onConfirm = (e) => {
+        if (window.confirm("신청하시겠습니까?")) {
+            onClickHandler(e); 
+            alert("신청되었습니다.");
+        } else {
+            alert("취소되었습니다.")
+        }
+    };
 
 return (
     <div className="mt-5">
@@ -100,7 +109,7 @@ return (
                 </Form.Group>
 
                 <div className="d-grid gap-1">
-                    <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>신청하기</Button>
+                    <Button className="px-3" variant="outline-dark" onClick={onConfirm}>신청하기</Button>
                 </div>
                 
             </Form>

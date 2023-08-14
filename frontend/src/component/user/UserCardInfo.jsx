@@ -20,6 +20,15 @@ function UserCardInfo() {
 
     useEffect(() => {if      (cancelAppStatus === "successed") navigate(0);
                      else if (cancelAppStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");}, [cancelAppStatus])
+
+    const onConfirm = (e) => {
+        if (window.confirm("해지하시겠습니까?")) {
+            alert("해지신청 완료되었습니다.");
+            onClickHandler(e);
+        } else {
+            alert("취소되었습니다.");
+        }
+    }
     
     return (
         <div className="mt-5">
@@ -51,7 +60,7 @@ function UserCardInfo() {
                                     ? 
                                         <Button 
                                         value={el.id} 
-                                        onClick={onClickHandler}
+                                        onClick={onConfirm}
                                         className="px-3" 
                                         variant="outline-dark">해지 신청</Button>
                                     : 

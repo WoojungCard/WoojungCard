@@ -23,6 +23,6 @@ public class StoreSignUpRequest {
 	private LocalDate businessStartDate;
 	private String    storeTel;
 	private String    storeJoinDate;
-	private String    status;
+	private String    state;
 	private String    auth;
 }

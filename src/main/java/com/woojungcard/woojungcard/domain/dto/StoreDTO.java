@@ -24,6 +24,6 @@ public class StoreDTO {
 	private int       businessStartDate;
 	private String    businessType;
 	private LocalDate storeJoinDate;
-	private String    status;
+	private String    state;
 	private String    auth;
 }

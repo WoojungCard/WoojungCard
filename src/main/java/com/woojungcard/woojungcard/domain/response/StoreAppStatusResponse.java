@@ -20,5 +20,5 @@ public class StoreAppStatusResponse {
 	private String storeAddress2;
 	private String businessStartDate;
 	private String storeTel;
-	private String status;
+	private String state;
 }

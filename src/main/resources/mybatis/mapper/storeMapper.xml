@@ -32,7 +32,7 @@
 							   business_start_date,
 							   store_tel,
 							   store_join_date,
-							   status,
+							   state,
 							   auth)		
 			VALUES 			  (#{businessNumber}, 
 				       	       #{storePwd},
@@ -103,7 +103,7 @@
 						business_start_date,
 						store_tel,
 						store_join_date,
-						status,
+						state,
 						auth
 			FROM		store
 			WHERE		id = #{id}	
@@ -126,7 +126,7 @@
 						store_tel,
 						store_join_date
 	    	FROM   		store
-	    	WHERE  		status = "USE"
+	    	WHERE  		state = "USE"
 	   		AND 		auth   = "STORE"
     	]]>
 	</select>
@@ -144,9 +144,9 @@
 						store_address2,
 						business_start_date,
 						store_tel,
-						status
+						state
 	    	FROM   		store
-	    	WHERE  		status = 'waiting'
+	    	WHERE  		state = 'WAITING'
     	]]>
 	</select>
 
@@ -154,7 +154,7 @@
 		<select id = "storeAppStatusChange" parameterType="com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse" resultType="Integer">
 		<![CDATA[
     		UPDATE 	store
-			SET 	status = "USE"
+			SET 	state = "USE"
 			WHERE 	id     = #{id}
     	]]>
 	</select>

@@ -18,6 +18,15 @@ function UserCardCancelHistory() {
     useEffect(() => {if      (canceledApproveStatus === "successed") navigate(0);
                      else if (canceledApproveStatus === "failed")    alert("실패하였습니다. 다시 시도해주세요.");}, [canceledApproveStatus])
 
+
+    const onConfirm = (e) => {
+        if (window.confirm("승인하시겠습니까?")) {
+            onClickHandler(e);
+            alert("승인 완료되었습니다");
+        } else {
+            alert("취소되었습니다.");
+        }
+    }
     return (
         <div className="container mt-5 pt-4">
             <div className="container w-75">
@@ -50,7 +59,7 @@ function UserCardCancelHistory() {
                                     ? 
                                         <Button 
                                         value={el.id} 
-                                        onClick={onClickHandler}
+                                        onClick={onConfirm}
                                         className="px-3" 
                                         variant="outline-dark"
                                         >승인</Button> 

@@ -19,6 +19,14 @@ const CreditCardUsageHistory = (props)=>{
     const onClickHandler = (e) => {e.preventDefault();
                                    dispatch(userPayCardBill({"targetId" : cardIssuedId, "targetYear" : yearChoice, "targetMonth" : monthChoice, "payment" : cardUsageHistory?.reduce((sum, currValue) => sum + parseInt(currValue.interestBee) + parseInt(currValue.cardCharge), 0)}));}
 
+    const onConfirm = (e) => {
+        if (window.confirm("입금처리 하시겠습니까?")) {
+            onClickHandler(e);
+            alert("처리되었습니다.");
+        } else {
+            alert("취소되었습니다.")
+        }
+    }
     return (    
         <div>
             <div>
@@ -111,7 +119,7 @@ const CreditCardUsageHistory = (props)=>{
 
 
                     <div>
-                        <Button className="px-3" variant="outline-dark" onClick={onClickHandler}>납부하기</Button>
+                        <Button className="px-3" variant="outline-dark" onClick={onConfirm}>납부하기</Button>
                     </div>
                 </div>
             </div>

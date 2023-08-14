@@ -17,6 +17,15 @@ function UserCardAppHistory() {
 
     const onClickHandler = (e)=>{e.preventDefault();
                                  dispatch(userCardAppApprove(e.target.value));}
+
+    const onConfirm = (e) => {
+        if (window.confirm("승인하시겠습니까?")) {
+            onClickHandler(e);
+            alert("승인 완료되었습니다");
+        } else {
+            alert("취소되었습니다.");
+        }
+    }
     return (
         <div className="container mt-5 pt-4">
         <div className="container w-75">
@@ -45,7 +54,7 @@ function UserCardAppHistory() {
                         <td>{el.userTel}</td>
                         <td><Button 
                         value={el.id} 
-                        onClick={onClickHandler}
+                        onClick={onConfirm}
                         className="px-3" 
                         variant="outline-dark"
                         >카드승인</Button></td>

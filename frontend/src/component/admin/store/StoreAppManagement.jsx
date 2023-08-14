@@ -49,9 +49,13 @@ function StoreAppManagement() {
                                 
                                 const onClickStoreChange = (e) => {
                                     const id = e.target.value;
-                                    dispatch(StoreAppStatusChange(id));
-                                    alert("승인되었습니다.");
-                                    navigate(0);
+                                    if (window.confirm("승인 처리하시겠습니까?")) {
+                                        dispatch(StoreAppStatusChange(id));
+                                        alert("승인되었습니다.");
+                                        navigate(0);
+                                    } else {
+                                        alert("취소되었습니다.");
+                                    }   
                                 };
                                 
                                 const id = item.id;
