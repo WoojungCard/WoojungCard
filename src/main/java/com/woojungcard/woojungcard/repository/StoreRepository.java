@@ -3,7 +3,6 @@ package com.woojungcard.woojungcard.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.dto.StoreDTO;
@@ -18,6 +17,7 @@ import com.woojungcard.woojungcard.domain.request.StoreUpdateRequest;
 import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
+import com.woojungcard.woojungcard.domain.response.StorePayListResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -58,6 +58,7 @@ public interface StoreRepository {
 	Integer insertStorePayment(StorePaymentRequest request) throws Exception;
 	//store payment Deposit
 	Long getStorePaymentDeposit(StorePaymentDepositRequest request);
-	
+	//store pay List
+	List<StorePayListResponse> storePayListSearch();
 	
 }

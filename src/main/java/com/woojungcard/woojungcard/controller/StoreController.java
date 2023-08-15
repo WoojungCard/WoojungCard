@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest;
@@ -23,6 +22,7 @@ import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StorePayListResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -103,6 +103,11 @@ public class StoreController {
 	@PostMapping("/storePaymentDeposit")
 	public Long getStorePaymentDeposit(@RequestBody StorePaymentDepositRequest request) {
 		return storeService.getStorePaymentDeposit(request);
+	}
+	//Store pay List
+	@GetMapping("/storePayList")
+	public List<StorePayListResponse> storePayListSearch(){
+		return storeService.storePayListSearch();
 	}
 	
 }

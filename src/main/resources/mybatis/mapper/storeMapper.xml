@@ -206,7 +206,7 @@
 	
 	
 	<!-- 스토어 결제금액 생성하기 -->
-	<select id = "getStorePrice" parameterType="com.woojungcard.woojungcard.domain.request.StorePriceRequest">
+	<select id = "storePayListSearch" resultType="com.woojungcard.woojungcard.domain.response.StorePayListResponse" >
 		<![CDATA[
 			SELECT 
 				store.id,
@@ -219,7 +219,7 @@
             ON
             	store.id = transaction.store_id;
                 
-;	
+		
 				
 		]]>
 	</select>
