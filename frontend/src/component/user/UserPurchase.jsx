@@ -1,6 +1,14 @@
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
+import { storePayList } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function UserPurchase() {
+    const dispatch = useDispatch();
+    const {userCardList} = useSelector((state) => state.user);
+
+    useEffect(() => {dispatch(userCardList())}, []);
+
     return (
         <div className="container border rounded-3 w-50 mt-5 py-4">
             <h4 className="fw-bold text-center mt-2 mb-4">결제하기</h4>
@@ -13,9 +21,9 @@ function UserPurchase() {
                                     <Form.Select column sm="3" className="px-0 text-center" 
                                                 // onChange={} 
                                                 name="cardIssuedId">
-                                        {/* {cardPossessionList?.map((el) => 
+                                         {/* {userCardList?.map((el) => 
                                             <option value={el.id} >{el.cardNumber}</option>
-                                        )} */}
+                                        )}  */}
                                     </Form.Select>  
                                 </Col>
                         </Form.Group>
@@ -29,9 +37,9 @@ function UserPurchase() {
                                     <Form.Select column sm="3" className="px-0 text-center" 
                                                 // onChange={} 
                                                 name="storeName">
-                                        {/* {cardPossessionList?.map((el) => 
+                                         {/* {storePayList?.map((el) => 
                                             <option value={el.id} >{el.cardNumber}</option>
-                                        )} */}
+                                        )}  */}
                                     </Form.Select>  
                                 </Col>
                         </Form.Group>
