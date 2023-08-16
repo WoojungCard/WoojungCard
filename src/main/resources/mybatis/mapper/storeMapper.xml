@@ -123,7 +123,7 @@
 						store_address2,
 						business_type,
 						business_start_date,
-						store_tel,
+						store_tel, 
 						store_join_date
 	    	FROM   		store
 	    	WHERE  		state = "USE"
