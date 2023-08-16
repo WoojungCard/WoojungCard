@@ -152,6 +152,12 @@ function UserHeader(props) {
                                         </div>
                                     </div>
 
+                                    <div className="col-2">
+                                        <Link to={"/user/purchase"} style={styles.main}>
+                                            결제하기
+                                        </Link>
+                                    </div>
+
                                     <div className="flex-column col-2">
                                         <div>
                                             <Link to={"/user/cardInfo"} style={styles.main}>
@@ -190,7 +196,7 @@ function UserHeader(props) {
                                         </h5>
                                     </div>
 
-                                    <div className="" style={styles.main}>
+                                    <div className="ps-3 col-2" style={styles.main}>
                                         <span 
                                             style={{cursor: "pointer"}}
                                             onClick={onClickLogOut}

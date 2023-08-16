@@ -93,6 +93,7 @@ public class JwtService {
             TokenInfo info = new TokenInfo().tokenToDTO(claims);
             return info;
         }catch (Exception e){
+        	e.printStackTrace();
             return null;
         }
     }

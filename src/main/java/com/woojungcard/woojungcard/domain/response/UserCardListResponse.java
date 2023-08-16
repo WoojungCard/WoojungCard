@@ -1,4 +1,4 @@
-package com.woojungcard.woojungcard.domain.request;
+package com.woojungcard.woojungcard.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter 
 @Setter
-public class UserCardApproveRequest {
-	private Long   id;
-	private String cardNumber;
-	private int randum;
+public class UserCardListResponse {
+  private int id;
+  private String cardName;
+  private String cardNumber;
 }

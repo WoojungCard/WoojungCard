@@ -22,6 +22,7 @@ import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StorePayListResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
@@ -169,5 +170,10 @@ public class StoreServiceImpl implements StoreService {
 			Long zeroResult = 0L;
 			return zeroResult;
 		}
+	}
+	//Store pay List
+	@Transactional
+	public List<StorePayListResponse> storePayListSearch(){
+		return storeRepository.storePayListSearch();
 	}
 }
