@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardListSearchRequest;
 import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
 import com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest;
 import com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest;
@@ -60,12 +61,13 @@ public class CardServiceImpl implements CardService {
 	public ResponseEntity<String> userCardAppAprove(UserCardApproveRequest request) throws UserCardApproveException {
 		StringBuilder cardNumber = new StringBuilder();
         for (int i = 0; i < 16; i++) {
-            int randomDigit = (int) (Math.random() * 10);
+              int randomDigit = (int) (Math.random() * 10);
             cardNumber.append(randomDigit);
             if ((i + 1) % 4 == 0 && i < 15) {
             	cardNumber.append("-");
             }
         }
+        
         request.setCardNumber(cardNumber.toString());
 		Integer updateRow = cardRepository.userCardAppAprove(request);
 		if(updateRow != 0) {
@@ -79,6 +81,31 @@ public class CardServiceImpl implements CardService {
 			throw new UserCardApproveException();
 		}
 	}
+	@Transactional
+	public ResponseEntity<String> userCardAppAprove(UserCardListSearchRequest request) throws UserCardApproveException {
+		StringBuilder cardNumber = new StringBuilder();
+        for (int i = 0; i < 16; i++) {
+              int randomDigit = (int) (Math.random() * 10);
+            cardNumber.append(randomDigit);
+            if ((i + 1) % 4 == 0 && i < 15) {
+            	cardNumber.append("-");
+            }
+        }
+        
+        request.setCardNumber(cardNumber.toString());
+		Integer updateRow = cardRepository.userCardAppAprove(request);
+		if(updateRow != 0) {
+			Integer addRow = cardRepository.insertCardApplicationApproval(request.getId());
+			if (addRow != 0) {
+				return new ResponseEntity<>("승인 완료", HttpStatus.OK);
+			} else {
+				throw new UserCardApproveException();
+			}
+		} else {
+			throw new UserCardApproveException();
+		}
+	}
+	
 	
 	
 	// User Card Canceled Application

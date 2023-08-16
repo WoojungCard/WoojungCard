@@ -15,16 +15,18 @@ import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.request.UserPaymentRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
 import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
 import com.woojungcard.woojungcard.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -89,5 +91,27 @@ public class UserController {
 	public List<CardAppStatusResponse> userCardAppStatus() {
 		return userService.userCardAppStatus();
 	}
+
+
+	// User Card payment
+	@PostMapping("/cardpayment")
+	public ResponseEntity<String> getCardpayment(@RequestBody UserPaymentRequest request) {
+		
+		
+		ResponseEntity<String> cardPay = userService.userCardPay(request);
+		//List<Object> cardList = userService.getCardList(request);
+			
+		//resultMap.put("cardList", cardList);
+		
+		return cardPay; 
+	}
+	// User Card List
+	@GetMapping("/userCardList")
+	public List<UserCardListResponse> userCardListSearch(){
+		return userService.userCardListSearch();
+	}
+	
+	
 }
+
     

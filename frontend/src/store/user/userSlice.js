@@ -5,6 +5,8 @@ import { async } from "q";
 const initialState = {
     data: {},
     userListData: [],
+    userCardList: [],
+    storePayList: [],
     idCheckResult : "",
     userInfo : {},
     userAppInfo : {},
@@ -72,12 +74,14 @@ export const userCardAppInfo= createAsyncThunk("/user/cardAppInfo", async() => {
 // Get User List (ADMIN)
 export const userList = createAsyncThunk("/user/getUserList", async() => {
 	const response = await api("GET", "/user/getUserList");
+    // console.log(response.data);
 	return response.data;
 })
 
 // User Card Application Status
 export const userCardAppStatus = createAsyncThunk("/user/cardAppStatus", async() => {
     const response = await api("GET", "/user/cardAppStatus");
+    console.log(response.data);
     return response.data;
 })
 
@@ -89,6 +93,30 @@ export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thun
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response);
     }
+})
+// User Card Payment
+export const userCardPayment = createAsyncThunk("/user/cardpaymnet", async(request, thunkAPI) =>{
+    try{
+       const response = await api("POST", "/user/cardpayment", request);
+       return response.data; 
+    }catch(err){
+        return thunkAPI.rejectWithValue(err.response);
+    }
+})
+// User Card List
+export const userCardList = createAsyncThunk("/user/userCardList", async() => {
+    const response = await api("GET", "/user/userCardList");
+    console.log(response.data);
+    return response.data;
+})
+// Store pay List
+export const storePayList = createAsyncThunk("/store/storePayList", async(thunkAPI) =>{
+    try{
+        const response = await api("GET", "/store/storePayList");
+        return response.data;
+       }catch(err){
+          return thunkAPI.rejectWithValue(err.response);
+       }
 })
 
 const userSlice = createSlice({
@@ -117,15 +145,15 @@ const userSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userSignUp.pending, (state, action) => {
-                state.signUpStatus = "loading";
+                state.status = "loading";
             })
             .addCase(userSignUp.fulfilled,(state, action) => {
-                state.signUpStatus = "successed";
+                state.status = "successed";
                 state.data = action.payload;
             })
             .addCase(userSignUp.rejected, (state, action) => {
-                state.signUpStatus = "failed";
-                state.error = action.payload.data;
+                state.status = "failed";
+                state.error = action.err.message;
             })
             .addCase(userLogin.pending, (state, action) => {
                 state.loginStatus = "loading";
@@ -138,7 +166,7 @@ const userSlice = createSlice({
             })
             .addCase(userLogin.rejected, (state, action) => {
                 state.loginStatus = "failed";
-                state.error = action.payload.data;
+                state.error = action.payload;
             })
             .addCase(userGetInfo.pending, (state, action) => {  
                 state.status = "loading";
@@ -152,14 +180,14 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userInfoUpdate.pending, (state, action) => {  
-                state.updateStatus = "loading";
+                state.status = "loading";
             })
             .addCase(userInfoUpdate.fulfilled,(state, action) => {
-                state.updateStatus = "successed";
+                state.status = "successed";
                 state.userInfo = action.payload;
             })
             .addCase(userInfoUpdate.rejected, (state, action) => {
-                state.updateStatus = "failed";
+                state.status = "failed";
                 state.error = action.payload;
             })
             .addCase(userCardAppInfo.pending, (state, action) => {  
@@ -189,14 +217,38 @@ const userSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(userCardApp.pending, (state, action) => {  
-                state.appStatus = "loading";
+                state.status = "loading";
             })
             .addCase(userCardApp.fulfilled,(state, action) => {
-                state.appStatus = "successed";
+                state.status = "successed";
                 state.data = action.payload;
             })
             .addCase(userCardApp.rejected, (state, action) => {
-                state.appStatus = "failed";
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(userCardPayment.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.data = action.payload;
+            })
+            .addCase(userCardPayment.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(userCardList.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.userCardList = action.payload;
+            })
+            .addCase(userCardList.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(storePayList.fulfilled,(state, action) => {
+                state.status = "successed";
+                state.storePayList = action.payload;
+            })
+            .addCase(storePayList.rejected, (state, action) => {
+                state.status = "failed";
                 state.error = action.payload;
             })
     }
