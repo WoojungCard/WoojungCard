@@ -16,6 +16,7 @@ const initialState = {
     approveStatus : "idle",
     cancelAppStatus : "idle",
     canceledApproveStatus : "idle",
+    userPayCardBillStatus : "idle",
     error: null
 }
 
@@ -192,7 +193,7 @@ const cardSlice = createSlice({
                 state.status = "loading";
             })
             .addCase(userPayCardBill.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.userPayCardBillStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userPayCardBill.rejected, (state, action) => {
