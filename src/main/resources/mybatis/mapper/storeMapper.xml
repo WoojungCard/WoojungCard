@@ -123,7 +123,7 @@
 						store_address2,
 						business_type,
 						business_start_date,
-						store_tel,
+						store_tel, 
 						store_join_date
 	    	FROM   		store
 	    	WHERE  		state = "USE"
@@ -203,4 +203,18 @@
 			AND		target_month = #{targetMonth}
 		]]>
 	</select>
+	
+	
+	<!-- 스토어 결제금액 생성하기 -->
+	<select id = "storePayListSearch" resultType="com.woojungcard.woojungcard.domain.response.StorePayListResponse" >
+		<![CDATA[
+			SELECT 
+				id,
+                store_name 
+				,(FLOOR(RAND()*10)+1)*10000 AS price
+			FROM 
+				store
+		]]>
+	</select>
+	
 </mapper>

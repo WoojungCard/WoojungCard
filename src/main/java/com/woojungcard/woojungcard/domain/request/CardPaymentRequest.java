@@ -1,5 +1,7 @@
 package com.woojungcard.woojungcard.domain.request;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter 
 @Setter
-public class UserCardApproveRequest {
-	private Long   id;
-	private String cardNumber;
-	private int randum;
+public class CardPaymentRequest {
+	private Long      userId;
 }

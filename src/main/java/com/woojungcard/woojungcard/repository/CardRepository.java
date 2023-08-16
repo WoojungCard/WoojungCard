@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.woojungcard.woojungcard.domain.request.UserCardApproveRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardListSearchRequest;
 import com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest;
 import com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest;
 import com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest;
@@ -29,6 +30,9 @@ public interface CardRepository {
 	
 	// User Card Application Approve
 	Integer userCardAppAprove(UserCardApproveRequest request);
+	
+	// User Card List request
+	Integer userCardAppAprove(UserCardListSearchRequest request);
 	
 	// Add Card Application Approval Table
 	Integer insertCardApplicationApproval(Long id);

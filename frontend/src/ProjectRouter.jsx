@@ -28,6 +28,7 @@ import StoreLayout from "./component/layout/StoreLayout";
 import StoreSalesManage from "./component/store/StoreSalesManage";
 import StoreSalesDeposit from "./component/store/StoreSalesDeposit";
 import StoreManagementDetail from "./component/admin/store/StoreManagementDetail";
+import UserPurchase from "./component/user/UserPurchase";
 
 const ProjectRouter = () => {
 	return (
@@ -52,6 +53,7 @@ const ProjectRouter = () => {
 					<Route path="cardAppStatus" element=<UserCardAppStatus/> />
 					<Route path="cardInfo" element=<UserCardInfo/> />
 					<Route path="cardUsageHistory" element=<UserCardUsageHistoryForm/> />
+					<Route path="purchase" element=<UserPurchase/> />
 				</Route>
 				
 				{/* 가맹점 */}

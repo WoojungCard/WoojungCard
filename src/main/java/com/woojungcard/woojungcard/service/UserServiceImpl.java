@@ -10,21 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.woojungcard.woojungcard.config.EncryptConfig;
 import com.woojungcard.woojungcard.domain.dto.UserDTO;
 import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
+import com.woojungcard.woojungcard.domain.request.UserCardListSearchRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.request.UserPaymentRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
 import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
-import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
-import com.woojungcard.woojungcard.jwt.JwtService;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.jwt.JwtService;
 import com.woojungcard.woojungcard.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -140,4 +142,36 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationException();
 		}	
 	}
+	// User Card Pay
+	@Transactional
+	public ResponseEntity<String> userCardPay(UserPaymentRequest request){
+		//Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		//request.setId(id);
+		StringBuilder approvalNumber = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			int randomDigit = (int) (Math.random() * 10);
+			approvalNumber.append(randomDigit);
+		}
+		request.setApprovalNumber(Integer.parseInt(approvalNumber.toString()));
+		Integer insertRow = userRepository.userCardPay(request);
+		if(insertRow != 0) {
+			return new ResponseEntity<String>("결제가 완료되었습니다.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("결제에 실패했습니다.", HttpStatus.OK);
+		}
+	}
+	
+	@Transactional
+	public List<UserCardListResponse> userCardListSearch(){
+		
+		Long id = jwtService.tokenToDTO(jwtService.getAccessToken()).getId();
+		
+//		UserCardListSearchRequest arg = new UserCardListSearchRequest();
+//		arg.setId(id);
+		
+		List<UserCardListResponse> list = userRepository.userCardListSearch(id);
+		
+		return list;
+	}
+	
 }

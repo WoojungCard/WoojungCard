@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import com.woojungcard.woojungcard.domain.request.StoreAppStatusChangeRequest;
 import com.woojungcard.woojungcard.domain.request.StoreIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.StoreLoginRequest;
 import com.woojungcard.woojungcard.domain.request.StorePaymentDepositRequest;
@@ -17,11 +16,11 @@ import com.woojungcard.woojungcard.domain.response.StoreAppInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreAppStatusResponse;
 import com.woojungcard.woojungcard.domain.response.StoreInfoResponse;
 import com.woojungcard.woojungcard.domain.response.StoreLoginResponse;
+import com.woojungcard.woojungcard.domain.response.StorePayListResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesManagementResponse;
 import com.woojungcard.woojungcard.domain.response.StoreSalesReceiptResponse;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
-import com.woojungcard.woojungcard.exception.StoreAppStatusChangeException;
 import com.woojungcard.woojungcard.exception.StoreIdCheckException;
 import com.woojungcard.woojungcard.exception.StoreUpdateException;
 
@@ -50,5 +49,8 @@ public interface StoreService {
 	public ResponseEntity<String> insertStorePayment(StorePaymentRequest request) throws Exception;
 	//store payment Deposit
 	public Long getStorePaymentDeposit(StorePaymentDepositRequest request);
+	//store pay List
+	public List<StorePayListResponse> storePayListSearch();
+	
 }
 

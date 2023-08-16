@@ -9,17 +9,19 @@ import com.woojungcard.woojungcard.domain.request.UserCardAppRequest;
 import com.woojungcard.woojungcard.domain.request.UserIdCheckRequest;
 import com.woojungcard.woojungcard.domain.request.UserInfoUpdateRequest;
 import com.woojungcard.woojungcard.domain.request.UserLoginRequest;
+import com.woojungcard.woojungcard.domain.request.UserPaymentRequest;
 import com.woojungcard.woojungcard.domain.request.UserSignUpRequest;
 import com.woojungcard.woojungcard.domain.response.CardAppStatusResponse;
-import com.woojungcard.woojungcard.domain.response.CardApplicationResponse;
 import com.woojungcard.woojungcard.domain.response.UserCardAppInfoResponse;
+import com.woojungcard.woojungcard.domain.response.UserCardListResponse;
 import com.woojungcard.woojungcard.domain.response.UserInfoResponse;
 import com.woojungcard.woojungcard.domain.response.UserLoginResponse;
-import com.woojungcard.woojungcard.exception.UserIdCheckException;
+import com.woojungcard.woojungcard.exception.ApplicationException;
 import com.woojungcard.woojungcard.exception.LoginException;
 import com.woojungcard.woojungcard.exception.SignUpException;
 import com.woojungcard.woojungcard.exception.UpdateException;
-import com.woojungcard.woojungcard.exception.ApplicationException;
+import com.woojungcard.woojungcard.exception.UserIdCheckException;
+
 
 public interface UserService {
 	// User Id Check
@@ -48,4 +50,10 @@ public interface UserService {
 	
 	// User Card Application
 	public ResponseEntity<String> userCardApp(UserCardAppRequest request) throws ApplicationException ;
+	
+	// User Card Payment
+	public ResponseEntity<String> userCardPay(UserPaymentRequest request); 
+	
+	// User CardList 
+	public List<UserCardListResponse> userCardListSearch();
 }

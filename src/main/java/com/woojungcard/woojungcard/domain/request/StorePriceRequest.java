@@ -9,8 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter 
 @Setter
-public class UserCardApproveRequest {
-	private Long   id;
-	private String cardNumber;
-	private int randum;
+public class StorePriceRequest {
+		private String StoreName;
+		private Long randomNumber;
 }
