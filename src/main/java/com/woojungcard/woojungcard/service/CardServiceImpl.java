@@ -82,34 +82,7 @@ public class CardServiceImpl implements CardService {
 		}
 	}
 	
-	
-	@Transactional
-	public ResponseEntity<String> userCardPay(UserPaymentRequest request) throws UserCardApproveException {
-		StringBuilder approvalNumber = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
-              int randomDigit = (int) (Math.random() * 10);
-              approvalNumber.append(randomDigit);
-        }
-        
-
-        
-        
-        request.setApprovalNumber(Integer.parseInt(approvalNumber.toString()));
-		Integer updateRow = cardRepository.userCardAppAprove(request);
-		if(updateRow != 0) {
-			Integer addRow = cardRepository.insertCardApplicationApproval(request.getId());
-			if (addRow != 0) {
-				return new ResponseEntity<>("승인 완료", HttpStatus.OK);
-			} else {
-				throw new UserCardApproveException();
-			}
-		} else {
-			throw new UserCardApproveException();
-		}
-	}
-	
-	
-	
+		
 	// User Card Canceled Application
 	@Transactional
 	public ResponseEntity<String> userCardCancelApp(Long id) throws ApplicationException {

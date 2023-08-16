@@ -45,7 +45,7 @@
 							   #{businessStartDate},
 							   #{storeTel},
 							   now(),
-							   "WATING",
+							   "WAITING",
 							   "STORE")
 		]]>
 	</insert>

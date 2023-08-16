@@ -89,10 +89,9 @@ function StoreJoin() {
 	
 //	가맹점 신청하기 클릭
 	const onClickStoreJoin = (e) => {e.preventDefault();
-									 dispatch(storeSignUp(store));
-									 navigate('/login/login');};
+									 dispatch(storeSignUp(store));};
 
-	useEffect(() => {if      (signUpStatus === "successed") {navigate("/")} 
+	useEffect(() => {if      (signUpStatus === "successed") {navigate("/login")} 
 	                 else if (signUpStatus === "failed")    {alert("등록에 실패하였습니다. 다시 시도해주세요.")}}, [signUpStatus])
 	
 	
