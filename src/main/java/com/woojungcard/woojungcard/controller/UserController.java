@@ -92,20 +92,17 @@ public class UserController {
 		return userService.userCardAppStatus();
 	}
 
-
 	// User Card payment
 	@PostMapping("/cardpayment")
 	public ResponseEntity<String> getCardpayment(@RequestBody UserPaymentRequest request) {
-		
 		ResponseEntity<String> cardPay = userService.userCardPay(request);
-		
 		return cardPay; 
 	}
+	
 	// User Card List
 	@GetMapping("/userCardList")
 	public List<UserCardListResponse> userCardListSearch(){
 		return userService.userCardListSearch();
-	}
-		
+	}	
 }
     

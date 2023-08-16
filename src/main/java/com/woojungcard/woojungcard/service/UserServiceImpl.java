@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationException();
 		}	
 	}
+	
 	// User Card Pay
 	@Transactional
 	public ResponseEntity<String> userCardPay(UserPaymentRequest request){
