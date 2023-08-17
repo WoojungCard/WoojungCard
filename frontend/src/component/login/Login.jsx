@@ -34,14 +34,14 @@ function Login() {
 						 "storePwd"       : insertLoginPwd})
 	
 	const onClickLogin = (e) => {e.preventDefault();
-								 if      (userType === 'u') {dispatch(userLogin(loginInfo))} 
+								 if      (userType === 'u') {dispatch(userLogin (loginInfo))} 
 								 else if (userType === 's') {dispatch(storeLogin(loginInfo2))}}
 
 	useEffect(() => {if      (loginStatus === "successed")      {navigate("/user", {replace : true});
 							   						             navigate(0);}
 					 else if (loginStatus === "failed")         {alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.")}}, [loginStatus]);
 	useEffect(() => {if      (storeLoginStatus === "successed") {dispatch(storeGetInfo())} 
-		             else if (storeLoginStatus === "failed")    {alert("로그인에 실패하였습니다. 계정을 다시 확인해주세요.")}}, [storeLoginStatus]);
+		             else if (storeLoginStatus === "failed")    {alert("로그인에 실패하였습니다. 계정 및 승인 여부를 확인해주세요.")}}, [storeLoginStatus]);
 	useEffect(() => {if      (storeInfo.auth === "ADMIN")       {navigate("/admin", {replace : true});
 			  										             navigate(0);}
 					 else if (storeInfo.auth === "STORE")       {navigate("/store", {replace : true});

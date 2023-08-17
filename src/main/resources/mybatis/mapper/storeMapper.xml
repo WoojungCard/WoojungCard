@@ -87,6 +87,7 @@
 			FROM	store
 			WHERE	business_number = #{businessNumber} 
 			AND 	store_pwd 		= #{storePwd}
+			AND 	state 			= "USE"
 		]]>
 	</select>
 	
