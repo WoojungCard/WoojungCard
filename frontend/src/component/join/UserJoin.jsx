@@ -62,7 +62,7 @@ function UserJoin() {
 
 	useEffect(() => {if      (signUpStatus === "successed") {navigate("/login");
 											                 navigate(0);}
-					 else if (signUpStatus === "failed") {alert("가입에 실패하였습니다. 다시 시도해주세요.")}}, [signUpStatus])
+					 else if (signUpStatus === "failed")    {alert("가입에 실패하였습니다. 다시 시도해주세요.")}}, [signUpStatus])
 	
 	return (
 		<div className="mt-5 pt-5">

@@ -36,6 +36,15 @@ function StoreSalesDeposit() {
     const onClickHandler = (e) => {e.preventDefault();
                                    dispatch(insertStorePayment({"targetYear" : selectedYear, "targetMonth" : selectedMonth, "payment" : paymentResult}));}
 
+    const onComfirm = (e) => {
+        if(window.confirm("입금하시겠습니까?")) {
+            alert("처리되었습니다");
+            onClickHandler(e);
+        } else {
+            alert("취소하였습니다");
+            navigate(0);
+        } }
+
     useEffect(() => {if      (insertStatus === "successed")  navigate(0);
                      else if (insertStatus === "failed")     alert("입금 실패하였습니다. 다시 시도해주세요.");}          , [insertStatus])
 
@@ -91,7 +100,7 @@ function StoreSalesDeposit() {
             <div className="d-flex justify-content-center mt-5">
                 <Link to="/">
                     <Button type="button" className="px-3" variant="outline-dark"
-                            onClick={onClickHandler}
+                            onClick={onComfirm}
                     >
                         입금하기
                     </Button>

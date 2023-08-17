@@ -71,11 +71,11 @@ function CardManage() {
                                             {item.cardName}
                                         </Link>
                                     </th>
-                                    <th>{item.cardType}</th>
+                                    <th>{item.cardType === "CREDIT" ? "신용" : "체크"}</th>
                                     <th>{item.cardInfo}</th>
                                     <th>{item.registerDate}</th>
                                     <th>{item.count}</th>
-                                    <th>{item.state}</th>
+                                    <th>{item.state === "PROCEEDING" ? "발급신청가능" : "발급종료"}</th>
                                 </tr>
                             );
                         })}

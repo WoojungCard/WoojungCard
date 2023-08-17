@@ -38,7 +38,7 @@ function CardManageDetail() {
                         </tr>
                         <tr style={customHeight}>
                             <th>신용/체크</th>
-                            <td>{cardData.cardType}</td>
+                            <td>{cardData.cardType === "CREDIT" ? "신용" : "체크"}</td>
                         </tr>
                         <tr style={customHeight}>
                             <th>등록일</th>
@@ -54,19 +54,19 @@ function CardManageDetail() {
                         </tr>
                         <tr style={customHeight}>
                             <th>비고</th>
-                            <td>{cardData.state}</td>
+                            <td>{cardData.state === "PROCEEDING" ? "발급신청가능" : "발급종료"}</td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
 
-            <div className="d-flex justify-content-center mt-5">
+            {/* <div className="d-flex justify-content-center mt-5">
                 <Link to="/">
                     <Button type="button" className="px-3" variant="outline-dark">
                         수정하기
                     </Button>
                 </Link>
-            </div>
+            </div> */}
         </div>
     );
 }
