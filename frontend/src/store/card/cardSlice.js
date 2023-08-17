@@ -23,6 +23,7 @@ const initialState = {
 // Card All list
 export const cardList = createAsyncThunk("/card/list", async() => {
     const response = await api("GET", "/card/list");
+    console.log(response.data);
     return response.data;
 })
 

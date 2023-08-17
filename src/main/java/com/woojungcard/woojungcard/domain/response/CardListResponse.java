@@ -19,6 +19,7 @@ public class CardListResponse {
 	private String    	 cardName;
 	private CardType  	 cardType;
 	private String    	 cardInfo;
+	private String       cardImage;
 	private LocalDate    registerDate;
 	private ProductState state;
 	private Long 		 count;

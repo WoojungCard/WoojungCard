@@ -49,7 +49,7 @@ function CardProductList() {
 							<div className="col-4">
 								<img
 									className="d-block"
-									src="/img/defaultCardImage.png"
+									src={`/img/${el.cardImage}`}
 									alt="[우정카드]"
 									style={{width: "145px", height: "90px"}}
 								/>

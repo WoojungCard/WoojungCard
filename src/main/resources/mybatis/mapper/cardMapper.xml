@@ -20,6 +20,7 @@
 						cp.card_name,
 						cp.card_type,
 						cp.card_info,
+						cp.card_image,
 						cp.register_date,
 						cp.state,
 						COUNT(ci.card_id) AS count

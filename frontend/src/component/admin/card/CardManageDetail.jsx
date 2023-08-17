@@ -23,7 +23,7 @@ function CardManageDetail() {
             <div className="row justify-content-center mt-4">
                 <img
                     className="d-block p-0"
-                    src="/img/defaultCardImage.png"
+                    src={`/img/${cardData.cardImage}`}
                     alt="[우정카드]"
                     style={{ width: "145px", height: "90px" }}
                 />
