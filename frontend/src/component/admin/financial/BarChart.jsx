@@ -12,25 +12,30 @@ const BarChart = (props) => {
 
     const {genderAgeData} = useSelector((state) => state.admin);
 
-    const [data, setData]           = useState([]);
-    const [chartData, setChartData] = useState([]);
+    const [data         , setData         ] = useState([]);
+    const [chartData    , setChartData    ] = useState([]);
+    const [chartMaxValue, setChartMaxValue] = useState([]);
 
     const selectedMonth = props.selectedMonth;
     const lastYearMonth = props.lastYearMonth;
 
     const paymentData = ({
-        "paymentMonth" : selectedMonth,
+        "paymentMonth"         : selectedMonth,
         "paymentMonthLastYear" : lastYearMonth
     });
 
 
     useEffect(() => {dispatch(adminGenderAgeData(paymentData))}, [selectedMonth]);
     useEffect(() => {setData(genderAgeData)}                   , [genderAgeData]);
-    useEffect(() => {const transformData = (data) => {const maleCharges = {};
+    useEffect(() => {let maxCharge = 0;
+                     const transformData = (data) => {const maleCharges = {};
                                                       const femaleCharges = {};
+                                                      
                                                     
                                                       data.forEach((data) => {const ageGroup = data.ageGroup;
                                                                               const totalCharge = data.totalCharge;
+                                                                              
+                                                                              if (totalCharge > maxCharge) maxCharge = totalCharge;
                                                                               if (data.userGender === 'MAN') {maleCharges[ageGroup] = (maleCharges[ageGroup] || 0) + totalCharge} 
                                                                               else if (data.userGender === 'WOMAN') {femaleCharges[ageGroup] = (femaleCharges[ageGroup] || 0) + totalCharge}});
                                                         
@@ -40,6 +45,7 @@ const BarChart = (props) => {
 
                                                       return transformedData; };
                     const newChartData = transformData(genderAgeData);
+                    setChartMaxValue(maxCharge);
                     setChartData(newChartData);}               , [data]);
     
     return (
@@ -66,8 +72,8 @@ const BarChart = (props) => {
                 indexBy="age"
                 margin={{ top: 50, right: 100, bottom: 30, left: 60 }}
                 padding={0.2}
-                minValue={-10000000}
-                maxValue={10000000}
+                minValue={-chartMaxValue}
+                maxValue={chartMaxValue}
                 colors={{ scheme: 'category10' }}
                 colorBy="id"
                 theme={{
