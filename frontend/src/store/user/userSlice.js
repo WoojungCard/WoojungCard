@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { api } from "../../api";
-import { async } from "q";
 
 const initialState = {
     data: {},
@@ -94,6 +93,7 @@ export const userCardApp = createAsyncThunk("/user/cardApp", async(request, thun
         return thunkAPI.rejectWithValue(err.response);
     }
 })
+
 // User Card Payment
 export const userCardPayment = createAsyncThunk("/user/cardpaymnet", async(request, thunkAPI) =>{
     try{
@@ -103,12 +103,14 @@ export const userCardPayment = createAsyncThunk("/user/cardpaymnet", async(reque
         return thunkAPI.rejectWithValue(err.response);
     }
 })
+
 // User Card List
 export const userCardList = createAsyncThunk("/user/userCardList", async() => {
     const response = await api("GET", "/user/userCardList");
     // console.log(response.data);
     return response.data;
 })
+
 // Store pay List
 export const storePayList = createAsyncThunk("/store/storePayList", async() => {
     const response = await api("GET", "/store/storePayList");
@@ -142,14 +144,14 @@ const userSlice = createSlice({
                 state.status = "failed";
             })
             .addCase(userSignUp.pending, (state, action) => {
-                state.status = "loading";
+                state.signUpStatus = "loading";
             })
             .addCase(userSignUp.fulfilled,(state, action) => {
-                state.status = "successed";
+                state.signUpStatus = "successed";
                 state.data = action.payload;
             })
             .addCase(userSignUp.rejected, (state, action) => {
-                state.status = "failed";
+                state.signUpStatus = "failed";
                 state.error = action.err.message;
             })
             .addCase(userLogin.pending, (state, action) => {

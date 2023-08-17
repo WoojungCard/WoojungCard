@@ -15,11 +15,11 @@ const styles = {
 // 로그인 전 보여지는 메인 헤더
 function MainHeader(props) {
 
-    const {userInfo} = useSelector((state)=>state.user);
+    // const {userInfo} = useSelector((state)=>state.user);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {dispatch(userGetInfo())}, [])
+    // useEffect(() => {dispatch(userGetInfo())}, [])
 
     const onClickHandler = () => {dispatch(logout())}
 
