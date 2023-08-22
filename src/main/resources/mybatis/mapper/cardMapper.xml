@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woojungcard.woojungcard.repository.CardRepository">
+
+	<!-- 카드 발급 신청 내역 -->
+    <select id="cardApplication" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardApplicationResponse">
+    	<![CDATA[
+	        SELECT   card_name,
+	        		 card_type
+	        FROM	 card_product
+	       	WHERE    id = #{id}
+        ]]>
+    </select>
+    
+    <!-- 카드 전체 리스트 조회 -->
+	<select id="cardList" resultType="com.woojungcard.woojungcard.domain.response.CardListResponse"	>
+		<![CDATA[
+			SELECT		cp.id,
+						cp.card_name,
+						cp.card_type,
+						cp.card_info,
+						cp.card_image,
+						cp.register_date,
+						cp.state,
+						COUNT(ci.card_id) AS count
+			FROM		card_product cp
+		   	LEFT JOIN   card_issued ci 
+		   	ON 			cp.id = ci.card_id
+		   	GROUP BY    cp.id
+		]]>
+	</select>
+	
+	<!-- 고객 카드신청 내역 조회 -->
+	<select id="cardAppHistory" resultType="com.woojungcard.woojungcard.domain.response.UserCardAppHistoryResponse">
+		<![CDATA[
+			SELECT		i.id 		 AS id,
+						card_name,
+						card_type,
+						request_date, 
+						user_name,
+						user_birth,
+						user_tel
+			FROM		card_issued  AS i 
+			INNER JOIN 	card_product AS p 
+			ON 			i.card_id = p.id 
+			INNER JOIN 	user AS u 
+			ON 			i.user_id = u.id
+			WHERE		i.state = "WATING"
+			ORDER BY	request_date
+		]]>
+	</select>
+	
+	<!-- 개인 고객 카드 요청 승인 -->
+	<update id="userCardAppAprove" parameterType="com.woojungcard.woojungcard.domain.request.UserCardApproveRequest">
+		<![CDATA[
+			UPDATE	card_issued
+			SET		state = "USE",
+					expiration_date = Date_ADD(now(), INTERVAL 5 YEAR),
+					card_number = #{cardNumber}
+			WHERE	id = #{id}
+		]]>	
+	</update>
+	
+	<!-- 개인 고객 카드 승인시 card_application_approve 테이블 추가 -->
+	<insert id="insertCardApplicationApproval" parameterType="Long">
+		<![CDATA[
+			INSERT INTO	  card_application_approval(card_issued_id, approval_date)
+			VALUES        (#{id}, now())
+		]]>
+	</insert>
+	
+	<!-- 고객 카드 해지 신청 -->
+	<update id="userCardCancelApp" parameterType="Long">
+		<![CDATA[
+			UPDATE	card_issued
+			SET		state = "STOPPING"
+			WHERE	id = #{id}
+		]]>
+	</update>
+	
+	<!-- 고객 카드 해지 신청시 card_canceled 테이블 추가 -->
+	<insert id="userCardCanceledAdd" parameterType="Long">
+		<![CDATA[
+			INSERT INTO  card_canceled(card_issued_id, request_date)
+			VALUES		 (#{id}, now())
+		]]>
+	</insert>
+	
+	<!-- 고객 카드 정지 신청 내역 조회 -->
+	<select id="userCardCancelHistory" parameterType="Long" resultType="com.woojungcard.woojungcard.domain.response.CardCancelHistoryResponse">
+		<![CDATA[
+			SELECT 			c.id 			AS id, 
+							i.card_number 	AS card_number, 
+							p.card_name 	AS card_name, 
+							p.card_type 	AS card_type, 
+							c.request_date  AS request_date, 
+							u.user_name 	AS user_name, 
+							u.user_birth  	AS user_birth, 
+							u.user_tel 	 	AS user_tel,
+							c.cancel_date   AS cancel_date
+			FROM 			card_canceled   AS c 
+			INNER JOIN 		card_issued     AS i 
+			ON 				c.card_issued_id = i.id 
+			INNER JOIN 		card_product    AS p 
+			ON 				i.card_id = p.id 
+			INNER JOIN		user 		    AS u 
+			ON 				u.id = i.user_id
+		]]>
+	</select>
+	
+	<!-- 고객 카드 정시 신청 승인 -->
+	<update id="userCardCancelApprove" parameterType="Long">
+		<![CDATA[
+			UPDATE		card_issued
+			SET			state = "CANCELED"
+			WHERE		id = (SELECT	c.card_issued_id AS id
+							  FROM		card_canceled    AS c
+							  WHERE		c.id = #{id})
+		]]>
+	</update>
+	
+	<!-- 고객 카드 정지 신청 일자 추가 (card_canceled) -->
+	<update id="addUserCardCancelDate" parameterType="Long">
+		<![CDATA[
+			UPDATE	card_canceled
+			SET		cancel_date = now()
+			WHERE   id = #{id}
+		]]>
+	</update>
+	
+	<!-- 고객 카드 보유 내역 조회 -->
+	<select id="userCardPossessionHistory" resultType="com.woojungcard.woojungcard.domain.response.UserCardPossessionResponse" parameterType="Long">
+		<![CDATA[
+			SELECT		i.id 		  AS id, 
+						i.card_number AS card_number,
+						p.card_type   AS card_type
+			FROM		card_issued   AS i
+			INNER JOIN	card_product  AS p
+			ON			i.card_id = p.id
+			WHERE		user_id = #{id}
+			ORDER BY	expiration_date
+		]]>
+	</select>
+	
+	<!-- 고객 카드 사용 내역 조회 -->
+	<select id="userCardUsageHistory" parameterType="com.woojungcard.woojungcard.domain.request.UserCardUsageHistoryRequest" resultType="com.woojungcard.woojungcard.domain.response.UserCardUsageHistoryResponse">
+		<![CDATA[
+			SELECT 	    MIN(t.payment_date) AS payment_date, 
+			    		t.approval_number   AS approval_number, 
+			    		s.business_number   AS business_number, 
+			    		s.store_name 	    AS store_name, 
+			    		s.business_type 	AS business_type, 
+			    		t.installment 		AS installment, 
+			    		t.card_charge 		AS card_charge,
+			    		MIN(IF(t.installment > n.installment_months , t.card_charge * (n.interest_rate/100), null)) AS interest_bee
+			FROM 	    transaction 		AS t 
+			INNER JOIN  store 				AS s 
+			ON 		    t.store_id = s.id
+			INNER JOIN  card_issued 		AS i
+			ON 		    i.id       = t.card_issued_id
+			INNER JOIN  installment 		AS n
+			ON		    n.card_id  = i.card_id
+			WHERE	    card_issued_id IN (SELECT    i.id 
+									        FROM     card_issued AS i 
+									        WHERE    i.user_id = #{id}
+									        AND      i.id = #{cardIssuedId}
+									        )
+			AND 	    YEAR(t.payment_date)  = #{yearChoice} 
+			AND 	    MONTH(t.payment_date) = #{monthChoice}
+			GROUP BY    t.approval_number, 
+						s.business_number, 
+						s.store_name, 
+						s.business_type, 
+						t.installment, 
+						t.card_charge
+		]]>
+	</select>
+	
+	<!-- 유저 카드 청구 금액 납부 -->
+	<insert id="userPayCardBill" parameterType="com.woojungcard.woojungcard.domain.request.UserPayCardBillRequest">
+		<![CDATA[
+			INSERT INTO		payment(payer, target_id, target_year, target_month, payment, payment_date, payment_state)
+			VALUES			(#{payer}, #{targetId}, #{targetYear}, #{targetMonth}, #{payment}, now(), #{paymentState})
+		]]>
+	</insert>
+	
+	<!-- 유저 카드 납부 금액 조회 -->
+	<select id="userPayBillHistory" parameterType="com.woojungcard.woojungcard.domain.request.UserPayBillHistoryRequest" resultType="Long">
+		<![CDATA[
+			SELECT 		sum(payment) 
+			FROM		payment 
+			WHERE		payer        = "USER" 
+			AND 		target_id    = #{cardIssuedId} 
+			AND 		target_year  = #{targetYear} 
+			AND 		target_month = #{targetMonth}
+		]]>
+	</select>
+	
+	<!-- Find Card Type By Id -->
+	<select id="findCardTypeById" parameterType="Long" resultType="String">
+		<![CDATA[
+			SELECT			p.card_type  AS card_type
+			FROM			card_issued  AS i
+			INNER JOIN		card_product AS p
+			ON				i.card_id = p.id
+			WHERE			i.id 	  = #{id}
+		]]>
+	</select>
+</mapper>
